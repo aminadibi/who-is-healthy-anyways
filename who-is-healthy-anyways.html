@@ -1,0 +1,3085 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Amin Adibi">
+<meta name="author" content="Christopher Carlsten">
+<meta name="author" content="Emily Brigham">
+<meta name="author" content="Don Sin">
+<meta name="author" content="Peter Loewen">
+<meta name="author" content="Mohsen Sadatsafavi">
+<meta name="dcterms.date" content="2024-10-21">
+
+<title>Who Is Healthy Anyways</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="who-is-healthy-anyways_files/libs/clipboard/clipboard.min.js"></script>
+<script src="who-is-healthy-anyways_files/libs/quarto-html/quarto.js"></script>
+<script src="who-is-healthy-anyways_files/libs/quarto-html/popper.min.js"></script>
+<script src="who-is-healthy-anyways_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="who-is-healthy-anyways_files/libs/quarto-html/anchor.min.js"></script>
+<link href="who-is-healthy-anyways_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="who-is-healthy-anyways_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="who-is-healthy-anyways_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="who-is-healthy-anyways_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="who-is-healthy-anyways_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="who-is-healthy-anyways_files/libs/table1-1.0/table1_defaults.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#home-ownership-bmi-and-occupation" id="toc-home-ownership-bmi-and-occupation" class="nav-link" data-scroll-target="#home-ownership-bmi-and-occupation">Home Ownership, BMI and Occupation</a></li>
+  <li><a href="#income-to-poverty-ratio" id="toc-income-to-poverty-ratio" class="nav-link" data-scroll-target="#income-to-poverty-ratio">Income to Poverty Ratio</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a>
+  <ul class="collapse">
+  <li><a href="#effect-of-home-ownership" id="toc-effect-of-home-ownership" class="nav-link" data-scroll-target="#effect-of-home-ownership">Effect of Home Ownership</a></li>
+  <li><a href="#separate-analysis-based-on-sex" id="toc-separate-analysis-based-on-sex" class="nav-link" data-scroll-target="#separate-analysis-based-on-sex">Separate Analysis based on Sex</a>
+  <ul class="collapse">
+  <li><a href="#females" id="toc-females" class="nav-link" data-scroll-target="#females">Females</a></li>
+  <li><a href="#males" id="toc-males" class="nav-link" data-scroll-target="#males">Males</a></li>
+  </ul></li>
+  <li><a href="#establishing-the-order-of-exclusion" id="toc-establishing-the-order-of-exclusion" class="nav-link" data-scroll-target="#establishing-the-order-of-exclusion">Establishing the order of exclusion</a></li>
+  <li><a href="#alternative-order-of-reference-values" id="toc-alternative-order-of-reference-values" class="nav-link" data-scroll-target="#alternative-order-of-reference-values">Alternative Order of Reference Values</a>
+  <ul class="collapse">
+  <li><a href="#alternate-order-2" id="toc-alternate-order-2" class="nav-link" data-scroll-target="#alternate-order-2">Alternate Order 2</a></li>
+  <li><a href="#non-cumulative-exclusion" id="toc-non-cumulative-exclusion" class="nav-link" data-scroll-target="#non-cumulative-exclusion">Non-Cumulative Exclusion</a></li>
+  </ul></li>
+  <li><a href="#differential-missingness-by-race" id="toc-differential-missingness-by-race" class="nav-link" data-scroll-target="#differential-missingness-by-race">Differential Missingness by Race</a>
+  <ul class="collapse">
+  <li><a href="#adults" id="toc-adults" class="nav-link" data-scroll-target="#adults">Adults</a></li>
+  <li><a href="#youth" id="toc-youth" class="nav-link" data-scroll-target="#youth">Youth</a></li>
+  </ul></li>
+  <li><a href="#visualizing-disparities" id="toc-visualizing-disparities" class="nav-link" data-scroll-target="#visualizing-disparities">Visualizing Disparities</a></li>
+  <li><a href="#intersection-of-race-and-country-of-birth" id="toc-intersection-of-race-and-country-of-birth" class="nav-link" data-scroll-target="#intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</a>
+  <ul class="collapse">
+  <li><a href="#gap-between-white-people-and-us-born-black-people" id="toc-gap-between-white-people-and-us-born-black-people" class="nav-link" data-scroll-target="#gap-between-white-people-and-us-born-black-people">Gap between White people and US-born Black people</a></li>
+  <li><a href="#gap-between-white-people-and-non-us-born-black-people" id="toc-gap-between-white-people-and-non-us-born-black-people" class="nav-link" data-scroll-target="#gap-between-white-people-and-non-us-born-black-people">Gap between White people and non-US born Black people</a></li>
+  <li><a href="#adults-1" id="toc-adults-1" class="nav-link" data-scroll-target="#adults-1">Adults</a></li>
+  <li><a href="#youth-1" id="toc-youth-1" class="nav-link" data-scroll-target="#youth-1">Youth</a></li>
+  </ul></li>
+  <li><a href="#emotional-support" id="toc-emotional-support" class="nav-link" data-scroll-target="#emotional-support">Emotional Support</a></li>
+  <li><a href="#lung-function-vs.-age" id="toc-lung-function-vs.-age" class="nav-link" data-scroll-target="#lung-function-vs.-age">Lung Function vs.&nbsp;Age</a>
+  <ul class="collapse">
+  <li><a href="#adults-2" id="toc-adults-2" class="nav-link" data-scroll-target="#adults-2">Adults</a></li>
+  <li><a href="#youth-2" id="toc-youth-2" class="nav-link" data-scroll-target="#youth-2">Youth</a></li>
+  </ul></li>
+  <li><a href="#lung-function-vs.-height" id="toc-lung-function-vs.-height" class="nav-link" data-scroll-target="#lung-function-vs.-height">Lung Function vs.&nbsp;Height</a>
+  <ul class="collapse">
+  <li><a href="#adults-3" id="toc-adults-3" class="nav-link" data-scroll-target="#adults-3">Adults</a></li>
+  <li><a href="#youth-3" id="toc-youth-3" class="nav-link" data-scroll-target="#youth-3">Youth</a></li>
+  </ul></li>
+  <li><a href="#nhanes-iii" id="toc-nhanes-iii" class="nav-link" data-scroll-target="#nhanes-iii">NHANES III</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="who-is-healthy-anyways.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Who Is Healthy Anyways</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliations</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Amin Adibi <a href="mailto:amin.adibi@ubc.ca" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0003-2748-4781" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Respiratory Evaluation Sciences Program, Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Christopher Carlsten </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Legacy for Airway Health, Vancouver Coastal Health Research Institute
+          </p>
+        <p class="affiliation">
+            Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
+          </p>
+        <p class="affiliation">
+            Air Pollution Exposure Lab, Vancouver Coastal Health Research Institute
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Emily Brigham </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Legacy for Airway Health, Vancouver Coastal Health Research Institute
+          </p>
+        <p class="affiliation">
+            Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Don Sin </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Centre for Heart Lung Innovation (HLI)
+          </p>
+        <p class="affiliation">
+            Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Peter Loewen </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Mohsen Sadatsafavi </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Respiratory Evaluation Sciences Program, Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 21, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p><strong>RATIONALE:</strong> Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. We hypothesized that measurable disparities will help explain racial gaps in lung function.</p>
+<p><strong>METHODS:</strong> We defined reference populations from 18,359 Black and White NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with occupational exposure to dust/fumes, maternal tobacco use, second-hand smoke exposure,obesity, low physical activity, unhealthy diet, self-assessed poor health, and home ownership. Across populations, we compared average age-, sex-, and height-adjusted differences in FEV<sub>1</sub> and FVC between Black and White adults (≥20) and youth (&lt;20).</p>
+<p><strong>RESULTS:</strong> From the base reference population to the most restrictive, the percentage of Black participants decreased from 20% to 16% in youth and 14% to 7% in adults. The racial gap in lung function was reduced from 0.40 L (95%CI 0.36-0.43) to 0.31 L (95%CI 0.26-0.36) in FEV<sub>1</sub> and from 0.48 L (95%CI 0.44-0.51) to 0.36 (95%CI 0.30-0.42) in FVC in youth but increased in adults.</p>
+<p><strong>CONCLUSIONS:</strong> The disparities investigated herein explain up to 25% of the racial gap in lung function among American youth. Further research on adults is required.</p>
+<hr>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>Racial gaps in measures of lung function have been known since late 18th century. For more than a hundred years, pro-slavery scientists in the US weaponized the lower observed lung function in Black people to argue that Black bodies were inferior and justify White supremacy <span class="citation" data-cites="braun2023">(<a href="#ref-braun2023" role="doc-biblioref">Braun and Grisson 2023</a>)</span>. This scientifically racist view was eventually replaced with the notion of innate but benign racial differences in lung function, likely attributable to anthropometric differences. In the twentieth century and with the growing adoption of pre-employment spirometry as a test of fitness for workers, occupation standards in the US proposed race-based adjustment of spirometry results to prevent hiring discrimination against Black people <span class="citation" data-cites="townsend2022">(<a href="#ref-townsend2022" role="doc-biblioref">Townsend and Cowl 2022</a>)</span>. In 2005, the American Thoracic Society (ATS) and the European Respiratory Society (ERS) started recommending race-specific reference equations for interpreting pulmonary function tests <span class="citation" data-cites="pellegrino2005">(<a href="#ref-pellegrino2005" role="doc-biblioref">Pellegrino 2005</a>)</span>. In the past two decades, race-based lung function reference values have been widely used to guide diagnosis, severity grading, and management of lung diseases, decide priority for lung transplant surgery, as a fitness for employment eligibility in some industries, and to monitor occupational health and adjudicate insurance claims.</p>
+<p>In recent years, increased awareness of the history of structural racism and disparities affecting racialized populations has led to calls to revisit race-based equations in medicine <span class="citation" data-cites="vyas2020">(<a href="#ref-vyas2020" role="doc-biblioref">Vyas, Eisenstein, and Jones 2020</a>)</span>. Of note is the growing body of literature suggests that racialized populations experience a disproportionate level of harmful environmental exposures that might hinder lung growth and lower lung function <span class="citation" data-cites="marciniuk2023">(<a href="#ref-marciniuk2023" role="doc-biblioref">Marciniuk et al. 2023</a>)</span>.</p>
+<p>Spirometry reference equations are developed with data from from “healthy” volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases <span class="citation" data-cites="quanjer2012 bowerman2023">(<a href="#ref-quanjer2012" role="doc-biblioref">Quanjer et al. 2012</a>; <a href="#ref-bowerman2023" role="doc-biblioref">Bowerman et al. 2023</a>)</span>. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.</p>
+<p>However, it is unclear what proportion of the observed racial gaps in lung function is due to social determinants of health. Previous studies on adults have attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2-4.7% to education <span class="citation" data-cites="harik-khan2001">(<a href="#ref-harik-khan2001" role="doc-biblioref">HARIK-KHAN et al. 2001</a>)</span>. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic stsstus accounted for 7-10% of the racial differences <span class="citation" data-cites="harik-khan2004">(<a href="#ref-harik-khan2004" role="doc-biblioref">Harik-Khan 2004</a>)</span>.</p>
+<p>We hypothesized that disproportionate exposures explain a larger proportion of racial gaps in lung function than previously reported.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p>We used data from three cycles of the US National Health and Nutrition Examination Survey (NHANES) 2007-2012 to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with occupational exposures, physical inactivity, maternal smoking, obesity, no home ownership, no insurance, lower education, and unhealthy diet.</p>
+<p>For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (&lt;20 yrs) and adults (≥20 yrs).</p>
+<p>In the main analysis, we interpreted missing variables permissively and did not excluded anyone based on a missing variable. For example, if someone’s smoking status was unknown, we did not exclude them when excluding smokers. This choice was motivated by statistical efficiency of having a larger number of persons in each consecutive reference population. In the sensitivity analyses, we explored the effects of this value judgment, but conducting analyses with alternative assumptions. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty by assessing the effects of sequentially restricting the reference population to those with income-to-poverty ratios of equal or larger than 1, 1.5, 2, 2.5, up to 5.</p>
+<p>In the sensitivity analyses, we evaluated the results separately for males and females, those born outside of the U.S. versus those who were born in the U.S., and other groups of self-identified race and ethnicity.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth. Characteristics of participants is summarized in <a href="#tbl-table1" class="quarto-xref">Table&nbsp;1</a> .</p>
+<div class="cell">
+<div id="tbl-table1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-table1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Characteristics of Participants Included in the Study
+</figcaption>
+<div aria-describedby="tbl-table1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="Rtable1">
+<table class="Rtable1 do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Adults<br>
+<span class="stratn">(N=7533)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Youth<br>
+<span class="stratn">(N=2924)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
+<span class="stratn">(N=10457)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="rowlabel firstrow">age</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>47.4 (16.4)</td>
+<td>12.5 (3.93)</td>
+<td>37.6 (21.0)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">47.0 [20.0, 79.0]</td>
+<td class="lastrow">12.0 [6.00, 19.0]</td>
+<td class="lastrow">37.0 [6.00, 79.0]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">race_text_nhanes</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Non-Hispanic Black</td>
+<td>2420 (32.1%)</td>
+<td>1311 (44.8%)</td>
+<td>3731 (35.7%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Non-Hispanic White</td>
+<td class="lastrow">5113 (67.9%)</td>
+<td class="lastrow">1613 (55.2%)</td>
+<td class="lastrow">6726 (64.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">sex</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">1</td>
+<td>3669 (48.7%)</td>
+<td>1474 (50.4%)</td>
+<td>5143 (49.2%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">2</td>
+<td class="lastrow">3864 (51.3%)</td>
+<td class="lastrow">1450 (49.6%)</td>
+<td class="lastrow">5314 (50.8%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">smoker</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>3817 (50.7%)</td>
+<td>164 (5.6%)</td>
+<td>3981 (38.1%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">3716 (49.3%)</td>
+<td class="lastrow">2760 (94.4%)</td>
+<td class="lastrow">6476 (61.9%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">resp_dx</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>1469 (19.5%)</td>
+<td>625 (21.4%)</td>
+<td>2094 (20.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">6064 (80.5%)</td>
+<td class="lastrow">2299 (78.6%)</td>
+<td class="lastrow">8363 (80.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">resp_symptoms</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>1708 (22.7%)</td>
+<td>434 (14.8%)</td>
+<td>2142 (20.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">5825 (77.3%)</td>
+<td class="lastrow">2490 (85.2%)</td>
+<td class="lastrow">8315 (79.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">physically_active</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>5445 (72.3%)</td>
+<td>2686 (91.9%)</td>
+<td>8131 (77.8%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2088 (27.7%)</td>
+<td class="lastrow">238 (8.1%)</td>
+<td class="lastrow">2326 (22.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">occupational_exposure</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>4046 (53.7%)</td>
+<td>214 (7.3%)</td>
+<td>4260 (40.7%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">3487 (46.3%)</td>
+<td class="lastrow">2710 (92.7%)</td>
+<td class="lastrow">6197 (59.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">income_poverty_ratio</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>2.76 (1.68)</td>
+<td>2.27 (1.63)</td>
+<td>2.63 (1.68)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>2.51 [0, 5.00]</td>
+<td>1.79 [0, 5.00]</td>
+<td>2.31 [0, 5.00]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">486 (6.5%)</td>
+<td class="lastrow">168 (5.7%)</td>
+<td class="lastrow">654 (6.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">home_owner</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>4963 (65.9%)</td>
+<td>1667 (57.0%)</td>
+<td>6630 (63.4%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2570 (34.1%)</td>
+<td class="lastrow">1257 (43.0%)</td>
+<td class="lastrow">3827 (36.6%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">bmi</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>29.4 (7.06)</td>
+<td>21.8 (6.13)</td>
+<td>27.3 (7.62)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>28.3 [13.2, 84.9]</td>
+<td>20.5 [12.5, 57.1]</td>
+<td>26.3 [12.5, 84.9]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">34 (0.5%)</td>
+<td class="lastrow">23 (0.8%)</td>
+<td class="lastrow">57 (0.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">maternal_smoke</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>NA (NA)</td>
+<td>1.93 (0.942)</td>
+<td>1.93 (0.942)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>NA [NA, NA]</td>
+<td>2.00 [1.00, 9.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">7533 (100%)</td>
+<td class="lastrow">818 (28.0%)</td>
+<td class="lastrow">8351 (79.9%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">smoker_in_household</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>1.79 (0.418)</td>
+<td>1.80 (0.397)</td>
+<td>1.80 (0.413)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>2.00 [1.00, 9.00]</td>
+<td>2.00 [1.00, 2.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">23 (0.3%)</td>
+<td class="lastrow">12 (0.4%)</td>
+<td class="lastrow">35 (0.3%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">education_adults</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">1</td>
+<td>231 (3.1%)</td>
+<td>0 (0%)</td>
+<td>231 (2.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">2</td>
+<td>1047 (13.9%)</td>
+<td>0 (0%)</td>
+<td>1047 (10.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">3</td>
+<td>1869 (24.8%)</td>
+<td>0 (0%)</td>
+<td>1869 (17.9%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">4</td>
+<td>2455 (32.6%)</td>
+<td>0 (0%)</td>
+<td>2455 (23.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">5</td>
+<td>1928 (25.6%)</td>
+<td>0 (0%)</td>
+<td>1928 (18.4%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">7</td>
+<td>2 (0.0%)</td>
+<td>0 (0%)</td>
+<td>2 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">9</td>
+<td>1 (0.0%)</td>
+<td>0 (0%)</td>
+<td>1 (0.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2924 (100%)</td>
+<td class="lastrow">2924 (28.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">now_attending_school</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>NA (NA)</td>
+<td>1.34 (0.582)</td>
+<td>1.34 (0.582)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>NA [NA, NA]</td>
+<td>1.00 [1.00, 3.00]</td>
+<td>1.00 [1.00, 3.00]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">7533 (100%)</td>
+<td class="lastrow">1057 (36.1%)</td>
+<td class="lastrow">8590 (82.1%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">healthy_eater</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>5522 (73.3%)</td>
+<td>2688 (91.9%)</td>
+<td>8210 (78.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2011 (26.7%)</td>
+<td class="lastrow">236 (8.1%)</td>
+<td class="lastrow">2247 (21.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">fev1</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>3.07 (0.920)</td>
+<td>2.68 (1.04)</td>
+<td>2.96 (0.971)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">3.01 [0.476, 6.92]</td>
+<td class="lastrow">2.55 [0.816, 6.14]</td>
+<td class="lastrow">2.91 [0.476, 6.92]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">fvc</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>3.97 (1.11)</td>
+<td>3.15 (1.24)</td>
+<td>3.74 (1.20)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">3.88 [1.10, 8.08]</td>
+<td class="lastrow">3.00 [1.01, 7.21]</td>
+<td class="lastrow">3.69 [1.01, 8.08]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<!--The flow of participants is shown in @fig-flowchart.-->
+<p>From the base reference population to the most restrictive, the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in <a href="#fig-racialgap" class="quarto-xref">Figure&nbsp;1</a> . After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth .</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-racialgap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-racialgap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Changes in lung function racial gaps in successively more restrictive reference populations
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="home-ownership-bmi-and-occupation" class="level3">
+<h3 class="anchored" data-anchor-id="home-ownership-bmi-and-occupation">Home Ownership, BMI and Occupation</h3>
+<p>After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in <a href="#fig-racialgap-home-bmi-job" class="quarto-xref">Figure&nbsp;2</a>. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-racialgap-home-bmi-job" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-racialgap-home-bmi-job-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-home-bmi-job-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-home-bmi-job-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="income-to-poverty-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="income-to-poverty-ratio">Income to Poverty Ratio</h3>
+<p>After excluding participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in <a href="#fig-incomepovertyratio" class="quarto-xref">Figure&nbsp;3</a>. The proportion of racial gap in FEV<sub>1</sub> and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-incomepovertyratio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-is-healthy-anyways_files/figure-html/fig-incomepovertyratio-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Changes in lung function racial gaps based on income to poverty ratio
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function<span class="citation" data-cites="lungfun1991">(<a href="#ref-lungfun1991" role="doc-biblioref"><span>“Lung Function Testing: Selection of Reference Values and Interpretative Strategies”</span> 1991</a>)</span>. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors<span class="citation" data-cites="becklake1986">(<a href="#ref-becklake1986" role="doc-biblioref">Becklake 1986</a>)</span>. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.</p>
+<p>(Does SDoH affect FEV1 beyond race?)</p>
+<p>Our study has several major limitations. Our results reflect American surveys and cannot necessarily be generalized beyond the U.S. Our analysis was limited by the data collected and available in NHANES study and our current understanding of SDoH, which is incomplete and evolving. As such, we were unable to evaluate results for nuanced race groups, or account for several important SDoH and environmental exposures, including intergenerational effects of wealth, and deprivation, early-life exposure to pollutants, and built environment. We also had no data on gender identity, etc, etc.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-becklake1986" class="csl-entry" role="listitem">
+Becklake, Margaret R. 1986. <span>“Concepts of Normality Applied to the Measurement of Lung Function.”</span> <em>The American Journal of Medicine</em> 80 (6): 1158–64. <a href="https://doi.org/10.1016/0002-9343(86)90678-9">https://doi.org/10.1016/0002-9343(86)90678-9</a>.
+</div>
+<div id="ref-bowerman2023" class="csl-entry" role="listitem">
+Bowerman, Cole, Nirav R. Bhakta, Danny Brazzale, Brendan R. Cooper, Julie Cooper, Laura Gochicoa-Rangel, Jeffrey Haynes, et al. 2023. <span>“A Race-Neutral Approach to the Interpretation of Lung Function Measurements.”</span> <em>American Journal of Respiratory and Critical Care Medicine</em> 207 (6): 768–74. <a href="https://doi.org/10.1164/rccm.202205-0963oc">https://doi.org/10.1164/rccm.202205-0963oc</a>.
+</div>
+<div id="ref-braun2023" class="csl-entry" role="listitem">
+Braun, Lundy, and Ricky Grisson. 2023. <span>“Race, Lung Function, and the Historical Context of Prediction Equations.”</span> <em>JAMA Network Open</em> 6 (6): e2316128. <a href="https://doi.org/10.1001/jamanetworkopen.2023.16128">https://doi.org/10.1001/jamanetworkopen.2023.16128</a>.
+</div>
+<div id="ref-harik-khan2004" class="csl-entry" role="listitem">
+Harik-Khan, R. I. 2004. <span>“Racial Difference in Lung Function in African-American and White Children: Effect of Anthropometric, Socioeconomic, Nutritional, and Environmental Factors.”</span> <em>American Journal of Epidemiology</em> 160 (9): 893–900. <a href="https://doi.org/10.1093/aje/kwh297">https://doi.org/10.1093/aje/kwh297</a>.
+</div>
+<div id="ref-harik-khan2001" class="csl-entry" role="listitem">
+HARIK-KHAN, RAIDAI., JEROMEL. FLEG, DENISC. MULLER, and ROBERTA. WISE. 2001. <span>“The Effect of Anthropometric and Socioeconomic Factors on the Racial Difference in Lung Function.”</span> <em>American Journal of Respiratory and Critical Care Medicine</em> 164 (9): 1647–54. <a href="https://doi.org/10.1164/ajrccm.164.9.2106075">https://doi.org/10.1164/ajrccm.164.9.2106075</a>.
+</div>
+<div id="ref-lungfun1991" class="csl-entry" role="listitem">
+<span>“Lung Function Testing: Selection of Reference Values and Interpretative Strategies.”</span> 1991. <em>American Review of Respiratory Disease</em> 144 (5): 1202–18. <a href="https://doi.org/10.1164/ajrccm/144.5.1202">https://doi.org/10.1164/ajrccm/144.5.1202</a>.
+</div>
+<div id="ref-marciniuk2023" class="csl-entry" role="listitem">
+Marciniuk, Darcy D., Ellen A. Becker, David A. Kaminsky, Meredith C. McCormack, Sanja Stanojevic, Nirav R. Bhakta, Christian Bime, et al. 2023. <span>“Effect of Race and Ethnicity on Pulmonary Function Testing Interpretation.”</span> <em>CHEST</em> 164 (2): 461–75. <a href="https://doi.org/10.1016/j.chest.2023.03.026">https://doi.org/10.1016/j.chest.2023.03.026</a>.
+</div>
+<div id="ref-pellegrino2005" class="csl-entry" role="listitem">
+Pellegrino, R. 2005. <span>“Interpretative Strategies for Lung Function Tests.”</span> <em>European Respiratory Journal</em> 26 (5): 948–68. <a href="https://doi.org/10.1183/09031936.05.00035205">https://doi.org/10.1183/09031936.05.00035205</a>.
+</div>
+<div id="ref-quanjer2012" class="csl-entry" role="listitem">
+Quanjer, Philip H., Sanja Stanojevic, Tim J. Cole, Xaver Baur, Graham L. Hall, Bruce H. Culver, Paul L. Enright, et al. 2012. <span>“Multi-Ethnic Reference Values for Spirometry for the 3<span></span>95-Yr Age Range: The Global Lung Function 2012 Equations.”</span> <em>European Respiratory Journal</em> 40 (6): 1324–43. <a href="https://doi.org/10.1183/09031936.00080312">https://doi.org/10.1183/09031936.00080312</a>.
+</div>
+<div id="ref-townsend2022" class="csl-entry" role="listitem">
+Townsend, Mary C., and Clayton T. Cowl. 2022. <span>“U.S. Occupational Historical Perspective on Race and Lung Function.”</span> <em>American Journal of Respiratory and Critical Care Medicine</em> 206 (6): 789–90. <a href="https://doi.org/10.1164/rccm.202203-0565le">https://doi.org/10.1164/rccm.202203-0565le</a>.
+</div>
+<div id="ref-vyas2020" class="csl-entry" role="listitem">
+Vyas, Darshali A., Leo G. Eisenstein, and David S. Jones. 2020. <span>“Hidden in Plain Sight <span></span> Reconsidering the Use of Race Correction in Clinical Algorithms.”</span> Edited by Debra Malina. <em>New England Journal of Medicine</em> 383 (9): 874–82. <a href="https://doi.org/10.1056/nejmms2004740">https://doi.org/10.1056/nejmms2004740</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="appendices" class="level1">
+<h1>Appendices</h1>
+<section id="effect-of-home-ownership" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-home-ownership">Effect of Home Ownership</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 7533</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 2924</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was 0.02</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.12</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.13</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="separate-analysis-based-on-sex" class="level2">
+<h2 class="anchored" data-anchor-id="separate-analysis-based-on-sex">Separate Analysis based on Sex</h2>
+<section id="females" class="level3">
+<h3 class="anchored" data-anchor-id="females">Females</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in createCohort("adult", sex = "female"): only females are included.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 8571</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 5314</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 3864</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in createCohort("youth", sex = "female"): only females are included.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 8571</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 5314</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 1450</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.27</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.16</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.19</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label =
+scales::percent(perc, : Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label =
+scales::percent(perc, : Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="males" class="level3">
+<h3 class="anchored" data-anchor-id="males">Males</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in createCohort("adult", sex = "male"): only males are included.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 8461</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 5143</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 3669</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in createCohort("youth", sex = "male"): only males are included.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 8461</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 5143</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 1474</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.14</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.08</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.35</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.34</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label =
+scales::percent(perc, : Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label =
+scales::percent(perc, : Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="establishing-the-order-of-exclusion" class="level2">
+<h2 class="anchored" data-anchor-id="establishing-the-order-of-exclusion">Establishing the order of exclusion</h2>
+<p>First, we need to do some preprocessing to create a reference population for evaluation purposes.</p>
+<p>Now we can look at multivariate association ranking.</p>
+<p>Now let’s look at ranking univariate associations:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>All Ages
+All Ages
+All Ages
+All Ages
+All Ages
+All Ages
+All Ages
+All Ages
+All Ages</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 6
+  variable term                  estimate std.error statistic  p.value
+  &lt;chr&gt;    &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 1        occupational_exposure -0.0689    0.00656   -10.5   1.33e-25
+2 4        physically_active      0.0405    0.00675     6.00  2.07e- 9
+3 9        maternal_smoke         0.0332    0.00804     4.13  3.71e- 5
+4 2        smoker_in_household    0.0259    0.00761     3.40  6.71e- 4
+5 3        bmi                    0.0233    0.00655     3.56  3.72e- 4
+6 8        home_ownership         0.0120    0.00709     1.69  9.10e- 2
+7 6        has_insurance         -0.00609   0.00697    -0.874 3.82e- 1
+8 7        education              0.00543   0.00675     0.805 4.21e- 1
+9 5        healthy_diet           0.00482   0.00634     0.759 4.48e- 1</code></pre>
+</div>
+</div>
+</section>
+<section id="alternative-order-of-reference-values" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-order-of-reference-values">Alternative Order of Reference Values</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 7533</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 2924</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.19</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="alternate-order-2" class="level3">
+<h3 class="anchored" data-anchor-id="alternate-order-2">Alternate Order 2</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 7533</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 2924</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.19</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We tried different orders of exclusion and it seems that in adults we see a decline once we have excluded based on three factors: BMI, home ownership, and occupational exposure.</p>
+</section>
+<section id="non-cumulative-exclusion" class="level3">
+<h3 class="anchored" data-anchor-id="non-cumulative-exclusion">Non-Cumulative Exclusion</h3>
+<p>Excluding one by one, instead of nested, to see which variable matters most. It’s kind of like variable selection and we want to get the most parsimonious combination that describes the most reduction in racial gap. Must be a smarter way to do this.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 7533</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 2924</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.03</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was 0.02</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was 0.04</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was 0.04</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="differential-missingness-by-race" class="level2">
+<h2 class="anchored" data-anchor-id="differential-missingness-by-race">Differential Missingness by Race</h2>
+<p>Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.</p>
+<section id="adults" class="level3">
+<h3 class="anchored" data-anchor-id="adults">Adults</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="youth" class="level3">
+<h3 class="anchored" data-anchor-id="youth">Youth</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualizing-disparities" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-disparities">Visualizing Disparities</h2>
+<p>Let’s look at income disparities:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 39 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 53 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 31 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 60 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+# Groups:   race_text_nhanes [2]
+  race_text_nhanes   sex   total_people income_five_times_poverty proportion
+  &lt;chr&gt;              &lt;fct&gt;        &lt;int&gt;                     &lt;int&gt;      &lt;dbl&gt;
+1 Non-Hispanic Black 1              406                        74      0.182
+2 Non-Hispanic Black 2              562                        79      0.141
+3 Non-Hispanic White 1              820                       301      0.367
+4 Non-Hispanic White 2              997                       300      0.301</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 6
+# Groups:   race_text_nhanes, sex [4]
+  race_text_nhanes   sex   birth_country   total_people income_five_times_pove…¹
+  &lt;chr&gt;              &lt;fct&gt; &lt;fct&gt;                  &lt;int&gt;                    &lt;int&gt;
+1 Non-Hispanic Black 1     Other countries           84                       17
+2 Non-Hispanic Black 1     US                       322                       57
+3 Non-Hispanic Black 2     Other countries           78                       13
+4 Non-Hispanic Black 2     US                       484                       66
+5 Non-Hispanic White 1     Other countries           51                       17
+6 Non-Hispanic White 1     US                       769                      284
+7 Non-Hispanic White 2     Other countries           63                       15
+8 Non-Hispanic White 2     US                       934                      285
+# ℹ abbreviated name: ¹​income_five_times_poverty
+# ℹ 1 more variable: proportion &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Now let’s look at education in adults, and occupational exposures.</p>
+<p>More efficient code:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>adult</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+ℹ Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>and for youth:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Youth</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="intersection-of-race-and-country-of-birth" class="level2">
+<h2 class="anchored" data-anchor-id="intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</h2>
+<p>We can check results separately for Black people born within and outside of the US:</p>
+<section id="gap-between-white-people-and-us-born-black-people" class="level3">
+<h3 class="anchored" data-anchor-id="gap-between-white-people-and-us-born-black-people">Gap between White people and US-born Black people</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10178</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 7293</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10178</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 2885</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.36</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.24</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gap-between-white-people-and-non-us-born-black-people" class="level3">
+<h3 class="anchored" data-anchor-id="gap-between-white-people-and-non-us-born-black-people">Gap between White people and non-US born Black people</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 7005</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>adult-NHANES : 5353</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 7005</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>youth-NHANES : 1652</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in adults, the reduction in gap was -0.12</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in adults, the reduction in gap was -0.15</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FEV1 in youth, the reduction in gap was -0.15</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For FVC in youth, the reduction in gap was -0.28</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="adults-1" class="level3">
+<h3 class="anchored" data-anchor-id="adults-1">Adults</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="youth-1" class="level3">
+<h3 class="anchored" data-anchor-id="youth-1">Youth</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.
+`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
+using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="emotional-support" class="level2">
+<h2 class="anchored" data-anchor-id="emotional-support">Emotional Support</h2>
+<p>Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it’d be hard to evaluate the effect of emotional support on racial gap in lung function.</p>
+</section>
+<section id="lung-function-vs.-age" class="level2">
+<h2 class="anchored" data-anchor-id="lung-function-vs.-age">Lung Function vs.&nbsp;Age</h2>
+<section id="adults-2" class="level3">
+<h3 class="anchored" data-anchor-id="adults-2">Adults</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="youth-2" class="level3">
+<h3 class="anchored" data-anchor-id="youth-2">Youth</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="lung-function-vs.-height" class="level2">
+<h2 class="anchored" data-anchor-id="lung-function-vs.-height">Lung Function vs.&nbsp;Height</h2>
+<section id="adults-3" class="level3">
+<h3 class="anchored" data-anchor-id="adults-3">Adults</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="youth-3" class="level3">
+<h3 class="anchored" data-anchor-id="youth-3">Youth</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 15 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 15 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 12 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 12 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 6 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range (`stat_smooth()`).
+Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="nhanes-iii" class="level2">
+<h2 class="anchored" data-anchor-id="nhanes-iii">NHANES III</h2>
+<p>Now let’s see if the same pattern can be observed in NHANES III. The advantage here would be that we can now try to control for sitting height too, and see if it does a better job.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
