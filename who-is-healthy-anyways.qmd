@@ -34,6 +34,7 @@ author:
       - name: Respiratory Evaluation Sciences Program, Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
 date: "`r Sys.Date()`"
 bibliography: references.bib
+csl: european-respiratory-journal.csl
 execute:
   echo: false
 ---
@@ -881,6 +882,7 @@ refs_youth_male <- createCohort("youth", sex="male")
 plot_racial_gap_change_single_sex(refs_adult_male, refs_youth_male)
 ```
 
+
 ## Establishing the order of exclusion
 
 First, we need to do some preprocessing to create a reference population for evaluation purposes.
@@ -1562,7 +1564,7 @@ plot_racial_gap_change(createCohort1by1("adult"), createCohort1by1("youth"))
 
 Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.
 
-```{r}
+```{r, warning=FALSE}
 missingnessByRace <- function(df){
 df <- df %>% 
     select(mineral_dusts, organic_dusts, exhaust_fumes, other_fumes, race_text_nhanes,
@@ -1574,14 +1576,14 @@ df <- df %>%
 
 ### Adults
 
-```{r}
+```{r, warning=FALSE}
 
 lapply(refs_adult, missingnessByRace)
 ```
 
 ### Youth
 
-```{r}
+```{r, warning=FALSE}
 
 lapply(refs_youth, missingnessByRace)
 ```
@@ -1590,7 +1592,7 @@ lapply(refs_youth, missingnessByRace)
 
 Let's look at income disparities:
 
-```{r}
+```{r, warning=FALSE}
 
 # compareIncome <- function(race, sex, title) {
 #     data <- refs_adult[[1]] %>% filter(race_text_nhanes == race & sex==sex)
@@ -1655,7 +1657,7 @@ Now let's look at education in adults, and occupational exposures.
 
 More efficient code:
 
-```{r}
+```{r, warning=FALSE}
 disparityDist <- function(data, var) {
     data %>%
     group_by(race_text_nhanes, sex) %>%
@@ -1679,7 +1681,7 @@ purrr::map(adults_eval_variables, disparityDist, data = adults_eval)
 
 and for youth:
 
-```{r}
+```{r, warning=FALSE}
 
 youth_eval <- create_ref_for_eval("youth", binaryRace = FALSE)
 youth_eval_variables <- c("now_attending_school", "occupational_exposure", "smoker_in_household", 
@@ -1695,7 +1697,7 @@ We can check results separately for Black people born within and outside of the 
 
 ### Gap between White people and US-born Black people
 
-```{r}
+```{r, warning=FALSE}
 
 refs_adult_US_Black <- createCohort("adult", BlackBirthCountry="US")
 # message("Adult counts:")
@@ -1710,7 +1712,7 @@ plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
 
 ### Gap between White people and non-US born Black people
 
-```{r}
+```{r, warning=FALSE}
 refs_adult_OtherCountries_Black <- createCohort("adult", BlackBirthCountry="Other countries")
 #message("Adult counts:")
 #message(map_df(refs_adult, count))
@@ -1724,7 +1726,7 @@ plot_racial_gap_change(refs_adult_OtherCountries_Black, refs_youth_OtherCountrie
 
 ### Adults
 
-```{r}
+```{r, warning=FALSE}
 disparityDistBirthCountry <- function(data, var) {
     data %>%
     group_by(race_text_nhanes, sex, birth_country) %>%
@@ -1742,7 +1744,7 @@ purrr::map(adults_eval_variables, disparityDistBirthCountry, data = adults_eval)
 
 ### Youth
 
-```{r}
+```{r, warning=FALSE}
 purrr::map(youth_eval_variables, disparityDistBirthCountry, data = youth_eval)
 
 ```
@@ -1751,11 +1753,12 @@ purrr::map(youth_eval_variables, disparityDistBirthCountry, data = youth_eval)
 
 Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it'd be hard to evaluate the effect of emotional support on racial gap in lung function.
 
+<!--
 ## Lung Function vs. Age
 
 ### Adults
 
-```{r}
+```{r, warning=FALSE}
 
 fev1_age_race <- function(df) {
   ggplot(df, aes(y=fev1, x=age, col=race_text_nhanes)) +
@@ -1779,7 +1782,7 @@ lapply(refs_adult, fev1_age_race)
 
 ### Youth
 
-```{r}
+```{r, warning=FALSE}
 
 lapply(refs_youth, fev1_age_race)
 
@@ -1789,7 +1792,7 @@ lapply(refs_youth, fev1_age_race)
 
 ### Adults
 
-```{r}
+```{r, warning=FALSE}
 
 lapply(refs_adult, fev1_height_race)
 
@@ -1797,12 +1800,9 @@ lapply(refs_adult, fev1_height_race)
 
 ### Youth
 
-```{r}
+```{r, warning=FALSE}
 
 lapply(refs_youth, fev1_height_race)
 
 ```
-
-## NHANES III
-
-Now let's see if the same pattern can be observed in NHANES III. The advantage here would be that we can now try to control for sitting height too, and see if it does a better job.
+--> 
