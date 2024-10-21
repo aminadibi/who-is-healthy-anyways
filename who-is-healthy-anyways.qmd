@@ -39,7 +39,7 @@ execute:
   echo: false
 ---
 
-# Abstract
+## Abstract
 
 **RATIONALE:** Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. We hypothesized that measurable disparities will help explain racial gaps in lung function.
 
@@ -691,9 +691,9 @@ Our study has several major limitations. Our results reflect American surveys an
 ::: {#refs}
 :::
 
-# Appendices
+## Appendices
 
-## Effect of Home Ownership
+### Effect of Home Ownership
 
 ```{r}
 
@@ -703,13 +703,13 @@ refs_youth_homeOwnershipOnly <- createCohort("youth", homeOwnershipOnly=TRUE)
 plot_racial_gap_change(refs_adult_homeOwnershipOnly, refs_youth_homeOwnershipOnly)
 ```
 
-## Separate Analysis based on Sex
+### Separate Analysis based on Sex
 
-### Females
+#### Females
 
 ```{r}
-
-
+#| label: fig-females
+#| fig-cap: Changes in lung function racial gaps for female participants
 race_estimate_fev1_single_sex <- function(df) {
   lm_fit <- lm(fev1 ~ age + height + race, data=df, weights=MEC6YR)
   res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
@@ -871,10 +871,11 @@ refs_youth_female <- createCohort("youth", sex="female")
 plot_racial_gap_change_single_sex(refs_adult_female, refs_youth_female)
 ```
 
-### Males
+#### Males
 
 ```{r}
-
+#| label: fig-males
+#| fig-cap: Changes in lung function racial gaps for male participants
 refs_adult_male <- createCohort("adult", sex="male")
 refs_youth_male <- createCohort("youth", sex="male")
 
@@ -883,7 +884,7 @@ plot_racial_gap_change_single_sex(refs_adult_male, refs_youth_male)
 ```
 
 
-## Establishing the order of exclusion
+### Establishing the order of exclusion
 
 First, we need to do some preprocessing to create a reference population for evaluation purposes.
 
@@ -1123,7 +1124,7 @@ map_dfr(all_ages_vars,
 
 ```
 
-## Alternative Order of Reference Values
+### Alternative Order of Reference Values
 
 ```{r}
 createCohortAlt <- function (ageGroup,sex='all') {
@@ -1269,7 +1270,7 @@ plot_racial_gap_change(createCohortAlt("adult"), createCohortAlt("youth"))
 
 ```
 
-### Alternate Order 2
+#### Alternate Order 2
 
 ```{r}
 createCohortAlt2 <- function (ageGroup,sex='all') {
@@ -1560,7 +1561,7 @@ return(refs)
 plot_racial_gap_change(createCohort1by1("adult"), createCohort1by1("youth"))
 ```
 
-## Differential Missingness by Race
+### Differential Missingness by Race
 
 Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.
 
@@ -1574,21 +1575,21 @@ df <- df %>%
 
 ```
 
-### Adults
+#### Adults
 
 ```{r, warning=FALSE}
 
 lapply(refs_adult, missingnessByRace)
 ```
 
-### Youth
+#### Youth
 
 ```{r, warning=FALSE}
 
 lapply(refs_youth, missingnessByRace)
 ```
 
-## Visualizing Disparities
+### Visualizing Disparities
 
 Let's look at income disparities:
 
@@ -1691,11 +1692,11 @@ purrr::map(youth_eval_variables, disparityDist, data = youth_eval)
 
 ```
 
-## Intersection of Race and Country of Birth
+### Intersection of Race and Country of Birth
 
 We can check results separately for Black people born within and outside of the US:
 
-### Gap between White people and US-born Black people
+#### Gap between White people and US-born Black people
 
 ```{r, warning=FALSE}
 
@@ -1710,7 +1711,7 @@ refs_youth_US_Black <- createCohort("youth", BlackBirthCountry="US")
 plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
 ```
 
-### Gap between White people and non-US born Black people
+#### Gap between White people and non-US born Black people
 
 ```{r, warning=FALSE}
 refs_adult_OtherCountries_Black <- createCohort("adult", BlackBirthCountry="Other countries")
@@ -1724,7 +1725,7 @@ refs_youth_OtherCountries_Black <- createCohort("youth", BlackBirthCountry="Othe
 plot_racial_gap_change(refs_adult_OtherCountries_Black, refs_youth_OtherCountries_Black)
 ```
 
-### Adults
+#### Adults
 
 ```{r, warning=FALSE}
 disparityDistBirthCountry <- function(data, var) {
@@ -1742,14 +1743,14 @@ purrr::map(adults_eval_variables, disparityDistBirthCountry, data = adults_eval)
 
 ```
 
-### Youth
+#### Youth
 
 ```{r, warning=FALSE}
 purrr::map(youth_eval_variables, disparityDistBirthCountry, data = youth_eval)
 
 ```
 
-## Emotional Support
+### Emotional Support
 
 Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it'd be hard to evaluate the effect of emotional support on racial gap in lung function.
 
