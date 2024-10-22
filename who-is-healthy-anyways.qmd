@@ -556,6 +556,8 @@ plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
 
+### Biological Sex
+
 We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 27% and 20% in adults, and 16% and 19% in youth, as shown in @fig-females. In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 14% and 8% in adults, and 35% and 34% in youth, as shown in @fig-males.
 
 
@@ -724,7 +726,6 @@ plot_racial_gap_change_single_sex(refs_adult_female, refs_youth_female)
 ```
 
 
-
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-males
 #| fig-cap: Changes in lung function racial gaps for male participants
@@ -854,16 +855,18 @@ plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePover
 
 
 ```
+In the supplementary material, we also explored the intersection of self-identified race and country of origin. 
 
 ## Discussion
 
 The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
 
-(Does SDoH affect FEV1 beyond race?)
+[Does SDoH affect FEV1 beyond race?]
 
 Our study has several major limitations. Our results reflect American surveys and cannot necessarily be generalized beyond the U.S. Our analysis was limited by the data collected and available in NHANES study and our current understanding of SDoH, which is incomplete and evolving. As such, we were unable to evaluate results for nuanced race groups, or account for several important SDoH and environmental exposures, including intergenerational effects of wealth, and deprivation, early-life exposure to pollutants, and built environment. We also had no data on gender identity, etc, etc.
 
 ## Conclusions
+Our study shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES.
 
 ## References
 
