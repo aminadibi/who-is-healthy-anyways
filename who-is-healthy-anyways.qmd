@@ -538,7 +538,7 @@ predPlot <- function(df) {
 
 ```
 
-From the base reference population to the most restrictive, the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap . After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth .
+From the base reference population to the most restrictive, the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap
@@ -556,158 +556,10 @@ plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
 
-### Home Ownership, BMI and Occupation
+We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 27% and 20% in adults, and 16% and 19% in youth, as shown in @fig-females. In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 14% and 8% in adults, and 35% and 34% in youth, as shown in @fig-males.
 
-After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.
 
 ```{r, warning=FALSE, message=FALSE}
-#| label: fig-racialgap-home-bmi-job
-#| fig-cap: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
-createCohort3Factor <- function (ageGroup,sex='all') {
-  if (!(ageGroup %in% c("adult", "youth"))) 
-    stop("Invalid age group")
-  if (!(sex %in% c("all", "male", "female"))) 
-    stop("Invalid sex")
-  
-
-  nhanes <- readRDS("nhanes_2007_2012.rds") 
-  
-  stopifnot((nhanes %>% count()) == 30442) # Ensure we have the correct n
-  stopifnot((nhanes %>% filter(race %in% c(3,4)) %>% count()) == 18359) 
-  stopifnot((nhanes %>% drop_na(fev1_pre, fvc_pre)  %>% count()) == 20050) 
-  
-  if (sex=='female') {
-    warning('only females are included.')
-    nhanes <- nhanes %>% filter(sex==2)
-  }
-  
-  if (sex=='male') {
-    warning('only males are included.')
-    nhanes <- nhanes %>% filter(sex==1)
-  }
-
-  nhanes <- nhanes %>%
-    mutate(fev1 = fev1_pre/1000,
-           fvc  = fvc_pre/1000) %>%
-    drop_na(fev1, fvc) %>%
-    filter(spiro_status_pre == 1) %>%
-    filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") 
-  
-  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
-                 (nhanes %>% count())))
-  
-  nhanes_bw <- nhanes %>%
-        filter(race %in% c(3,4))
-
-  message(paste0("NHANES Black and White N (excluding missing or low quality spiro: ", 
-                 (nhanes_bw %>% count())))
-  
-if (ageGroup=="adult") {
-nhanes_bw <- nhanes_bw %>%
-  filter(age>=20)
-
-  message(paste0(ageGroup, "-NHANES : ", 
-                 (nhanes_bw %>% count())))
-}
-  
-if (ageGroup=="youth") {
-nhanes_bw <- nhanes_bw %>%
-  filter(age<20)
-
-  message(paste0(ageGroup, "-NHANES : ", 
-                 (nhanes_bw %>% count())))
-}
-
-ref0 <- nhanes_bw
-
-ref0 %>%
-  group_by(race) %>%
-  count()
-
-ref1 <- ref0 %>%
-  filter ((is.na(current_smoke) | (current_smoke == "3")) &
-         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
-         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
-         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
-         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
-         (is.na(ever_asthma) | (ever_asthma !="1")) &
-         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
-         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
-         (is.na(cough_3_month) | (cough_3_month!=1)) & 
-         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
-         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
-         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
-  mutate(ref="reference")
-
-
-ref2 <- ref1 %>%
-      filter((is.na(bmi) | (bmi<=30))) %>%
-      filter(is.na(home_ownership) | (home_ownership==1)) %>%
-    filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
-         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
-         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
-         (is.na(other_fumes)     | (other_fumes!=1))) %>%
-      filter((is.na(bmi) | (bmi<=30))) %>%
-  mutate(ref="home-job-bmi") 
-
-
-refs <- list(ref1, ref2)
-
-return(refs)
-}
-
-plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
-```
-
-### Income to Poverty Ratio
-
-After excluding participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @fig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
-
-```{r, warning=FALSE, message=FALSE}
-#| label: fig-incomepovertyratio
-#| fig-cap: Changes in lung function racial gaps based on income to poverty ratio
-
-refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
-refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnly=TRUE)
-
-plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
-
-
-```
-
-## Discussion
-
-The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
-
-(Does SDoH affect FEV1 beyond race?)
-
-Our study has several major limitations. Our results reflect American surveys and cannot necessarily be generalized beyond the U.S. Our analysis was limited by the data collected and available in NHANES study and our current understanding of SDoH, which is incomplete and evolving. As such, we were unable to evaluate results for nuanced race groups, or account for several important SDoH and environmental exposures, including intergenerational effects of wealth, and deprivation, early-life exposure to pollutants, and built environment. We also had no data on gender identity, etc, etc.
-
-## Conclusions
-
-## References
-
-::: {#refs}
-:::
-
-## Appendices
-
-### Effect of Home Ownership
-
-```{r}
-
-refs_adult_homeOwnershipOnly <- createCohort("adult", homeOwnershipOnly=TRUE)
-refs_youth_homeOwnershipOnly <- createCohort("youth", homeOwnershipOnly=TRUE)
-
-plot_racial_gap_change(refs_adult_homeOwnershipOnly, refs_youth_homeOwnershipOnly)
-```
-
-### Separate Analysis based on Sex
-
-#### Females
-
-```{r}
 #| label: fig-females
 #| fig-cap: Changes in lung function racial gaps for female participants
 race_estimate_fev1_single_sex <- function(df) {
@@ -871,9 +723,9 @@ refs_youth_female <- createCohort("youth", sex="female")
 plot_racial_gap_change_single_sex(refs_adult_female, refs_youth_female)
 ```
 
-#### Males
 
-```{r}
+
+```{r, warning=FALSE, message=FALSE}
 #| label: fig-males
 #| fig-cap: Changes in lung function racial gaps for male participants
 refs_adult_male <- createCohort("adult", sex="male")
@@ -882,6 +734,154 @@ refs_youth_male <- createCohort("youth", sex="male")
 
 plot_racial_gap_change_single_sex(refs_adult_male, refs_youth_male)
 ```
+
+### Home Ownership, BMI, and Occupation
+
+After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.
+
+```{r, warning=FALSE, message=FALSE}
+#| label: fig-racialgap-home-bmi-job
+#| fig-cap: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
+createCohort3Factor <- function (ageGroup,sex='all') {
+  if (!(ageGroup %in% c("adult", "youth"))) 
+    stop("Invalid age group")
+  if (!(sex %in% c("all", "male", "female"))) 
+    stop("Invalid sex")
+  
+
+  nhanes <- readRDS("nhanes_2007_2012.rds") 
+  
+  stopifnot((nhanes %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot((nhanes %>% filter(race %in% c(3,4)) %>% count()) == 18359) 
+  stopifnot((nhanes %>% drop_na(fev1_pre, fvc_pre)  %>% count()) == 20050) 
+  
+  if (sex=='female') {
+    warning('only females are included.')
+    nhanes <- nhanes %>% filter(sex==2)
+  }
+  
+  if (sex=='male') {
+    warning('only males are included.')
+    nhanes <- nhanes %>% filter(sex==1)
+  }
+
+  nhanes <- nhanes %>%
+    mutate(fev1 = fev1_pre/1000,
+           fvc  = fvc_pre/1000) %>%
+    drop_na(fev1, fvc) %>%
+    filter(spiro_status_pre == 1) %>%
+    filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") 
+  
+  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+                 (nhanes %>% count())))
+  
+  nhanes_bw <- nhanes %>%
+        filter(race %in% c(3,4))
+
+  message(paste0("NHANES Black and White N (excluding missing or low quality spiro: ", 
+                 (nhanes_bw %>% count())))
+  
+if (ageGroup=="adult") {
+nhanes_bw <- nhanes_bw %>%
+  filter(age>=20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw %>% count())))
+}
+  
+if (ageGroup=="youth") {
+nhanes_bw <- nhanes_bw %>%
+  filter(age<20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw %>% count())))
+}
+
+ref0 <- nhanes_bw
+
+ref0 %>%
+  group_by(race) %>%
+  count()
+
+ref1 <- ref0 %>%
+  filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(ref="reference")
+
+
+ref2 <- ref1 %>%
+      filter((is.na(bmi) | (bmi<=30))) %>%
+      filter(is.na(home_ownership) | (home_ownership==1)) %>%
+    filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+      filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="home-job-bmi") 
+
+
+refs <- list(ref1, ref2)
+
+return(refs)
+}
+
+plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
+```
+
+### Income to Poverty Ratio
+
+When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @fig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
+
+```{r, warning=FALSE, message=FALSE}
+#| label: fig-incomepovertyratio
+#| fig-cap: Changes in lung function racial gaps based on income to poverty ratio
+
+refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
+refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
+
+
+```
+
+## Discussion
+
+The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
+
+(Does SDoH affect FEV1 beyond race?)
+
+Our study has several major limitations. Our results reflect American surveys and cannot necessarily be generalized beyond the U.S. Our analysis was limited by the data collected and available in NHANES study and our current understanding of SDoH, which is incomplete and evolving. As such, we were unable to evaluate results for nuanced race groups, or account for several important SDoH and environmental exposures, including intergenerational effects of wealth, and deprivation, early-life exposure to pollutants, and built environment. We also had no data on gender identity, etc, etc.
+
+## Conclusions
+
+## References
+
+::: {#refs}
+:::
+
+## Appendices
+
+### Effect of Home Ownership
+
+```{r}
+
+refs_adult_homeOwnershipOnly <- createCohort("adult", homeOwnershipOnly=TRUE)
+refs_youth_homeOwnershipOnly <- createCohort("youth", homeOwnershipOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_homeOwnershipOnly, refs_youth_homeOwnershipOnly)
+```
+
 
 
 ### Establishing the order of exclusion
