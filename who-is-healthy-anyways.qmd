@@ -577,40 +577,52 @@ race_estimate_fvc_single_sex <- function(df) {
 }
 
 plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
-
+  
+  sequence_adult <- lapply(refs_adult, function(x) unique(x$ref))
+  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
+  names(sequence_adult_df) <- 'ref'
+  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
+  
+  sequence_youth <- lapply(refs_youth, function(x) unique(x$ref))
+  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
+  names(sequence_youth_df) <- 'ref'
+  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
+  
+  
+  
   race_coeffs_fev1_adult <- map_df(refs_adult, race_estimate_fev1_single_sex) %>% 
-    mutate(sequence=factor(1:10),
+    mutate(sequence=sequence_adult_df$ref,
            Measure = "FEV1") 
   
   race_coeffs_fev1_youth <- map_df(refs_youth, race_estimate_fev1_single_sex) %>% 
-    mutate(sequence=factor(1:10),
+    mutate(sequence=sequence_youth_df$ref,
            Measure = "FEV1") 
   
   race_coeffs_fvc_adult <- map_df(refs_adult, race_estimate_fvc_single_sex) %>% 
-    mutate(sequence=factor(1:10),
+    mutate(sequence=sequence_adult_df$ref,
            Measure = "FVC")
   
   race_coeffs_fvc_youth <- map_df(refs_youth, race_estimate_fvc_single_sex) %>% 
-    mutate(sequence=factor(1:10),
+    mutate(sequence=sequence_youth_df$ref,
            Measure = "FVC")
   
   race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
   race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
   
-    # report Gap Reduction
-
+  # report Gap Reduction
+  
   message(paste0("For FEV1 in adults, the reduction in gap was ", 
                  compute_gap_reduction(race_coeffs_adult, "FEV1")))
-
+  
   message(paste0("For FVC in adults, the reduction in gap was ", 
                  compute_gap_reduction(race_coeffs_adult, "FVC")))
- 
+  
   message(paste0("For FEV1 in youth, the reduction in gap was ", 
                  compute_gap_reduction(race_coeffs_youth, "FEV1")))
   
   message(paste0("For FVC in youth, the reduction in gap was ", 
-                  compute_gap_reduction(race_coeffs_youth, "FVC")))
-                 
+                 compute_gap_reduction(race_coeffs_youth, "FVC")))
+  
   racial_gap_adult <- ggplot(race_coeffs_adult, aes(y=-estimate, x=sequence, colour=Measure)) + 
     # geom_ribbon(aes(ymin=-conf.low, ymax=-conf.high), fill="salmon", alpha=0.4) + 
     # geom_line() +
@@ -619,8 +631,10 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
     ylim(0, 1.2) + 
     labs(caption="Racial gap is the age-, sex- , and height-adjusted difference between Black and White populations.") + 
     ylab("Racial Gap (L)") +
-    xlab("Increasingly Healthy Reference Populations") +
-    theme_few() + theme(legend.position="right")
+    xlab("") +
+    theme_few() + theme(legend.position="right") + 
+    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+  
   
   
   racial_gap_youth <- ggplot(race_coeffs_youth, aes(y=-estimate, x=sequence, colour=Measure)) + 
@@ -630,20 +644,22 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
     geom_errorbar(aes(y=-estimate, x=sequence, ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
     ylim(0, 1.2) + 
     ylab("Racial Gap (L)") +
-    xlab("Increasingly Healthy Reference Populations") +
-    theme_few() + theme(legend.position="none")
+    xlab("") +
+    theme_few() + theme(legend.position="none") + 
+    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+  
   
   refs_df_adult <- rbind(
-                   refs_adult[[1]] %>% mutate(ref=1), 
-                   refs_adult[[2]] %>% mutate(ref=2),
-                   refs_adult[[3]] %>% mutate(ref=3),
-                   refs_adult[[4]] %>% mutate(ref=4),
-                   refs_adult[[5]] %>% mutate(ref=5),
-                   refs_adult[[6]] %>% mutate(ref=6),
-                   refs_adult[[7]] %>% mutate(ref=7),
-                   refs_adult[[8]] %>% mutate(ref=8),
-                   refs_adult[[9]] %>% mutate(ref=9),
-                   refs_adult[[10]] %>% mutate(ref=10))
+    refs_adult[[1]] %>% mutate(ref=1), 
+    refs_adult[[2]] %>% mutate(ref=2),
+    refs_adult[[3]] %>% mutate(ref=3),
+    refs_adult[[4]] %>% mutate(ref=4),
+    refs_adult[[5]] %>% mutate(ref=5),
+    refs_adult[[6]] %>% mutate(ref=6),
+    refs_adult[[7]] %>% mutate(ref=7),
+    refs_adult[[8]] %>% mutate(ref=8),
+    refs_adult[[9]] %>% mutate(ref=9),
+    refs_adult[[10]] %>% mutate(ref=10))
   
   refs_df_percent_adult <- refs_df_adult %>%
     mutate(ref=factor(ref)) %>%
@@ -660,16 +676,16 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
     mutate(perc=1)
   
   refs_df_youth <- rbind(
-                   refs_youth[[1]] %>% mutate(ref=1), 
-                   refs_youth[[2]] %>% mutate(ref=2),
-                   refs_youth[[3]] %>% mutate(ref=3),
-                   refs_youth[[4]] %>% mutate(ref=4),
-                   refs_youth[[5]] %>% mutate(ref=5),
-                   refs_youth[[6]] %>% mutate(ref=6),
-                   refs_youth[[7]] %>% mutate(ref=7),
-                   refs_youth[[8]] %>% mutate(ref=8),
-                   refs_youth[[9]] %>% mutate(ref=9),
-                   refs_youth[[10]] %>% mutate(ref=10))
+    refs_youth[[1]] %>% mutate(ref=1), 
+    refs_youth[[2]] %>% mutate(ref=2),
+    refs_youth[[3]] %>% mutate(ref=3),
+    refs_youth[[4]] %>% mutate(ref=4),
+    refs_youth[[5]] %>% mutate(ref=5),
+    refs_youth[[6]] %>% mutate(ref=6),
+    refs_youth[[7]] %>% mutate(ref=7),
+    refs_youth[[8]] %>% mutate(ref=8),
+    refs_youth[[9]] %>% mutate(ref=9),
+    refs_youth[[10]] %>% mutate(ref=10))
   
   refs_df_percent_youth <- refs_df_youth %>%
     mutate(ref=factor(ref)) %>%
@@ -688,34 +704,36 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
   gap_perc_black_adult <- ggplot(refs_df_percent_adult) +
     geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
     geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
-    geom_text(data=ref_df_sample_size_adult, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
+#  geom_text(data=ref_df_sample_size_adult, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
     scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
     ggtitle("Adults (≥20 yrs)") +
-    labs(x="Increasingly Healthy Reference Populations",
+    labs(x="",
          y="Percentage") +
     guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="right")
+    theme_few() + theme(legend.position="right", axis.text.x=element_blank())
   
   gap_perc_black_youth <- ggplot(refs_df_percent_youth) +
     geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "fill") +
     geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
-    geom_text(data=ref_df_sample_size_youth, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
+ #   geom_text(data=ref_df_sample_size_youth, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
     scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
     ggtitle("Youth (<20 yrs)") +
-    labs(x="Increasingly Healthy Reference Populations",
+    labs(x="",
          y="Percentage") +
     guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="none")
+    theme_few() + theme(legend.position="none", axis.text.x=element_blank())
   
   
   p <- (((gap_perc_black_youth/racial_gap_youth) + 
-      plot_layout(axes = "collect")) | 
-    ((gap_perc_black_adult/racial_gap_adult) + 
-       plot_layout(axes = "collect")) ) + 
+           plot_layout(axes = "collect")) | 
+          ((gap_perc_black_adult/racial_gap_adult) + 
+             plot_layout(axes = "collect")) ) + 
     plot_annotation(tag_levels = 'A') 
-
+  
   return(p)
 }
+
+
 
 
 refs_adult_female <- createCohort("adult", sex="female")
@@ -861,17 +879,26 @@ In the supplementary material, we also explored the intersection of self-identif
 
 The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health. 
 
-We found that social determinants of health measured in NHANES data accounts for up to 26% of racial gap in lung function. The explained proportion rose to 35% in males under 20 years of age. [Interpretation?]
+Our study underscores the significant influence of social determinants of health on lung function. Our results suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. These findings are in line with previous research that highlights the critical role of environmental, socio-economic, and lifestyle factors in shaping health outcomes 
 
-The explained proportion was also higher in Black individuals who were born in the US, with up to 36% of the racial gap in adult FEV~1~ explained by the studied social determinants of health. This points to the more significant role for the effects of racism, segregation, red-zoning, and other social determinants of health in explaining racial disparities in lung function in the US.
+The higher explained proportion of the racial gap in lung function among Black individuals born in the US (i.e., up to 36% of the racial gap in adult FEV~1~ explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities 
 
-Our exploratory analysis showed the excluding those based on home ownership, BMI, and occupational exposures explain the vast majority of explainable racial gap.
+Our analysis revealed that excluding individuals based on home ownership, BMI, and occupational exposures accounts for a significant portion of the explainable racial gap, indicating that financial stability, physical health, and work-related factors are pivotal contributors to lung function disparities. These findings suggest that interventions aimed at reducing socio-economic inequities could potentially mitigate a significant portion of racial gaps in lung function.
 
-[Does SDoH affect FEV1 beyond race?]
+Our study highlights the necessity for further research to comprehensively understand the interplay between SDoH, environmental exposures, and lung function across different populations. Future studies should aim to incorporate a wider array of SDoH, such as stress levels, access to healthcare, neighborhood safety, and intergenerational wealth effects. There is also a need for longitudinal studies that can elucidate causal pathways and the potential impact of policy changes on reducing health disparities.
 
-Our study has several major limitations. Our results reflect American surveys and cannot necessarily be generalized beyond the U.S. Our analysis was limited by the data collected and available in NHANES study and our current understanding of SDoH, which is incomplete and evolving. As such, we were unable to evaluate results for nuanced race groups, or account for several important SDoH and environmental exposures, including intergenerational effects of wealth, and deprivation, early-life exposure to pollutants, and built environment. We also had no data on gender identity, etc, etc.
+Moreover, exploring the intersectionality of race, gender identity, and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global strategies to address lung health disparities.
+
+While our study provides valuable insights, certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. The available data also limits our assessment of various SDoH and environmental exposures, such as intergenerational wealth effects and life-course exposure to pollutants. Additionally, the absence of data on gender identity prevented us from analyzing potential differential effects.
+
+<!--[Does SDoH affect FEV1 beyond race?]-->
+
+These findings have important implications for clinical practice and policy. Our results show a larger than previously known effect of complex exposures on racial gaps in lung function, and the true proportion is likely higher than our estimates. However, the racial gaps in lung function cannot yet be completely explained by disparities in complex exposures. The previous guidelines that recommended race-specific reference equations for pulmonary function testing risk assumed racial gaps in lung function were normal and reinforced inequities by perpetuating the notion of race as a biological determinant, rather than acknowledging the role of modifiable social factors. However, the new race-averaged reference equations also fail to account for our understanding of the the effect size of social and environmental exposures on lung function. 
+
+Policymakers should consider strategies to reduce exposure to harmful environmental conditions, improve access to healthcare and education, and address occupational health disparities. Implementing policies that prioritize community-level interventions to enhance air quality, housing, and economic opportunities could play a crucial role in bridging these gaps.
 
 ## Conclusions
+
 Our study shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES.
 
 ## References
