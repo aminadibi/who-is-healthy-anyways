@@ -87,13 +87,10 @@ div.csl-indent {
   <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a>
   <ul class="collapse">
   <li><a href="#table-1-by-self-identified-race" id="toc-table-1-by-self-identified-race" class="nav-link" data-scroll-target="#table-1-by-self-identified-race">Table 1 by Self-Identified Race</a></li>
-  <li><a href="#establishing-the-order-of-exclusion" id="toc-establishing-the-order-of-exclusion" class="nav-link" data-scroll-target="#establishing-the-order-of-exclusion">Establishing the order of exclusion</a></li>
-  <li><a href="#alternative-order-of-reference-values" id="toc-alternative-order-of-reference-values" class="nav-link" data-scroll-target="#alternative-order-of-reference-values">Alternative Order of Reference Values</a></li>
-  <li><a href="#non-cumulative-exclusion" id="toc-non-cumulative-exclusion" class="nav-link" data-scroll-target="#non-cumulative-exclusion">Non-Cumulative Exclusion</a></li>
   <li><a href="#intersection-of-race-and-country-of-birth" id="toc-intersection-of-race-and-country-of-birth" class="nav-link" data-scroll-target="#intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="who-is-healthy-anyways.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="who-is-healthy-anyways.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="who-is-healthy-anyways.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -1084,7 +1081,7 @@ Figure&nbsp;5: Changes in lung function racial gaps based on income to poverty r
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
 <p>The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function<span class="citation" data-cites="lungfun1991">[<a href="#ref-lungfun1991" role="doc-biblioref">10</a>]</span>. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors<span class="citation" data-cites="becklake1986">[<a href="#ref-becklake1986" role="doc-biblioref">11</a>]</span>. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.</p>
 <p>Our study underscores the significant influence of social determinants of health on lung function. Our results suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. These findings are in line with previous research that highlights the critical role of environmental, socio-economic, and lifestyle factors in shaping health outcomes</p>
-<p>The higher explained proportion of the racial gap in lung function among Black individuals born in the US (i.e., up to 36% of the racial gap in adult FEV<sub>1</sub> explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities</p>
+<p>The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV<sub>1</sub> explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities</p>
 <p>Our analysis revealed that excluding individuals based on home ownership, BMI, and occupational exposures accounts for a significant portion of the explainable racial gap, indicating that financial stability, physical health, and work-related factors are pivotal contributors to lung function disparities. These findings suggest that interventions aimed at reducing socio-economic inequities could potentially mitigate a significant portion of racial gaps in lung function.</p>
 <p>Our study highlights the necessity for further research to comprehensively understand the interplay between SDoH, environmental exposures, and lung function across different populations. Future studies should aim to incorporate a wider array of SDoH, such as stress levels, access to healthcare, neighborhood safety, and intergenerational wealth effects. There is also a need for longitudinal studies that can elucidate causal pathways and the potential impact of policy changes on reducing health disparities.</p>
 <p>Moreover, exploring the intersectionality of race, gender identity, and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global strategies to address lung health disparities.</p>
@@ -1912,224 +1909,62 @@ Figure&nbsp;5: Changes in lung function racial gaps based on income to poverty r
 </div>
 </div>
 </section>
-<section id="establishing-the-order-of-exclusion" class="level3">
-<h3 class="anchored" data-anchor-id="establishing-the-order-of-exclusion">Establishing the order of exclusion</h3>
-<p>First, we need to do some preprocessing to create a reference population for evaluation purposes.</p>
-<p>Now we can look at multivariate association ranking.</p>
-<p>Now let’s look at ranking univariate associations:</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>All Ages
-All Ages
-All Ages
-All Ages
-All Ages
-All Ages
-All Ages
-All Ages
-All Ages</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 6
-  variable term                  estimate std.error statistic  p.value
-  &lt;chr&gt;    &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 1        occupational_exposure -0.0689    0.00656   -10.5   1.33e-25
-2 4        physically_active      0.0405    0.00675     6.00  2.07e- 9
-3 9        maternal_smoke         0.0332    0.00804     4.13  3.71e- 5
-4 2        smoker_in_household    0.0259    0.00761     3.40  6.71e- 4
-5 3        bmi                    0.0233    0.00655     3.56  3.72e- 4
-6 8        home_ownership         0.0120    0.00709     1.69  9.10e- 2
-7 6        has_insurance         -0.00609   0.00697    -0.874 3.82e- 1
-8 7        education              0.00543   0.00675     0.805 4.21e- 1
-9 5        healthy_diet           0.00482   0.00634     0.759 4.48e- 1</code></pre>
-</div>
-</div>
-</section>
-<section id="alternative-order-of-reference-values" class="level3">
-<h3 class="anchored" data-anchor-id="alternative-order-of-reference-values">Alternative Order of Reference Values</h3>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>adult-NHANES : 7533</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>youth-NHANES : 2924</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in adults, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in adults, the reduction in gap was -0.19</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
-Ignoring unknown aesthetics: fill</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="alternate-order-2" class="level4">
-<h4 class="anchored" data-anchor-id="alternate-order-2">Alternate Order 2</h4>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>adult-NHANES : 7533</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>youth-NHANES : 2924</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in adults, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in adults, the reduction in gap was -0.19</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
-Ignoring unknown aesthetics: fill</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We tried different orders of exclusion and it seems that in adults we see a decline once we have excluded based on three factors: BMI, home ownership, and occupational exposure.</p>
-</section>
-</section>
-<section id="non-cumulative-exclusion" class="level3">
-<h3 class="anchored" data-anchor-id="non-cumulative-exclusion">Non-Cumulative Exclusion</h3>
-<p>Excluding one by one, instead of nested, to see which variable matters most. It’s kind of like variable selection and we want to get the most parsimonious combination that describes the most reduction in racial gap. Must be a smarter way to do this.</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>adult-NHANES : 7533</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10457</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>youth-NHANES : 2924</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in adults, the reduction in gap was -0.03</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in adults, the reduction in gap was 0.02</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in youth, the reduction in gap was 0.04</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For fvc in youth, the reduction in gap was 0.04</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
-Ignoring unknown aesthetics: fill</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
 <section id="intersection-of-race-and-country-of-birth" class="level3">
 <h3 class="anchored" data-anchor-id="intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</h3>
-<p>We can check results separately for Black people born within and outside of the US:</p>
-<section id="gap-between-white-people-and-us-born-black-people" class="level4">
-<h4 class="anchored" data-anchor-id="gap-between-white-people-and-us-born-black-people">Gap between White people and US-born Black people</h4>
+<p>We produced results separately people born within and outside of the US:</p>
+<section id="gap-between-white-and-black-people-born-in-the-us" class="level4">
+<h4 class="anchored" data-anchor-id="gap-between-white-and-black-people-born-in-the-us">Gap between White and Black people born in the US</h4>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10178</code></pre>
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 9875</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>adult-NHANES : 7293</code></pre>
+<pre><code>adult-NHANES : 7035</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 10178</code></pre>
+<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 9875</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>youth-NHANES : 2885</code></pre>
+<pre><code>youth-NHANES : 2840</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in adults, the reduction in gap was -0.36</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was -0.35</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For fvc in adults, the reduction in gap was -0.24</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was -0.23</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was -0.24</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was -0.25</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-usborn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-usborn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-is-healthy-anyways_files/figure-html/fig-usborn-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-usborn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Racial gap in lung function among those born in the US
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<!-- ## Reference Equations
+<!-- 
+
+
+### Establishing the order of exclusion
+
+First, we need to do some preprocessing to create a reference population for evaluation purposes.
+
 
 
 
@@ -2137,6 +1972,198 @@ Ignoring unknown aesthetics: fill</code></pre>
 ::: {.cell}
 
 :::
+
+
+
+
+
+Now we can look at multivariate association ranking.
+
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+
+Now let's look at ranking univariate associations:
+
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+
+### Alternative Order of Reference Values
+
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+
+#### Alternate Order 2
+
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+
+We tried different orders of exclusion and it seems that in adults we see a decline once we have excluded based on three factors: BMI, home ownership, and occupational exposure.
+
+### Non-Cumulative Exclusion
+
+Excluding one by one, instead of nested, to see which variable matters most. It's kind of like variable selection and we want to get the most parsimonious combination that describes the most reduction in racial gap. Must be a smarter way to do this.
+
+
+
+
+
+::: {.cell}
+::: {.cell-output .cell-output-stderr}
+
+```
+NHANES N (excluding missing or low quality spiro: 17032
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+NHANES Black and White N (excluding missing or low quality spiro: 10457
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+adult-NHANES : 7533
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+NHANES N (excluding missing or low quality spiro: 17032
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+NHANES Black and White N (excluding missing or low quality spiro: 10457
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+youth-NHANES : 2924
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+For fev1 in adults, the reduction in gap was -0.03
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+For fvc in adults, the reduction in gap was 0.02
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+For fev1 in youth, the reduction in gap was 0.04
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+For fvc in youth, the reduction in gap was 0.04
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
+Ignoring unknown aesthetics: fill
+```
+
+
+:::
+
+::: {.cell-output-display}
+![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-17-1.png){width=672}
+:::
+:::
+
+
+
+
+
+
+## Reference Equations
+
+
+
+
+
+::: {.cell}
+
+:::
+
 
 
 
@@ -2147,9 +2174,11 @@ Ignoring unknown aesthetics: fill</code></pre>
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2164,9 +2193,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2176,9 +2207,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2188,9 +2221,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2199,9 +2234,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2211,9 +2248,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2223,9 +2262,11 @@ Also, good to explore the relative difference in missingness. And we should prob
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2237,9 +2278,11 @@ Let's look at income disparities:
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2251,9 +2294,11 @@ More efficient code:
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2263,9 +2308,11 @@ and for youth:
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2282,9 +2329,11 @@ Social support questionnaire is only available in 2007-2008, but even in that cy
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2294,9 +2343,11 @@ Social support questionnaire is only available in 2007-2008, but even in that cy
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2308,9 +2359,11 @@ Social support questionnaire is only available in 2007-2008, but even in that cy
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 
@@ -2320,9 +2373,11 @@ Social support questionnaire is only available in 2007-2008, but even in that cy
 
 
 
+
 ::: {.cell}
 
 :::
+
 
 
 

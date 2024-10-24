@@ -5,6 +5,9 @@ format:
     toc: true
   docx:
     toc: false
+    reference-doc: custom-reference-doc.docx
+  pdf:
+    toc: false
 editor: visual
 author:
   - name: Amin Adibi
@@ -92,11 +95,11 @@ compute_gap_reduction <- function(df, measure) {
     round(2)
 }
 
-createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BlackBirthCountry='all', homeOwnershipOnly=FALSE) {
+createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
     stop("Invalid age group")
-  if (!(BlackBirthCountry %in% c("all", "US", "Other countries"))) 
-    stop("Invalid BlackBirthCountry")
+  if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
+    stop("Invalid BirthCountry")
   if (!(sex %in% c("all", "male", "female"))) 
     stop("Invalid sex")
   
@@ -128,12 +131,13 @@ createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', Bla
   message(paste0("NHANES N (excluding missing or low quality spiro: ", 
                  (nhanes %>% count())))
   
-  if (BlackBirthCountry=='all'){
+  if (BirthCountry=='all'){
       nhanes_bw <- nhanes %>%
         filter(race %in% c(3,4))
   } else  {
           nhanes_bw <- nhanes %>%
-        filter(((race==3) | ((race==4) & (birth_country==BlackBirthCountry))))
+            filter(race %in% c(3,4)) %>%
+            filter(birth_country==BirthCountry)
   } 
 
   message(paste0("NHANES Black and White N (excluding missing or low quality spiro: ", 
@@ -808,7 +812,7 @@ The effects of social determinants of health on lung function, these have been d
 
 Our study underscores the significant influence of social determinants of health on lung function. Our results suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. These findings are in line with previous research that highlights the critical role of environmental, socio-economic, and lifestyle factors in shaping health outcomes 
 
-The higher explained proportion of the racial gap in lung function among Black individuals born in the US (i.e., up to 36% of the racial gap in adult FEV~1~ explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities 
+The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV~1~ explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities 
 
 Our analysis revealed that excluding individuals based on home ownership, BMI, and occupational exposures accounts for a significant portion of the explainable racial gap, indicating that financial stability, physical health, and work-related factors are pivotal contributors to lung function disparities. These findings suggest that interventions aimed at reducing socio-economic inequities could potentially mitigate a significant portion of racial gaps in lung function.
 
@@ -852,11 +856,36 @@ Our study shows that a larger proportion of racial gaps in lung function can be 
 ```
 
 
+### Intersection of Race and Country of Birth
+
+We produced results separately people born within and outside of the US:
+
+#### Gap between White and Black people born in the US
+
+```{r, warning=FALSE}
+#| label: fig-usborn
+#| fig-cap: Racial gap in lung function among those born in the US
+refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
+# message("Adult counts:")
+# message(map_df(refs_adult, count))
+
+refs_youth_US_Black <- createCohort("youth", BirthCountry="US")
+# message("Youth counts:")
+# message(map_df(refs_youth, count))
+
+plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
+```
+
+
+
+<!-- 
+
+
 ### Establishing the order of exclusion
 
 First, we need to do some preprocessing to create a reference population for evaluation purposes.
 
-```{r}
+```{r, eval=F}
 
 create_ref_for_eval <- function(ageGroup, binaryRace=TRUE) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) stop("Invalid age group")
@@ -1027,7 +1056,7 @@ return(res)
 
 Now let's look at ranking univariate associations:
 
-```{r}
+```{r, eval=F}
 
 eval_var_importance <- function(vars_for_rec, ageGroup) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) stop("Invalid age group")
@@ -1094,7 +1123,7 @@ map_dfr(all_ages_vars,
 
 ### Alternative Order of Reference Values
 
-```{r}
+```{r, , eval=F}
 createCohortAlt <- function (ageGroup,sex='all') {
   if (!(ageGroup %in% c("adult", "youth"))) 
     stop("Invalid age group")
@@ -1240,7 +1269,7 @@ plot_racial_gap_change(createCohortAlt("adult"), createCohortAlt("youth"))
 
 #### Alternate Order 2
 
-```{r}
+```{r, eval=F}
 createCohortAlt2 <- function (ageGroup,sex='all') {
   if (!(ageGroup %in% c("adult", "youth"))) 
     stop("Invalid age group")
@@ -1529,28 +1558,8 @@ return(refs)
 plot_racial_gap_change(createCohort1by1("adult"), createCohort1by1("youth"))
 ```
 
-### Intersection of Race and Country of Birth
 
-We can check results separately for Black people born within and outside of the US:
-
-#### Gap between White people and US-born Black people
-
-```{r, warning=FALSE}
-
-refs_adult_US_Black <- createCohort("adult", BlackBirthCountry="US")
-# message("Adult counts:")
-# message(map_df(refs_adult, count))
-
-refs_youth_US_Black <- createCohort("youth", BlackBirthCountry="US")
-# message("Youth counts:")
-# message(map_df(refs_youth, count))
-
-plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
-```
-
-
-
-<!-- ## Reference Equations
+## Reference Equations
 
 ```{r, warning=FALSE, message=FALSE, eval=F}
 #| label: fig-refeq1
@@ -1605,11 +1614,11 @@ lapply(refs_youth, missingnessByRace)
 #### Gap between White people and non-US born Black people
 
 ```{r, warning=FALSE, eval=F}
-refs_adult_OtherCountries_Black <- createCohort("adult", BlackBirthCountry="Other countries")
+refs_adult_OtherCountries_Black <- createCohort("adult", BirthCountry="Other countries")
 #message("Adult counts:")
 #message(map_df(refs_adult, count))
 
-refs_youth_OtherCountries_Black <- createCohort("youth", BlackBirthCountry="Other countries")
+refs_youth_OtherCountries_Black <- createCohort("youth", BirthCountry="Other countries")
 #message("Youth counts:")
 #message(map_df(refs_youth, count))
 
