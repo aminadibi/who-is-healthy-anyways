@@ -343,7 +343,55 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
           sex_text   = case_match(sex,
                                      "1" ~ "Male"  ,
                                      "2" ~ "Female" ),
-         smoker =  
+          cough_3_month = case_match(cough_3_month,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+          phlegm_3_month = case_match(phlegm_3_month,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+          wheezing_past_yr = case_match(wheezing_past_yr,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+          dry_cough_night_past_yr = case_match(dry_cough_night_past_yr,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+          ever_asthma = case_match(ever_asthma,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+          ever_bronchitis = case_match(ever_bronchitis,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+          ever_emphysema = case_match(ever_emphysema,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+          ever_100_smoke = case_match(ever_100_smoke,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+          current_smoke = case_match(current_smoke,
+                                     "1" ~ "Everyday"  ,
+                                     "2" ~ "Some days",
+                                     "3" ~ "Not at all"),
+          education_adults = case_match(education_adults,
+                                     "1" ~ "Less than 9th grade"  ,
+                                     "2" ~ "9-11th grade",
+                                     "3" ~ "High school graduate",
+                                     "4" ~ "Some college or AA degree",
+                                     "5" ~ "College graduate or above"),
+          now_attending_school = case_match(now_attending_school,
+                                          1 ~ "In School",
+                                          2 ~ "Between grades",
+                                          2 ~ "Not in school"),
+          smoker_in_household = case_match(smoker_in_household,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          maternal_smoke = case_match(maternal_smoke,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          home_ownership = case_match(home_ownership,
+                                          1 ~ "Owned or being bought",
+                                          2 ~ "Rented",
+                                          3 ~ "Other arrangements"),
+          smoker=
        !((is.na(current_smoke) | (current_smoke == "3")) &
          (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
          (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
@@ -372,10 +420,14 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
          )
  
  table1(~ age + race_text_nhanes + sex_text + 
-          smoker + resp_dx + resp_symptoms + physically_active + occupational_exposure+ 
+           fev1 + fvc +
+          ever_100_smoke + current_smoke + smoker + smoker_in_household + 
+          ever_asthma + ever_bronchitis + ever_emphysema + 
+          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
+          physically_active + occupational_exposure+ 
           income_poverty_ratio + home_owner + bmi + maternal_smoke +
-          smoker_in_household + education_adults + now_attending_school + 
-          healthy_eater + fev1 + fvc
+          education_adults + now_attending_school + 
+          healthy_eater
           | age_group, table1)
  
 ```
