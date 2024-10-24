@@ -620,7 +620,7 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
     labs(caption="Racial gap is the age-, sex- , and height-adjusted difference between Black and White populations.") + 
     ylab("Racial Gap (L)") +
     xlab("Increasingly Healthy Reference Populations") +
-    theme_few() + theme(legend.position="bottom")
+    theme_few() + theme(legend.position="right")
   
   
   racial_gap_youth <- ggplot(race_coeffs_youth, aes(y=-estimate, x=sequence, colour=Measure)) + 
@@ -694,7 +694,7 @@ plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
     labs(x="Increasingly Healthy Reference Populations",
          y="Percentage") +
     guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="bottom")
+    theme_few() + theme(legend.position="right")
   
   gap_perc_black_youth <- ggplot(refs_df_percent_youth) +
     geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "fill") +
@@ -859,7 +859,13 @@ In the supplementary material, we also explored the intersection of self-identif
 
 ## Discussion
 
-The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
+The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health. 
+
+We found that social determinants of health measured in NHANES data accounts for up to 26% of racial gap in lung function. The explained proportion rose to 35% in males under 20 years of age. [Interpretation?]
+
+The explained proportion was also higher in Black individuals who were born in the US, with up to 36% of the racial gap in adult FEV~1~ explained by the studied social determinants of health. This points to the more significant role for the effects of racism, segregation, red-zoning, and other social determinants of health in explaining racial disparities in lung function in the US.
+
+Our exploratory analysis showed the excluding those based on home ownership, BMI, occupational exposure explain the vast majority of explainable racial gap.
 
 [Does SDoH affect FEV1 beyond race?]
 
