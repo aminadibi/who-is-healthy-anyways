@@ -77,7 +77,6 @@ div.csl-indent {
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
   <ul class="collapse">
-  <li><a href="#reference-equations" id="toc-reference-equations" class="nav-link" data-scroll-target="#reference-equations">Reference Equations</a></li>
   <li><a href="#biological-sex" id="toc-biological-sex" class="nav-link" data-scroll-target="#biological-sex">Biological Sex</a></li>
   <li><a href="#home-ownership-bmi-and-occupation" id="toc-home-ownership-bmi-and-occupation" class="nav-link" data-scroll-target="#home-ownership-bmi-and-occupation">Home Ownership, BMI, and Occupation</a></li>
   <li><a href="#income-to-poverty-ratio" id="toc-income-to-poverty-ratio" class="nav-link" data-scroll-target="#income-to-poverty-ratio">Income to Poverty Ratio</a></li>
@@ -91,10 +90,8 @@ div.csl-indent {
   <li><a href="#establishing-the-order-of-exclusion" id="toc-establishing-the-order-of-exclusion" class="nav-link" data-scroll-target="#establishing-the-order-of-exclusion">Establishing the order of exclusion</a></li>
   <li><a href="#alternative-order-of-reference-values" id="toc-alternative-order-of-reference-values" class="nav-link" data-scroll-target="#alternative-order-of-reference-values">Alternative Order of Reference Values</a></li>
   <li><a href="#non-cumulative-exclusion" id="toc-non-cumulative-exclusion" class="nav-link" data-scroll-target="#non-cumulative-exclusion">Non-Cumulative Exclusion</a></li>
-  <li><a href="#differential-missingness-by-race" id="toc-differential-missingness-by-race" class="nav-link" data-scroll-target="#differential-missingness-by-race">Differential Missingness by Race</a></li>
-  <li><a href="#visualizing-disparities" id="toc-visualizing-disparities" class="nav-link" data-scroll-target="#visualizing-disparities">Visualizing Disparities</a></li>
   <li><a href="#intersection-of-race-and-country-of-birth" id="toc-intersection-of-race-and-country-of-birth" class="nav-link" data-scroll-target="#intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</a></li>
-  <li><a href="#emotional-support" id="toc-emotional-support" class="nav-link" data-scroll-target="#emotional-support">Emotional Support</a></li>
+  <li><a href="#differential-missingness-by-race" id="toc-differential-missingness-by-race" class="nav-link" data-scroll-target="#differential-missingness-by-race">Differential Missingness by Race</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="who-is-healthy-anyways.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
@@ -660,9 +657,6 @@ Figure&nbsp;1: Changes in lung function racial gaps in successively more restric
 </div>
 </div>
 </div>
-<section id="reference-equations" class="level3">
-<h3 class="anchored" data-anchor-id="reference-equations">Reference Equations</h3>
-</section>
 <section id="biological-sex" class="level3">
 <h3 class="anchored" data-anchor-id="biological-sex">Biological Sex</h3>
 <p>We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 27% and 20% in adults, and 16% and 19% in youth, as shown in <a href="#fig-females" class="quarto-xref">Figure&nbsp;2</a>. In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 14% and 8% in adults, and 35% and 34% in youth, as shown in <a href="#fig-males" class="quarto-xref">Figure&nbsp;3</a>.</p>
@@ -812,16 +806,16 @@ Figure&nbsp;5: Changes in lung function racial gaps based on income to poverty r
 <pre><code>youth-NHANES : 2924</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was 0</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was 0</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was 0.02</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was 0.02</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was -0.12</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was -0.12</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was -0.13</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was -0.13</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
@@ -891,16 +885,16 @@ All Ages</code></pre>
 <pre><code>youth-NHANES : 2924</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was -0.19</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was -0.19</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
@@ -936,16 +930,16 @@ Ignoring unknown aesthetics: fill</code></pre>
 <pre><code>youth-NHANES : 2924</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was -0.19</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was -0.19</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
@@ -985,16 +979,16 @@ Ignoring unknown aesthetics: fill</code></pre>
 <pre><code>youth-NHANES : 2924</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was -0.03</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was -0.03</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was 0.02</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was 0.02</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was 0.04</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was 0.04</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was 0.04</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was 0.04</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
@@ -1004,501 +998,6 @@ Ignoring unknown aesthetics: fill</code></pre>
 <div>
 <figure class="figure">
 <p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="differential-missingness-by-race" class="level3">
-<h3 class="anchored" data-anchor-id="differential-missingness-by-race">Differential Missingness by Race</h3>
-<p>Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.</p>
-<section id="adults" class="level4">
-<h4 class="anchored" data-anchor-id="adults">Adults</h4>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[8]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-8.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[9]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-9.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[10]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-18-10.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="youth" class="level4">
-<h4 class="anchored" data-anchor-id="youth">Youth</h4>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[8]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-8.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[9]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-9.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[10]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-19-10.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="visualizing-disparities" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-disparities">Visualizing Disparities</h3>
-<p>Let’s look at income disparities:</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
-# Groups:   race_text_nhanes [2]
-  race_text_nhanes   sex   total_people income_five_times_poverty proportion
-  &lt;chr&gt;              &lt;fct&gt;        &lt;int&gt;                     &lt;int&gt;      &lt;dbl&gt;
-1 Non-Hispanic Black 1              406                        74      0.182
-2 Non-Hispanic Black 2              562                        79      0.141
-3 Non-Hispanic White 1              820                       301      0.367
-4 Non-Hispanic White 2              997                       300      0.301</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 6
-# Groups:   race_text_nhanes, sex [4]
-  race_text_nhanes   sex   birth_country   total_people income_five_times_pove…¹
-  &lt;chr&gt;              &lt;fct&gt; &lt;fct&gt;                  &lt;int&gt;                    &lt;int&gt;
-1 Non-Hispanic Black 1     Other countries           84                       17
-2 Non-Hispanic Black 1     US                       322                       57
-3 Non-Hispanic Black 2     Other countries           78                       13
-4 Non-Hispanic Black 2     US                       484                       66
-5 Non-Hispanic White 1     Other countries           51                       17
-6 Non-Hispanic White 1     US                       769                      284
-7 Non-Hispanic White 2     Other countries           63                       15
-8 Non-Hispanic White 2     US                       934                      285
-# ℹ abbreviated name: ¹​income_five_times_poverty
-# ℹ 1 more variable: proportion &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<p>Now let’s look at education in adults, and occupational exposures.</p>
-<p>More efficient code:</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>adult</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>and for youth:</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Youth</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes'. You can override using
-the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[8]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-8.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1529,280 +1028,578 @@ the `.groups` argument.</code></pre>
 <pre><code>youth-NHANES : 2885</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was -0.36</code></pre>
+<pre><code>For fev1 in adults, the reduction in gap was -0.36</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was -0.24</code></pre>
+<pre><code>For fvc in adults, the reduction in gap was -0.24</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fev1 in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was -0.26</code></pre>
+<pre><code>For fvc in youth, the reduction in gap was -0.26</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="gap-between-white-people-and-non-us-born-black-people" class="level4">
-<h4 class="anchored" data-anchor-id="gap-between-white-people-and-non-us-born-black-people">Gap between White people and non-US born Black people</h4>
+</section>
+<section id="differential-missingness-by-race" class="level3">
+<h3 class="anchored" data-anchor-id="differential-missingness-by-race">Differential Missingness by Race</h3>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 7005</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>adult-NHANES : 5353</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES N (excluding missing or low quality spiro: 17032</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NHANES Black and White N (excluding missing or low quality spiro: 7005</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>youth-NHANES : 1652</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in adults, the reduction in gap was -0.12</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For FVC in adults, the reduction in gap was -0.15</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For FEV1 in youth, the reduction in gap was -0.15</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For FVC in youth, the reduction in gap was -0.28</code></pre>
-</div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="Rtable1">
+<table class="Rtable1 caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic Black<br>
+<span class="stratn">(N=3731)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic White<br>
+<span class="stratn">(N=6726)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
+<span class="stratn">(N=10457)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="rowlabel firstrow">age</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>34.6 (21.0)</td>
+<td>39.3 (20.9)</td>
+<td>37.6 (21.0)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">31.0 [6.00, 79.0]</td>
+<td class="lastrow">39.0 [6.00, 79.0]</td>
+<td class="lastrow">37.0 [6.00, 79.0]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">sex_text</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Female</td>
+<td>1917 (51.4%)</td>
+<td>3397 (50.5%)</td>
+<td>5314 (50.8%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Male</td>
+<td class="lastrow">1814 (48.6%)</td>
+<td class="lastrow">3329 (49.5%)</td>
+<td class="lastrow">5143 (49.2%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">age_group</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Adults</td>
+<td>2420 (64.9%)</td>
+<td>5113 (76.0%)</td>
+<td>7533 (72.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Youth</td>
+<td class="lastrow">1311 (35.1%)</td>
+<td class="lastrow">1613 (24.0%)</td>
+<td class="lastrow">2924 (28.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">smoker</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>1154 (30.9%)</td>
+<td>2827 (42.0%)</td>
+<td>3981 (38.1%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2577 (69.1%)</td>
+<td class="lastrow">3899 (58.0%)</td>
+<td class="lastrow">6476 (61.9%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">resp_dx</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>769 (20.6%)</td>
+<td>1325 (19.7%)</td>
+<td>2094 (20.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2962 (79.4%)</td>
+<td class="lastrow">5401 (80.3%)</td>
+<td class="lastrow">8363 (80.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">resp_symptoms</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>708 (19.0%)</td>
+<td>1434 (21.3%)</td>
+<td>2142 (20.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">3023 (81.0%)</td>
+<td class="lastrow">5292 (78.7%)</td>
+<td class="lastrow">8315 (79.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">physically_active</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>2735 (73.3%)</td>
+<td>5396 (80.2%)</td>
+<td>8131 (77.8%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">996 (26.7%)</td>
+<td class="lastrow">1330 (19.8%)</td>
+<td class="lastrow">2326 (22.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">occupational_exposure</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Yes</td>
+<td>1295 (34.7%)</td>
+<td>2965 (44.1%)</td>
+<td>4260 (40.7%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">2436 (65.3%)</td>
+<td class="lastrow">3761 (55.9%)</td>
+<td class="lastrow">6197 (59.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">income_poverty_ratio</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>2.22 (1.58)</td>
+<td>2.84 (1.69)</td>
+<td>2.63 (1.68)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>1.79 [0, 5.00]</td>
+<td>2.72 [0, 5.00]</td>
+<td>2.31 [0, 5.00]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">327 (8.8%)</td>
+<td class="lastrow">327 (4.9%)</td>
+<td class="lastrow">654 (6.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">home_owner</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>1798 (48.2%)</td>
+<td>4832 (71.8%)</td>
+<td>6630 (63.4%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">1933 (51.8%)</td>
+<td class="lastrow">1894 (28.2%)</td>
+<td class="lastrow">3827 (36.6%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">bmi</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>27.8 (8.30)</td>
+<td>26.9 (7.20)</td>
+<td>27.3 (7.62)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>26.8 [12.7, 84.9]</td>
+<td>26.1 [12.5, 73.4]</td>
+<td>26.3 [12.5, 84.9]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">25 (0.7%)</td>
+<td class="lastrow">32 (0.5%)</td>
+<td class="lastrow">57 (0.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">maternal_smoke</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>2.06 (1.15)</td>
+<td>1.83 (0.722)</td>
+<td>1.93 (0.942)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>2.00 [1.00, 9.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">2800 (75.0%)</td>
+<td class="lastrow">5551 (82.5%)</td>
+<td class="lastrow">8351 (79.9%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">smoker_in_household</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>1.77 (0.418)</td>
+<td>1.81 (0.409)</td>
+<td>1.80 (0.413)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>2.00 [1.00, 2.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+<td>2.00 [1.00, 9.00]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">16 (0.4%)</td>
+<td class="lastrow">19 (0.3%)</td>
+<td class="lastrow">35 (0.3%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">education_adults</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">1</td>
+<td>77 (2.1%)</td>
+<td>154 (2.3%)</td>
+<td>231 (2.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">2</td>
+<td>438 (11.7%)</td>
+<td>609 (9.1%)</td>
+<td>1047 (10.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">3</td>
+<td>637 (17.1%)</td>
+<td>1232 (18.3%)</td>
+<td>1869 (17.9%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">4</td>
+<td>838 (22.5%)</td>
+<td>1617 (24.0%)</td>
+<td>2455 (23.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">5</td>
+<td>430 (11.5%)</td>
+<td>1498 (22.3%)</td>
+<td>1928 (18.4%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">7</td>
+<td>0 (0%)</td>
+<td>2 (0.0%)</td>
+<td>2 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">9</td>
+<td>0 (0%)</td>
+<td>1 (0.0%)</td>
+<td>1 (0.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1311 (35.1%)</td>
+<td class="lastrow">1613 (24.0%)</td>
+<td class="lastrow">2924 (28.0%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">now_attending_school</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>1.27 (0.541)</td>
+<td>1.39 (0.603)</td>
+<td>1.34 (0.582)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Median [Min, Max]</td>
+<td>1.00 [1.00, 3.00]</td>
+<td>1.00 [1.00, 3.00]</td>
+<td>1.00 [1.00, 3.00]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">2981 (79.9%)</td>
+<td class="lastrow">5609 (83.4%)</td>
+<td class="lastrow">8590 (82.1%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">healthy_eater</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>2826 (75.7%)</td>
+<td>5384 (80.0%)</td>
+<td>8210 (78.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">No</td>
+<td class="lastrow">905 (24.3%)</td>
+<td class="lastrow">1342 (20.0%)</td>
+<td class="lastrow">2247 (21.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">fev1</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>2.68 (0.879)</td>
+<td>3.11 (0.985)</td>
+<td>2.96 (0.971)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">2.64 [0.648, 6.14]</td>
+<td class="lastrow">3.09 [0.476, 6.92]</td>
+<td class="lastrow">2.91 [0.476, 6.92]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">fvc</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>3.32 (1.06)</td>
+<td>3.97 (1.21)</td>
+<td>3.74 (1.20)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">3.27 [1.01, 7.00]</td>
+<td class="lastrow">3.92 [1.03, 8.08]</td>
+<td class="lastrow">3.69 [1.01, 8.08]</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 </div>
-</section>
-<section id="adults-1" class="level4">
-<h4 class="anchored" data-anchor-id="adults-1">Adults</h4>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="youth-1" class="level4">
-<h4 class="anchored" data-anchor-id="youth-1">Youth</h4>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.
-`summarise()` has grouped output by 'race_text_nhanes', 'sex'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[2]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[3]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[4]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[5]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[6]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[7]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-7.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-[[8]]</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-8.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="emotional-support" class="level3">
-<h3 class="anchored" data-anchor-id="emotional-support">Emotional Support</h3>
-<p>Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it’d be hard to evaluate the effect of emotional support on racial gap in lung function.</p>
-<!--
+<!-- ## Reference Equations
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+
+### Differential Missingness by Race
+
+Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+#### Adults
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+#### Youth
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+#### Gap between White people and non-US born Black people
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+#### Adults
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+#### Youth
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+### Visualizing Disparities
+
+Let's look at income disparities:
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+Now let's look at education in adults, and occupational exposures.
+
+More efficient code:
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+and for youth:
+
+
+
+
+::: {.cell}
+
+:::
+
+
+
+
+### Emotional Support
+
+Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it'd be hard to evaluate the effect of emotional support on racial gap in lung function.
+
+
 ## Lung Function vs. Age
 
 ### Adults
@@ -1811,234 +1608,7 @@ using the `.groups` argument.</code></pre>
 
 
 ::: {.cell}
-::: {.cell-output .cell-output-stdout}
 
-```
-[[1]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-1.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[2]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-2.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[3]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-3.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[4]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-4.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[5]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-5.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[6]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-6.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[7]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-7.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[8]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-8.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[9]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-9.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[10]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-10.png){width=672}
-:::
 :::
 
 
@@ -2050,234 +1620,7 @@ using the `.groups` argument.</code></pre>
 
 
 ::: {.cell}
-::: {.cell-output .cell-output-stdout}
 
-```
-[[1]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-1.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[2]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-2.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[3]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-3.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[4]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-4.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[5]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-5.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[6]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-6.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[7]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-7.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[8]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-8.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[9]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-9.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[10]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-10.png){width=672}
-:::
 :::
 
 
@@ -2291,234 +1634,7 @@ using the `.groups` argument.</code></pre>
 
 
 ::: {.cell}
-::: {.cell-output .cell-output-stdout}
 
-```
-[[1]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-1.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[2]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-2.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[3]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-3.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[4]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-4.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[5]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-5.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[6]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-6.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[7]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-7.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[8]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-8.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[9]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-9.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[10]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-29-10.png){width=672}
-:::
 :::
 
 
@@ -2530,234 +1646,7 @@ using the `.groups` argument.</code></pre>
 
 
 ::: {.cell}
-::: {.cell-output .cell-output-stdout}
 
-```
-[[1]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-1.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[2]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-2.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[3]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-3.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[4]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-4.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[5]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-5.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[6]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-6.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[7]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-7.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[8]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-8.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[9]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-9.png){width=672}
-:::
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
-[[10]]
-```
-
-
-:::
-
-::: {.cell-output .cell-output-stderr}
-
-```
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-
-:::
-
-::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-30-10.png){width=672}
-:::
 :::
 
 

@@ -424,7 +424,8 @@ race_estimate <- function(df, outcome, single_sex=FALSE) {
   return(res)
 }
 
-plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE){
+plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
+                                   metric1="fev1", metric2="fvc"){
   
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
@@ -437,31 +438,31 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
   
   race_coeffs_fev1_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, "fev1", single_sex = single_sex)) %>% 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>% 
     mutate(sequence=sequence_adult_df$ref,
-           Measure = "FEV1") 
+           Measure = metric1) 
   
   race_coeffs_fev1_youth <-
-    map_df(refs_youth_list, function(x) race_estimate(x, "fev1", single_sex = single_sex)) %>%
+    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>%
     mutate(sequence=sequence_youth_df$ref,
-           Measure = "FEV1") 
+           Measure = metric1) 
   
   race_coeffs_fvc_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, "fvc", single_sex = single_sex)) %>%
+    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>%
     mutate(sequence=sequence_adult_df$ref,
-           Measure = "FVC")
+           Measure = metric2)
   
   race_coeffs_fvc_youth <- 
-    map_df(refs_youth_list, function(x) race_estimate(x, "fvc", single_sex = single_sex)) %>% 
+    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>% 
     mutate(sequence=sequence_youth_df$ref,
-           Measure = "FVC")
+           Measure = metric2)
   
   race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
   race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
   
   # report Gap Reduction
   gap_reduction_messages <- function(race_coeffs, age_group) {
-    measures <- c("FEV1", "FVC")
+    measures <- c(metric1, metric2)
     for (measure in measures) {
       message(paste0("For ", measure, " in ", age_group, ", the reduction in gap was ", 
                      compute_gap_reduction(race_coeffs, measure)))
@@ -567,8 +568,6 @@ message(map_df(refs_youth, count))
 plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
-
-### Reference Equations
 
 
 ### Biological Sex
@@ -1442,11 +1441,54 @@ return(refs)
 plot_racial_gap_change(createCohort1by1("adult"), createCohort1by1("youth"))
 ```
 
+### Intersection of Race and Country of Birth
+
+We can check results separately for Black people born within and outside of the US:
+
+#### Gap between White people and US-born Black people
+
+```{r, warning=FALSE}
+
+refs_adult_US_Black <- createCohort("adult", BlackBirthCountry="US")
+# message("Adult counts:")
+# message(map_df(refs_adult, count))
+
+refs_youth_US_Black <- createCohort("youth", BlackBirthCountry="US")
+# message("Youth counts:")
+# message(map_df(refs_youth, count))
+
+plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
+```
+
+### Differential Missingness by Race
+
+```{r}
+#| label: missing-ness-by-race
+ table1(~ age  + sex_text + age_group +
+          smoker + resp_dx + resp_symptoms + physically_active + occupational_exposure+ 
+          income_poverty_ratio + home_owner + bmi + maternal_smoke +
+          smoker_in_household + education_adults + now_attending_school + 
+          healthy_eater + fev1 + fvc
+          | race_text_nhanes, table1)
+```
+
+<!-- ## Reference Equations
+
+```{r, warning=FALSE, message=FALSE, eval=F}
+#| label: fig-refeq1
+#| fig-cap: ref eq1
+ 
+plot_racial_gap_change(refs_adult, refs_youth, metric1="fev1", metric2="predicted_fev1_gli2012")
+plot_racial_gap_change(refs_adult, refs_youth, metric1="fev1", metric2="predicted_fev1_gli_global")
+
+```
+
+
 ### Differential Missingness by Race
 
 Also, good to explore the relative difference in missingness. And we should probably do multiple imputation.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 missingnessByRace <- function(df){
 df <- df %>% 
     select(mineral_dusts, organic_dusts, exhaust_fumes, other_fumes, race_text_nhanes,
@@ -1458,23 +1500,61 @@ df <- df %>%
 
 #### Adults
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 lapply(refs_adult, missingnessByRace)
 ```
 
 #### Youth
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 lapply(refs_youth, missingnessByRace)
+```
+#### Gap between White people and non-US born Black people
+
+```{r, warning=FALSE, eval=F}
+refs_adult_OtherCountries_Black <- createCohort("adult", BlackBirthCountry="Other countries")
+#message("Adult counts:")
+#message(map_df(refs_adult, count))
+
+refs_youth_OtherCountries_Black <- createCohort("youth", BlackBirthCountry="Other countries")
+#message("Youth counts:")
+#message(map_df(refs_youth, count))
+
+plot_racial_gap_change(refs_adult_OtherCountries_Black, refs_youth_OtherCountries_Black)
+```
+
+#### Adults
+
+```{r, warning=FALSE, eval=F}
+disparityDistBirthCountry <- function(data, var) {
+    data %>%
+    group_by(race_text_nhanes, sex, birth_country) %>%
+    drop_na(.data[[var]]) %>%
+    summarise(value = sum(.data[[var]] == 1, na.rm = TRUE)/n()*100) %>%
+    ungroup() %>%
+    ggplot() +
+    geom_col(aes(x = value, y = race_text_nhanes, fill = birth_country), position = "dodge") +
+    theme_few()
+}
+
+purrr::map(adults_eval_variables, disparityDistBirthCountry, data = adults_eval)
+
+```
+
+#### Youth
+
+```{r, warning=FALSE, eval=F}
+purrr::map(youth_eval_variables, disparityDistBirthCountry, data = youth_eval)
+
 ```
 
 ### Visualizing Disparities
 
 Let's look at income disparities:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 # compareIncome <- function(race, sex, title) {
 #     data <- refs_adult[[1]] %>% filter(race_text_nhanes == race & sex==sex)
@@ -1539,7 +1619,7 @@ Now let's look at education in adults, and occupational exposures.
 
 More efficient code:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 disparityDist <- function(data, var) {
     data %>%
     group_by(race_text_nhanes, sex) %>%
@@ -1563,7 +1643,7 @@ purrr::map(adults_eval_variables, disparityDist, data = adults_eval)
 
 and for youth:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 youth_eval <- create_ref_for_eval("youth", binaryRace = FALSE)
 youth_eval_variables <- c("now_attending_school", "occupational_exposure", "smoker_in_household", 
@@ -1573,74 +1653,16 @@ purrr::map(youth_eval_variables, disparityDist, data = youth_eval)
 
 ```
 
-### Intersection of Race and Country of Birth
-
-We can check results separately for Black people born within and outside of the US:
-
-#### Gap between White people and US-born Black people
-
-```{r, warning=FALSE}
-
-refs_adult_US_Black <- createCohort("adult", BlackBirthCountry="US")
-# message("Adult counts:")
-# message(map_df(refs_adult, count))
-
-refs_youth_US_Black <- createCohort("youth", BlackBirthCountry="US")
-# message("Youth counts:")
-# message(map_df(refs_youth, count))
-
-plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
-```
-
-#### Gap between White people and non-US born Black people
-
-```{r, warning=FALSE}
-refs_adult_OtherCountries_Black <- createCohort("adult", BlackBirthCountry="Other countries")
-#message("Adult counts:")
-#message(map_df(refs_adult, count))
-
-refs_youth_OtherCountries_Black <- createCohort("youth", BlackBirthCountry="Other countries")
-#message("Youth counts:")
-#message(map_df(refs_youth, count))
-
-plot_racial_gap_change(refs_adult_OtherCountries_Black, refs_youth_OtherCountries_Black)
-```
-
-#### Adults
-
-```{r, warning=FALSE}
-disparityDistBirthCountry <- function(data, var) {
-    data %>%
-    group_by(race_text_nhanes, sex, birth_country) %>%
-    drop_na(.data[[var]]) %>%
-    summarise(value = sum(.data[[var]] == 1, na.rm = TRUE)/n()*100) %>%
-    ungroup() %>%
-    ggplot() +
-    geom_col(aes(x = value, y = race_text_nhanes, fill = birth_country), position = "dodge") +
-    theme_few()
-}
-
-purrr::map(adults_eval_variables, disparityDistBirthCountry, data = adults_eval)
-
-```
-
-#### Youth
-
-```{r, warning=FALSE}
-purrr::map(youth_eval_variables, disparityDistBirthCountry, data = youth_eval)
-
-```
-
 ### Emotional Support
 
 Social support questionnaire is only available in 2007-2008, but even in that cycle more than half of the data is missing and remainder has a huge class imbalance, so it'd be hard to evaluate the effect of emotional support on racial gap in lung function.
 
-<!--
+
 ## Lung Function vs. Age
 
 ### Adults
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 fev1_age_race <- function(df) {
   ggplot(df, aes(y=fev1, x=age, col=race_text_nhanes)) +
@@ -1664,7 +1686,7 @@ lapply(refs_adult, fev1_age_race)
 
 ### Youth
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 lapply(refs_youth, fev1_age_race)
 
@@ -1674,7 +1696,7 @@ lapply(refs_youth, fev1_age_race)
 
 ### Adults
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 lapply(refs_adult, fev1_height_race)
 
@@ -1682,7 +1704,7 @@ lapply(refs_adult, fev1_height_race)
 
 ### Youth
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=F}
 
 lapply(refs_youth, fev1_height_race)
 
