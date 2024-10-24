@@ -67,7 +67,7 @@ We hypothesized that disproportionate exposures explain a larger proportion of r
 
 We used data from three cycles of the US National Health and Nutrition Examination Survey (NHANES) 2007-2012 to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with occupational exposures, physical inactivity, maternal smoking, obesity, no home ownership, no insurance, lower education, and unhealthy diet.
 
-For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs).
+For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was made based on how NHANES data is structured; for example, the educational level variable is only available for those 20 years of age and older.
 
 In the main analysis, we interpreted missing variables permissively and did not excluded anyone based on a missing variable. For example, if someone's smoking status was unknown, we did not exclude them when excluding smokers. This choice was motivated by statistical efficiency of having a larger number of persons in each consecutive reference population. In the sensitivity analyses, we explored the effects of this value judgment, but conducting analyses with alternative assumptions. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty by assessing the effects of sequentially restricting the reference population to those with income-to-poverty ratios of equal or larger than 1, 1.5, 2, 2.5, up to 5.
 
@@ -865,7 +865,7 @@ We found that social determinants of health measured in NHANES data accounts for
 
 The explained proportion was also higher in Black individuals who were born in the US, with up to 36% of the racial gap in adult FEV~1~ explained by the studied social determinants of health. This points to the more significant role for the effects of racism, segregation, red-zoning, and other social determinants of health in explaining racial disparities in lung function in the US.
 
-Our exploratory analysis showed the excluding those based on home ownership, BMI, occupational exposure explain the vast majority of explainable racial gap.
+Our exploratory analysis showed the excluding those based on home ownership, BMI, and occupational exposures explain the vast majority of explainable racial gap.
 
 [Does SDoH affect FEV1 beyond race?]
 
