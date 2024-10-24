@@ -7,7 +7,7 @@ env:
   #EXTRA: mv LICENSE LICENSE_some_repo # do an extra command like renaming
   USERNAME: ${{ github.actor }}
   ADDRESS_SUFFIX: users.noreply.github.com
-  TOKEN_NAME: read_nhanes # name of token defined in the target repo's settings, needed for private repos
+  TOKEN_NAME: NHANES_SECRET # name of token defined in the target repo's settings, needed for private repos
   # SOURCE_BRANCH: source_alternate_branch # uncomment to takes files from a non default source branch
   # TARGET_BRANCH: target_alternate_branch # uncomment to monitor a non default target branch
   # TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
