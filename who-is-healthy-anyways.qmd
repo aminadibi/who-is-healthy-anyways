@@ -378,7 +378,7 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
                                      "4" ~ "Some college or AA degree",
                                      "5" ~ "College graduate or above"),
           now_attending_school = case_match(now_attending_school,
-                                          1 ~ "In School",
+                                          1 ~ "In school",
                                           2 ~ "Between grades",
                                           2 ~ "Not in school"),
           smoker_in_household = case_match(smoker_in_household,
@@ -391,6 +391,37 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
                                           1 ~ "Owned or being bought",
                                           2 ~ "Rented",
                                           3 ~ "Other arrangements"),
+          mineral_dusts = case_match(mineral_dusts,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          organic_dusts = case_match(organic_dusts,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          exhaust_fumes = case_match(exhaust_fumes,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          other_fumes = case_match(other_fumes,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          healthy_diet = case_match(healthy_diet,
+                                          1 ~ "Excellent",
+                                          2 ~ "Very good",
+                                          3 ~ "Good",
+                                          4 ~ "Fair",
+                                          5 ~ "Poor"),
+          vigorous_work = case_match(vigorous_work,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          moderate_work = case_match(moderate_work,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          vigorous_recreational = case_match(vigorous_recreational,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+          moderate_recreational = case_match(moderate_recreational,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+  
           smoker=
        !((is.na(current_smoke) | (current_smoke == "3")) &
          (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
@@ -421,13 +452,13 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
  
  table1(~ age + race_text_nhanes + sex_text + 
            fev1 + fvc +
-          ever_100_smoke + current_smoke + smoker + smoker_in_household + 
+          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
           ever_asthma + ever_bronchitis + ever_emphysema + 
           cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
-          physically_active + occupational_exposure+ 
-          income_poverty_ratio + home_owner + bmi + maternal_smoke +
+          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
+          income_poverty_ratio + home_owner + 
           education_adults + now_attending_school + 
-          healthy_eater
+          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
           | age_group, table1)
  
 ```
@@ -804,16 +835,21 @@ Our study shows that a larger proportion of racial gaps in lung function can be 
 
 ## Appendices
 
-### Effect of Home Ownership
+### Table 1 by Self-Identified Race
 
 ```{r}
-
-refs_adult_homeOwnershipOnly <- createCohort("adult", homeOwnershipOnly=TRUE)
-refs_youth_homeOwnershipOnly <- createCohort("youth", homeOwnershipOnly=TRUE)
-
-plot_racial_gap_change(refs_adult_homeOwnershipOnly, refs_youth_homeOwnershipOnly)
+#| label: missing-ness-by-race
+ table1(~ age + race_text_nhanes + sex_text + 
+           fev1 + fvc +
+          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
+          ever_asthma + ever_bronchitis + ever_emphysema + 
+          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
+          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
+          income_poverty_ratio + home_owner + 
+          education_adults + now_attending_school + 
+          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
+          | race_text_nhanes, table1)
 ```
-
 
 
 ### Establishing the order of exclusion
@@ -1512,17 +1548,7 @@ refs_youth_US_Black <- createCohort("youth", BlackBirthCountry="US")
 plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
 ```
 
-### Differential Missingness by Race
 
-```{r}
-#| label: missing-ness-by-race
- table1(~ age  + sex_text + age_group +
-          smoker + resp_dx + resp_symptoms + physically_active + occupational_exposure+ 
-          income_poverty_ratio + home_owner + bmi + maternal_smoke +
-          smoker_in_household + education_adults + now_attending_school + 
-          healthy_eater + fev1 + fvc
-          | race_text_nhanes, table1)
-```
 
 <!-- ## Reference Equations
 
@@ -1534,6 +1560,19 @@ plot_racial_gap_change(refs_adult, refs_youth, metric1="fev1", metric2="predicte
 plot_racial_gap_change(refs_adult, refs_youth, metric1="fev1", metric2="predicted_fev1_gli_global")
 
 ```
+
+
+### Effect of Home Ownership
+
+```{r, eval=F}
+
+refs_adult_homeOwnershipOnly <- createCohort("adult", homeOwnershipOnly=TRUE)
+refs_youth_homeOwnershipOnly <- createCohort("youth", homeOwnershipOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_homeOwnershipOnly, refs_youth_homeOwnershipOnly)
+```
+
+
 
 
 ### Differential Missingness by Race
