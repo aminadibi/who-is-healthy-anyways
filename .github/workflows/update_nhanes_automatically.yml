@@ -22,7 +22,8 @@ on: # Remove # below for non default branches
 #      - ${{ env.TARGET_BRANCH }}
 #    paths:
 #      - ${{ env.TARGET_PATH }}
-
+permissions:
+  contents: write
 jobs:
   pull-file:
     runs-on: ubuntu-latest
