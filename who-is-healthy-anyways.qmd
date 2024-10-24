@@ -416,29 +416,16 @@ flowchart TD
 
 ```{r}
 
-race_estimate_fev1 <- function(df) {
-  lm_fit <- lm(fev1 ~ sex + age + height + race, data=df, weights=MEC6YR)
-  res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
-  return(res)
-}
-
-race_estimate_fvc <- function(df) {
-  lm_fit <- lm(fvc ~ sex + age + height + race, data=df, weights=MEC6YR)
+race_estimate <- function(df, outcome, single_sex=FALSE) {
+  if (single_sex) {formula_text <- as.formula(paste0(outcome, " ~ age + height + race"))}
+  else {formula_text <- as.formula(paste0(outcome, " ~ sex + age + height + race"))}
+  lm_fit <- lm(formula_text, data=df, weights=MEC6YR)
   res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
   return(res)
 }
 
 plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE){
   
-  # Select functions based on single_sex parameter
-  if(single_sex) {
-    race_estimate_fev1_fn <- race_estimate_fev1_single_sex
-    race_estimate_fvc_fn <- race_estimate_fvc_single_sex
-  } else {
-    race_estimate_fev1_fn <- race_estimate_fev1
-    race_estimate_fvc_fn <- race_estimate_fvc
-  }
-
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
   names(sequence_adult_df) <- 'ref'
@@ -449,19 +436,23 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   names(sequence_youth_df) <- 'ref'
   sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
   
-  race_coeffs_fev1_adult <- map_df(refs_adult_list, race_estimate_fev1_fn) %>% 
+  race_coeffs_fev1_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, "fev1", single_sex = single_sex)) %>% 
     mutate(sequence=sequence_adult_df$ref,
            Measure = "FEV1") 
   
-  race_coeffs_fev1_youth <- map_df(refs_youth_list, race_estimate_fev1_fn) %>% 
+  race_coeffs_fev1_youth <-
+    map_df(refs_youth_list, function(x) race_estimate(x, "fev1", single_sex = single_sex)) %>%
     mutate(sequence=sequence_youth_df$ref,
            Measure = "FEV1") 
   
-  race_coeffs_fvc_adult <- map_df(refs_adult_list, race_estimate_fvc_fn) %>% 
+  race_coeffs_fvc_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, "fvc", single_sex = single_sex)) %>%
     mutate(sequence=sequence_adult_df$ref,
            Measure = "FVC")
   
-  race_coeffs_fvc_youth <- map_df(refs_youth_list, race_estimate_fvc_fn) %>% 
+  race_coeffs_fvc_youth <- 
+    map_df(refs_youth_list, function(x) race_estimate(x, "fvc", single_sex = single_sex)) %>% 
     mutate(sequence=sequence_youth_df$ref,
            Measure = "FVC")
   
@@ -588,17 +579,7 @@ We also looked at the racial gap in lung function from the most permissive to th
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-females
 #| fig-cap: Changes in lung function racial gaps for female participants
-race_estimate_fev1_single_sex <- function(df) {
-  lm_fit <- lm(fev1 ~ age + height + race, data=df, weights=MEC6YR)
-  res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
-  return(res)
-}
 
-race_estimate_fvc_single_sex <- function(df) {
-  lm_fit <- lm(fvc ~ age + height + race, data=df, weights=MEC6YR)
-  res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
-  return(res)
-}
 
 refs_adult_female <- createCohort("adult", sex="female")
 refs_youth_female <- createCohort("youth", sex="female")
