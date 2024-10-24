@@ -385,33 +385,40 @@ race_estimate_fvc <- function(df) {
   return(res)
 }
 
-plot_racial_gap_change <- function(refs_adult_list, refs_youth_list){
+plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE){
   
-    sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
-    sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
-    names(sequence_adult_df) <- 'ref'
-    sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
-    
-    sequence_youth <- lapply(refs_youth_list, function(x) unique(x$ref))
-    sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
-    names(sequence_youth_df) <- 'ref'
-    sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
+  # Select functions based on single_sex parameter
+  if(single_sex) {
+    race_estimate_fev1_fn <- race_estimate_fev1_single_sex
+    race_estimate_fvc_fn <- race_estimate_fvc_single_sex
+  } else {
+    race_estimate_fev1_fn <- race_estimate_fev1
+    race_estimate_fvc_fn <- race_estimate_fvc
+  }
 
-
-    
-  race_coeffs_fev1_adult <- map_df(refs_adult_list, race_estimate_fev1) %>% 
+  sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
+  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
+  names(sequence_adult_df) <- 'ref'
+  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
+  
+  sequence_youth <- lapply(refs_youth_list, function(x) unique(x$ref))
+  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
+  names(sequence_youth_df) <- 'ref'
+  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
+  
+  race_coeffs_fev1_adult <- map_df(refs_adult_list, race_estimate_fev1_fn) %>% 
     mutate(sequence=sequence_adult_df$ref,
            Measure = "FEV1") 
   
-  race_coeffs_fev1_youth <- map_df(refs_youth_list, race_estimate_fev1) %>% 
+  race_coeffs_fev1_youth <- map_df(refs_youth_list, race_estimate_fev1_fn) %>% 
     mutate(sequence=sequence_youth_df$ref,
            Measure = "FEV1") 
   
-  race_coeffs_fvc_adult <- map_df(refs_adult_list, race_estimate_fvc) %>% 
+  race_coeffs_fvc_adult <- map_df(refs_adult_list, race_estimate_fvc_fn) %>% 
     mutate(sequence=sequence_adult_df$ref,
            Measure = "FVC")
   
-  race_coeffs_fvc_youth <- map_df(refs_youth_list, race_estimate_fvc) %>% 
+  race_coeffs_fvc_youth <- map_df(refs_youth_list, race_estimate_fvc_fn) %>% 
     mutate(sequence=sequence_youth_df$ref,
            Measure = "FVC")
   
@@ -419,104 +426,75 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list){
   race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
   
   # report Gap Reduction
+  gap_reduction_messages <- function(race_coeffs, age_group) {
+    measures <- c("FEV1", "FVC")
+    for (measure in measures) {
+      message(paste0("For ", measure, " in ", age_group, ", the reduction in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure)))
+    }
+  }
 
-  message(paste0("For FEV1 in adults, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_adult, "FEV1")))
+  gap_reduction_messages(race_coeffs_adult, "adults")
+  gap_reduction_messages(race_coeffs_youth, "youth")
+  
+  # Plot Racial Gap
+  plot_racial_gap <- function(race_coeffs, age_group, suppress_legend=FALSE) {
+    p <- ggplot(race_coeffs, aes(y=-estimate, x=sequence, colour=Measure)) + 
+      geom_point() +
+      geom_errorbar(aes(ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
+      ylim(0, 1.2) + 
+      ylab("Racial Gap (L)") +
+      xlab("") +
+      theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+    
+    if (suppress_legend) {
+      p <- p +  theme(legend.position="none")
+    }
+    return(p)
+  }
+  
+  racial_gap_adult <- plot_racial_gap(race_coeffs_adult, "adults")
+  racial_gap_youth <- plot_racial_gap(race_coeffs_youth, "youth", suppress_legend=TRUE)
 
-  message(paste0("For FVC in adults, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_adult, "FVC")))
- 
-  message(paste0("For FEV1 in youth, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_youth, "FEV1")))
+  # Combine refs_df_adult and refs_df_youth
+  combine_refs_df <- function(refs_list) {
+    refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]] %>% mutate(ref = i)))
+    refs_df %>%
+      mutate(ref=factor(ref)) %>%
+      group_by(ref) %>%
+      count(race_text_nhanes, wt = MEC6YR) %>%
+      mutate(perc = n / sum(n)) %>%
+      ungroup()
+  }
   
-  message(paste0("For FVC in youth, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_youth, "FVC")))
-  
-  racial_gap_adult <- ggplot(race_coeffs_adult, aes(y=-estimate, x=sequence, colour=Measure)) + 
-    # geom_ribbon(aes(ymin=-conf.low, ymax=-conf.high), fill="salmon", alpha=0.4) + 
-    # geom_line() +
-    geom_point() +
-    geom_errorbar(aes(y=-estimate, x=sequence, ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-    ylim(0, 1.2) + 
-    labs(caption="Racial gap is the age-, sex- , and height-adjusted difference between Black and White populations.") + 
-    ylab("Racial Gap (L)") +
-    xlab("") +
-    theme_few() + theme(legend.position="right") +
-    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-  
-  
-  racial_gap_youth <- ggplot(race_coeffs_youth, aes(y=-estimate, x=sequence, colour=Measure)) + 
-    # geom_ribbon(aes(ymin=-conf.low, ymax=-conf.high), fill="salmon", alpha=0.4) + 
-    # geom_line() +
-    geom_point() +
-    geom_errorbar(aes(y=-estimate, x=sequence, ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-    ylim(0, 1.2) + 
-    ylab("Racial Gap (L)") +
-    xlab("") +
-    theme_few() + theme(legend.position="none") +
-    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-  
-  refs_df_adult <- do.call(rbind, lapply(1:length(refs_adult_list), function(i) refs_adult_list[[i]] %>% mutate(ref = i)))
-  
-  refs_df_percent_adult <- refs_df_adult %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count(race_text_nhanes, wt =MEC6YR ) %>%
-    mutate(perc = n / sum(n)) %>%
-    ungroup()
-  
-  ref_df_sample_size_adult <- refs_df_adult %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count() %>%
-    ungroup() %>%
-    mutate(perc=1)
-  
-  refs_df_youth <- do.call(rbind, lapply(1:length(refs_youth_list), function(i) refs_youth_list[[i]] %>% mutate(ref = i)))
-  
-  refs_df_percent_youth <- refs_df_youth %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count(race_text_nhanes, wt =MEC6YR) %>%
-    mutate(perc = n / sum(n)) %>%
-    ungroup() 
-  
-  ref_df_sample_size_youth <- refs_df_youth %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count() %>%
-    ungroup() %>%
-    mutate(perc=1)
-  
-  gap_perc_black_adult <- ggplot(refs_df_percent_adult) +
-    geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-    geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
-    # geom_text(data=ref_df_sample_size_adult, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2) + 
-    scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
-    ggtitle("Adults (≥20 yrs)") +
-    labs(x="",
-         y="Percentage") +
-    guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="right", axis.text.x=element_blank())
-  
-  gap_perc_black_youth <- ggplot(refs_df_percent_youth) +
-    geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "fill") +
-    geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
-    # geom_text(data=ref_df_sample_size_youth, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2) + 
-    scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
-    ggtitle("Youth (<20 yrs)") +
-    labs(x="",
-         y="Percentage") +
-    guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="none", axis.text.x=element_blank())
-  
-  
-  p <- (((gap_perc_black_youth/racial_gap_youth) + 
-      plot_layout(axes = "collect")) | 
-    ((gap_perc_black_adult/racial_gap_adult) + 
-       plot_layout(axes = "collect")) ) + 
+  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
+  refs_df_percent_youth <- combine_refs_df(refs_youth_list)
+
+  plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
+    p <- ggplot(refs_df_percent) +
+      geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
+      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
+      scale_y_continuous(labels=scales::percent) +
+      ggtitle(title) +
+      labs(x = "", y = "Percentage") +
+      guides(fill=guide_legend(title="Race and Ethnicity")) +
+      theme_few() + theme(axis.text.x = element_blank())
+    
+    if (suppress_legend) {
+      p <- p +  theme(legend.position="none", axis.text.x=element_blank())
+    }
+    return(p)
+  }
+
+  gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
+  gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Youth (<20 yrs)", suppress_legend=TRUE)
+
+    p <- (((gap_perc_black_youth/racial_gap_youth) + 
+           plot_layout(axes = "collect")) | 
+          ((gap_perc_black_adult/racial_gap_adult) + 
+             plot_layout(axes = "collect")) ) + 
     plot_annotation(tag_levels = 'A') 
-
+  
   return(p)
 }
 
@@ -576,171 +554,11 @@ race_estimate_fvc_single_sex <- function(df) {
   return(res)
 }
 
-plot_racial_gap_change_single_sex <- function(refs_adult, refs_youth){
-  
-  sequence_adult <- lapply(refs_adult, function(x) unique(x$ref))
-  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
-  names(sequence_adult_df) <- 'ref'
-  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
-  
-  sequence_youth <- lapply(refs_youth, function(x) unique(x$ref))
-  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
-  names(sequence_youth_df) <- 'ref'
-  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
-  
-  
-  
-  race_coeffs_fev1_adult <- map_df(refs_adult, race_estimate_fev1_single_sex) %>% 
-    mutate(sequence=sequence_adult_df$ref,
-           Measure = "FEV1") 
-  
-  race_coeffs_fev1_youth <- map_df(refs_youth, race_estimate_fev1_single_sex) %>% 
-    mutate(sequence=sequence_youth_df$ref,
-           Measure = "FEV1") 
-  
-  race_coeffs_fvc_adult <- map_df(refs_adult, race_estimate_fvc_single_sex) %>% 
-    mutate(sequence=sequence_adult_df$ref,
-           Measure = "FVC")
-  
-  race_coeffs_fvc_youth <- map_df(refs_youth, race_estimate_fvc_single_sex) %>% 
-    mutate(sequence=sequence_youth_df$ref,
-           Measure = "FVC")
-  
-  race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
-  race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
-  
-  # report Gap Reduction
-  
-  message(paste0("For FEV1 in adults, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_adult, "FEV1")))
-  
-  message(paste0("For FVC in adults, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_adult, "FVC")))
-  
-  message(paste0("For FEV1 in youth, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_youth, "FEV1")))
-  
-  message(paste0("For FVC in youth, the reduction in gap was ", 
-                 compute_gap_reduction(race_coeffs_youth, "FVC")))
-  
-  racial_gap_adult <- ggplot(race_coeffs_adult, aes(y=-estimate, x=sequence, colour=Measure)) + 
-    # geom_ribbon(aes(ymin=-conf.low, ymax=-conf.high), fill="salmon", alpha=0.4) + 
-    # geom_line() +
-    geom_point() +
-    geom_errorbar(aes(y=-estimate, x=sequence, ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-    ylim(0, 1.2) + 
-    labs(caption="Racial gap is the age-, sex- , and height-adjusted difference between Black and White populations.") + 
-    ylab("Racial Gap (L)") +
-    xlab("") +
-    theme_few() + theme(legend.position="right") + 
-    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-  
-  
-  
-  racial_gap_youth <- ggplot(race_coeffs_youth, aes(y=-estimate, x=sequence, colour=Measure)) + 
-    # geom_ribbon(aes(ymin=-conf.low, ymax=-conf.high), fill="salmon", alpha=0.4) + 
-    # geom_line() +
-    geom_point() +
-    geom_errorbar(aes(y=-estimate, x=sequence, ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-    ylim(0, 1.2) + 
-    ylab("Racial Gap (L)") +
-    xlab("") +
-    theme_few() + theme(legend.position="none") + 
-    theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-  
-  
-  refs_df_adult <- rbind(
-    refs_adult[[1]] %>% mutate(ref=1), 
-    refs_adult[[2]] %>% mutate(ref=2),
-    refs_adult[[3]] %>% mutate(ref=3),
-    refs_adult[[4]] %>% mutate(ref=4),
-    refs_adult[[5]] %>% mutate(ref=5),
-    refs_adult[[6]] %>% mutate(ref=6),
-    refs_adult[[7]] %>% mutate(ref=7),
-    refs_adult[[8]] %>% mutate(ref=8),
-    refs_adult[[9]] %>% mutate(ref=9),
-    refs_adult[[10]] %>% mutate(ref=10))
-  
-  refs_df_percent_adult <- refs_df_adult %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count(race_text_nhanes, wt =MEC6YR ) %>%
-    mutate(perc = n / sum(n)) %>%
-    ungroup()
-  
-  ref_df_sample_size_adult <- refs_df_adult %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count() %>%
-    ungroup() %>%
-    mutate(perc=1)
-  
-  refs_df_youth <- rbind(
-    refs_youth[[1]] %>% mutate(ref=1), 
-    refs_youth[[2]] %>% mutate(ref=2),
-    refs_youth[[3]] %>% mutate(ref=3),
-    refs_youth[[4]] %>% mutate(ref=4),
-    refs_youth[[5]] %>% mutate(ref=5),
-    refs_youth[[6]] %>% mutate(ref=6),
-    refs_youth[[7]] %>% mutate(ref=7),
-    refs_youth[[8]] %>% mutate(ref=8),
-    refs_youth[[9]] %>% mutate(ref=9),
-    refs_youth[[10]] %>% mutate(ref=10))
-  
-  refs_df_percent_youth <- refs_df_youth %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count(race_text_nhanes, wt=MEC6YR) %>%
-    mutate(perc = n / sum(n)) %>%
-    ungroup() 
-  
-  ref_df_sample_size_youth <- refs_df_youth %>%
-    mutate(ref=factor(ref)) %>%
-    group_by(ref) %>%
-    count() %>%
-    ungroup() %>%
-    mutate(perc=1)
-  
-  gap_perc_black_adult <- ggplot(refs_df_percent_adult) +
-    geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-    geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
-#  geom_text(data=ref_df_sample_size_adult, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
-    scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
-    ggtitle("Adults (≥20 yrs)") +
-    labs(x="",
-         y="Percentage") +
-    guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="right", axis.text.x=element_blank())
-  
-  gap_perc_black_youth <- ggplot(refs_df_percent_youth) +
-    geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "fill") +
-    geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
- #   geom_text(data=ref_df_sample_size_youth, aes(y=perc, x=ref, label=paste0("",n)), color = "black", nudge_y = 0.07, size = 2.5) + 
-    scale_y_continuous(labels=scales::percent) + # Convert to percentage scale
-    ggtitle("Youth (<20 yrs)") +
-    labs(x="",
-         y="Percentage") +
-    guides(fill=guide_legend(title="Race and Ethnicity")) +
-    theme_few() + theme(legend.position="none", axis.text.x=element_blank())
-  
-  
-  p <- (((gap_perc_black_youth/racial_gap_youth) + 
-           plot_layout(axes = "collect")) | 
-          ((gap_perc_black_adult/racial_gap_adult) + 
-             plot_layout(axes = "collect")) ) + 
-    plot_annotation(tag_levels = 'A') 
-  
-  return(p)
-}
-
-
-
-
 refs_adult_female <- createCohort("adult", sex="female")
 refs_youth_female <- createCohort("youth", sex="female")
 
 
-plot_racial_gap_change_single_sex(refs_adult_female, refs_youth_female)
+plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
 ```
 
 
@@ -751,7 +569,7 @@ refs_adult_male <- createCohort("adult", sex="male")
 refs_youth_male <- createCohort("youth", sex="male")
 
 
-plot_racial_gap_change_single_sex(refs_adult_male, refs_youth_male)
+plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
 ```
 
 ### Home Ownership, BMI, and Occupation
