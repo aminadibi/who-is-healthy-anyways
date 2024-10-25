@@ -1,5 +1,5 @@
 ---
-title: "Who Is Healthy Anyways"
+title: "Who is healthy anyways? The effect of health disparities on racial gaps in lung function"
 format: 
   html:
     toc: true
