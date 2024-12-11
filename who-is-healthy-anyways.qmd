@@ -15,6 +15,10 @@ crossref:
       key: suppfig
       reference-prefix: Figure S
       space-before-numbering: false
+    - kind: float
+      key: supptab
+      reference-prefix: Table S
+      space-before-numbering: false
 author:
   - name: Amin Adibi
     corresponding: true
@@ -805,6 +809,25 @@ Our study underscores the significant influence of social determinants of health
 
 ## Appendices
 
+### Participant characteristics by Race
+
+::: {#supptab-missing-ness-by-race}
+
+```{r}
+ table1(~ age + race_text_nhanes + sex_text + 
+           fev1 + fvc +
+          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
+          ever_asthma + ever_bronchitis + ever_emphysema + 
+          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
+          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
+          income_poverty_ratio + home_owner + 
+          education_adults + now_attending_school + 
+          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
+          | race_text_nhanes, table1)
+```
+Table 1 by self-identified race
+:::
+
 ### Separate Analysis by Biological Sex
 
 ::: {#suppfig-females}
@@ -830,22 +853,6 @@ plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
 ```
 Changes in lung function racial gaps for male participants
 :::
-
-### Table 1 by Self-Identified Race
-
-```{r}
-#| label: missing-ness-by-race
- table1(~ age + race_text_nhanes + sex_text + 
-           fev1 + fvc +
-          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
-          ever_asthma + ever_bronchitis + ever_emphysema + 
-          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
-          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
-          income_poverty_ratio + home_owner + 
-          education_adults + now_attending_school + 
-          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | race_text_nhanes, table1)
-```
 
 ### Intersection of Race and Country of Birth
 
