@@ -80,11 +80,13 @@ We hypothesized that accounting for a more comprehensive set of social and envir
 
 ## Methods
 
-We used data from three cycles of NHANES (2007-2012) to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height recording and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmeed occupational exposures, physical inactivity, maternal smoking, obesity, no home ownership, no insurance, lower education, and unhealthy diet.
+We used data from three cycles of NHANES (2007-2012) to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height recording and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmed occupational exposures, physical inactivity, maternal smoking, obesity (defined as body-mass-index≥30), no home ownership, no insurance, lower education, and self-declared unhealthy diet.
 
 For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was made based on how NHANES data is structured; for example, the educational level variable is only available for those 20 years of age and older.
 
-In the sensitivity analyses, we evaluated the results separately for males and females, those born outside of the U.S. versus those who were born in the U.S., and other groups of self-identified race and ethnicity. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone. To due this, we assessed the effects of sequentially restricting the reference population to those with income-to-poverty ratios of equal or larger than 1, 1.5, 2, 2.5, up to 5.
+In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone.
+
+All data preparation and analysis was performed in R v4.4.2 using reproducible Quarto documents. A fully reproducible analysis code is publicly available at <https://github.com/aminadibi/who-is-healthy-anyways/>.
 
 ```{r, warning=FALSE, message=FALSE}
 rm(list = ls(all.names = TRUE))
@@ -666,7 +668,7 @@ plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
 
-### Secondary and Sensitivity Analyses 
+### Secondary and Sensitivity Analyses
 
 #### Biological Sex
 
@@ -812,7 +814,6 @@ Our study underscores the significant influence of social determinants of health
 ### Participant characteristics by Race
 
 ::: {#supptab-missing-ness-by-race}
-
 ```{r}
  table1(~ age + race_text_nhanes + sex_text + 
            fev1 + fvc +
@@ -825,13 +826,13 @@ Our study underscores the significant influence of social determinants of health
           healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
           | race_text_nhanes, table1)
 ```
+
 Table 1 by self-identified race
 :::
 
 ### Separate Analysis by Biological Sex
 
 ::: {#suppfig-females}
-
 ```{r,  warning=FALSE, message=FALSE}
 refs_adult_female <- createCohort("adult", sex="female")
 refs_youth_female <- createCohort("youth", sex="female")
@@ -839,9 +840,9 @@ refs_youth_female <- createCohort("youth", sex="female")
 
 plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
 ```
+
 Changes in lung function racial gaps for female participants
 :::
-  
 
 ::: {#suppfig-males}
 ```{r, warning=FALSE, message=FALSE}
@@ -851,6 +852,7 @@ refs_youth_male <- createCohort("youth", sex="male")
 
 plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
 ```
+
 Changes in lung function racial gaps for male participants
 :::
 
@@ -859,7 +861,6 @@ Changes in lung function racial gaps for male participants
 We produced results separately for self-identified Black and White person born in the US.
 
 ::: {#suppfig-usborn}
-
 ```{r, warning=FALSE, message=FALSE}
 refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
 # message("Adult counts:")
@@ -871,8 +872,9 @@ refs_youth_US_Black <- createCohort("youth", BirthCountry="US")
 
 plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
 ```
+
 Racial gap in lung function among those born in the US
-::: 
+:::
 
 ### Income to Poverty Ratio
 
@@ -887,9 +889,9 @@ refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnl
 
 plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
 ```
+
 Changes in lung function racial gaps based on income to poverty ratio
 :::
-
 
 ````{=html}
 <!-- 
