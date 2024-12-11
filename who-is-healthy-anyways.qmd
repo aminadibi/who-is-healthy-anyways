@@ -9,6 +9,12 @@ format:
   pdf:
     toc: false
 editor: visual
+crossref:
+  custom:
+    - kind: float
+      key: suppfig
+      reference-prefix: Figure S
+      space-before-numbering: false
 author:
   - name: Amin Adibi
     corresponding: true
@@ -62,15 +68,15 @@ In recent years, increased awareness of the history of structural racism and dis
 
 Spirometry reference equations are developed with data from from "healthy" volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases [@quanjer2012; @bowerman2023]. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.
 
-The effect of social and environmental factors on lung function has been known for decades. The 1991 official statement of the ATS on the choice of reference values and interpretative strategies for lung function testing explicitly mentions tobacco smoking, urban versus rural residence, indoor and outdoor air pollution and socio-economic status as factors that partially explain between-individual differences in lung function [@lungfun1991].
+The effects of social determinants of health on lung function have been discussed in the literature for decades. The 1991 official statements of the American Thoracic Society on interpretative strategies for lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as the main sources of between-individual variability in lung function[@lungfun1991]. The statement also mentions racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesizes that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors [@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
 
-However, it is unclear what proportion of the observed racial gaps in lung function is due to social determinants of health. Previous studies on adults have attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education [@harik-khan2001]. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences [@harik-khan2004].
+Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population[@holland2022], one focused on adults[@harik-khan2001] and one on children[@harik-khan2004]. The study on adults attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education [@harik-khan2001]. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences [@harik-khan2004]. However, these studies consider a limited set of social exposures, typically comprised of poverty index, BMI, education, employment, and household size and were conducted using older US National Health and Nutrition Examination Survey (NHANES) III survey data (1988–1994).
 
-We hypothesized that disproportionate exposures explain a larger proportion of racial gaps in lung function than previously reported.
+We hypothesized that accounting for a more comprehensive set of social and environmental exposures in newer iterations of NHANES data could explain a larger proportion of racial gaps in lung function than previously reported. We have presented a preliminary version of these results in the 2024 European Respiratory Congress in Vienna [@adibi2024].
 
 ## Methods
 
-We used data from three cycles of the US National Health and Nutrition Examination Survey (NHANES) 2007-2012 to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height recording and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmeed occupational exposures, physical inactivity, maternal smoking, obesity, no home ownership, no insurance, lower education, and unhealthy diet.
+We used data from three cycles of NHANES (2007-2012) to define 10 increasingly healthier reference populations. We included self-identified Black and White individuals with valid height recording and high-quality spirometry. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmeed occupational exposures, physical inactivity, maternal smoking, obesity, no home ownership, no insurance, lower education, and unhealthy diet.
 
 For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was made based on how NHANES data is structured; for example, the educational level variable is only available for those 20 years of age and older.
 
@@ -656,33 +662,13 @@ plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
 
-### Biological Sex
+### Secondary and Sensitivity Analyses 
 
-We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 27% and 20% in adults, and 16% and 19% in youth, as shown in @fig-females. In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 14% and 8% in adults, and 35% and 34% in youth, as shown in @fig-males.
+#### Biological Sex
 
-```{r, warning=FALSE, message=FALSE}
-#| label: fig-females
-#| fig-cap: Changes in lung function racial gaps for female participants
+We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 27% and 20% in adults, and 16% and 19% in youth, respectively (appendix @suppfig-females). In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 14% and 8% in adults, and 35% and 34% in youth (appendix @suppfig-males).
 
-
-refs_adult_female <- createCohort("adult", sex="female")
-refs_youth_female <- createCohort("youth", sex="female")
-
-
-plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
-```
-
-```{r, warning=FALSE, message=FALSE}
-#| label: fig-males
-#| fig-cap: Changes in lung function racial gaps for male participants
-refs_adult_male <- createCohort("adult", sex="male")
-refs_youth_male <- createCohort("youth", sex="male")
-
-
-plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
-```
-
-### Home Ownership, BMI, and Occupation
+#### Home Ownership, BMI, and Occupation
 
 After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.
 
@@ -786,31 +772,13 @@ return(refs)
 plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
 ```
 
-### Income to Poverty Ratio
-
-When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @fig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
-
-```{r, warning=FALSE, message=FALSE}
-#| label: fig-incomepovertyratio
-#| fig-cap: Changes in lung function racial gaps based on income to poverty ratio
-
-refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
-refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnly=TRUE)
-
-plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
-
-
-```
-
-In the supplementary material, we also explored the intersection of self-identified race and country of origin.
+In the supplementary material, we also explored the intersection of self-identified race and country of origin (@suppfig-usborn).
 
 ## Discussion
 
-The effects of social determinants of health on lung function, these have been discussed in the literature for decades. The 1991 official statements of the ATS on lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as one of the main sources of variability in lung function[@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
+Our results reinforce the critical role of environmental, social, and lifestyle factors in shaping health outcomes and suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. Our findings attribute a higher proportion of racial differences in lung function to social and environmental exposures than previously reported [@harik-khan2001; @harik-khan2004].
 
-Our study underscores the significant influence of social determinants of health on lung function. Our results suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. These findings are in line with previous research that highlights the critical role of environmental, socio-economic, and lifestyle factors in shaping health outcomes
-
-The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV~1~ explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities
+The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV~1~ explained by the studied exposures) suggests that systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities.
 
 Our analysis revealed that excluding individuals based on home ownership, BMI, and occupational exposures accounts for a significant portion of the explainable racial gap, indicating that financial stability, physical health, and work-related factors are pivotal contributors to lung function disparities. These findings suggest that interventions aimed at reducing socio-economic inequities could potentially mitigate a significant portion of racial gaps in lung function.
 
@@ -818,7 +786,7 @@ Our study highlights the necessity for further research to comprehensively under
 
 Moreover, exploring the intersectionality of race, gender identity, and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global strategies to address lung health disparities.
 
-While our study provides valuable insights, certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. The available data also limits our assessment of various SDoH and environmental exposures, such as intergenerational wealth effects and life-course exposure to pollutants. Additionally, the absence of data on gender identity prevented us from analyzing potential differential effects.
+Certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. The available data also limits our assessment of various SDoH and environmental exposures, such as intergenerational wealth effects and life-course exposure to pollutants. Additionally, the absence of data on gender identity prevented us from analyzing potential differential effects.
 
 <!--[Does SDoH affect FEV1 beyond race?]-->
 
@@ -828,7 +796,7 @@ Policymakers should consider strategies to reduce exposure to harmful environmen
 
 ## Conclusions
 
-Our study shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES.
+Our study underscores the significant influence of social determinants of health on lung function and shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES.
 
 ## References
 
@@ -836,6 +804,32 @@ Our study shows that a larger proportion of racial gaps in lung function can be 
 :::
 
 ## Appendices
+
+### Separate Analysis by Biological Sex
+
+::: {#suppfig-females}
+
+```{r,  warning=FALSE, message=FALSE}
+refs_adult_female <- createCohort("adult", sex="female")
+refs_youth_female <- createCohort("youth", sex="female")
+
+
+plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
+```
+Changes in lung function racial gaps for female participants
+:::
+  
+
+::: {#suppfig-males}
+```{r, warning=FALSE, message=FALSE}
+refs_adult_male <- createCohort("adult", sex="male")
+refs_youth_male <- createCohort("youth", sex="male")
+
+
+plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
+```
+Changes in lung function racial gaps for male participants
+:::
 
 ### Table 1 by Self-Identified Race
 
@@ -855,13 +849,11 @@ Our study shows that a larger proportion of racial gaps in lung function can be 
 
 ### Intersection of Race and Country of Birth
 
-We produced results separately people born within and outside of the US:
+We produced results separately for self-identified Black and White person born in the US.
 
-#### Gap between White and Black people born in the US
+::: {#suppfig-usborn}
 
-```{r, warning=FALSE}
-#| label: fig-usborn
-#| fig-cap: Racial gap in lung function among those born in the US
+```{r, warning=FALSE, message=FALSE}
 refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
 # message("Adult counts:")
 # message(map_df(refs_adult, count))
@@ -872,6 +864,25 @@ refs_youth_US_Black <- createCohort("youth", BirthCountry="US")
 
 plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
 ```
+Racial gap in lung function among those born in the US
+::: 
+
+### Income to Poverty Ratio
+
+When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @suppfig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
+
+::: {#suppfig-incomepovertyratio}
+```{r, warning=FALSE, message=FALSE}
+
+
+refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
+refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
+```
+Changes in lung function racial gaps based on income to poverty ratio
+:::
+
 
 ````{=html}
 <!-- 
