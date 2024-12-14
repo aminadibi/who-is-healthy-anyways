@@ -831,7 +831,21 @@ Our study underscores the significant influence of social determinants of health
 
 ## Appendices
 
-### Participant characteristics by Race
+### Participant Flow Across Successive Reference Equations
+
+::: {#suppfig-flow-refs}
+
+Flow of participants across different reference equations
+```{mermaid, include=T}
+flowchart TD
+    A0[n=2,785] -- ref1 -- A1[]
+    Y0[n=2,058] -- ref1 -- Y1[]
+
+```
+:::
+
+
+### Participants characteristics by Race
 
 ::: {#supptab-missing-ness-by-race}
 ```{r}
