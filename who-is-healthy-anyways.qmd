@@ -365,7 +365,7 @@ Characteristics of participants is summarized in @tbl-table1 .
 
 ```{r}
 #| label: tbl-table1
-#| tbl-cap: Characteristics of Participants Included in the Study
+#| tbl-cap: Characteristics of Participants Included in the Baseline Reference Population
 #TODO this is great, but does not consider survey weights
 #TODO this does not show missingness and value judgments around how we handled it properly.
 
@@ -532,7 +532,7 @@ Characteristics of participants is summarized in @tbl-table1 .
           income_poverty_ratio + home_owner + 
           education_adults + now_attending_school + 
           healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | age_group, table1)
+          | age_group, table1, digits=2)
  
 ```
 
@@ -843,10 +843,10 @@ Our study underscores the significant influence of social determinants of health
           income_poverty_ratio + home_owner + 
           education_adults + now_attending_school + 
           healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | race_text_nhanes, table1)
+          | race_text_nhanes, table1, digits=2)
 ```
 
-Table 1 by self-identified race
+Characteristics of Participants Included in the Baseline Reference Population by self-identified race
 :::
 
 ### Separate Analysis by Biological Sex
