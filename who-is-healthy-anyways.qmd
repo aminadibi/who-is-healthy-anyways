@@ -346,7 +346,7 @@ return(refs)
 
 Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth.
 
-The flow of participants is shown in @fig-flowchart.
+The flow of participants is shown in @fig-flowchart. Participant flow across successive reference populations is shown in @suppfig-flowrefs.
 
 ```{mermaid, include=T}
 %%| label: fig-flowchart
@@ -394,6 +394,21 @@ Characteristics of participants is summarized in @tbl-table1 .
           sex_text   = case_match(sex,
                                      "1" ~ "Male"  ,
                                      "2" ~ "Female" ),
+          time_in_us = case_match(time_in_us, 
+                                  1 ~ "Less than 1 year",
+                                  2 ~ "1 yr., less than 5 yrs.",
+                                  3 ~ "5 yrs., less than 10 yrs.",
+                                  4 ~ "10 yrs., less than 15 yrs.", 
+                                  5 ~ "15 yrs., less than 20 yrs.",
+                                  6 ~ "20 yrs., less than 30 yrs.", 
+                                  7 ~ "30 yrs., less than 40 yrs.", 
+                                  8 ~ "40 yrs., less than 50 yrs.", 
+                                  9 ~ "50 years or more", 
+                                  77 ~ NA,
+                                  99 ~ NA, 
+                                  
+                                  
+                                  ),
           cough_3_month = case_match(cough_3_month,
                                      1 ~ "Yes"  ,
                                      2 ~ "No"),
@@ -506,6 +521,7 @@ Characteristics of participants is summarized in @tbl-table1 .
  label(table1$fev1) <- "FEV1 (L)"
  label(table1$fvc) <- "FVC (L)"
  label(table1$sex_text) <- "Biological Sex at Birth"
+  label(table1$birth_country) <- "Birth Country"
  label(table1$smoker_in_household) <- "Smoker in household"
  label(table1$maternal_smoke) <- "Maternal smoke during pregnancy (For youth)"
  label(table1$mineral_dusts) <- "Occupational Exposure to Mineral Dusts"
@@ -833,17 +849,32 @@ Our study underscores the significant influence of social determinants of health
 
 ### Participant Flow Across Successive Reference Equations
 
-::: {#suppfig-flow-refs}
-
+::: {#suppfig-flowrefs}
 Flow of participants across different reference equations
+
 ```{mermaid, include=T}
 flowchart TD
-    A0[n=2,785] -- ref1 -- A1[]
-    Y0[n=2,058] -- ref1 -- Y1[]
+    A1["Adults, n=2785"] -- Excluded those with occupational exposures --> A2[1566]
+    A2["1566"] -- Excluded those not physically active --> A3[1108]
+    A3[1108] -- Excluded those with maternal smoking exposure --> A4[1108]
+    A4[1108] -- Excluded those with second-hand smoking exposure --> A5[1055]
+    A5[1055] -- Excluded obese individuals --> A6[714]
+    A6[714] -- Excluded those who did not own thier home --> A7[502]
+    A7[502] -- Excluded those without health insurance --> A8[461]
+    A8[461] -- Excluded those who did not ever attend college --> A9[378]
+    A9[378] -- Excluded those with self-evaluated unhealthy diet --> A10[341]
+    Y1["Youth, n=2,058"] -- Excluded those with occupational exposures --> Y2[1951]
+    Y2[1951] -- Excluded those not physically active --> Y3[1795]
+    Y3[1795] -- Excluded with maternal smoking exposure --> Y4[1547]
+    Y4[1547] -- Excluded those with second-hand smoking exposure --> Y5[1357]
+    Y5[1357] -- Excluded obese individuals --> Y6[1278]
+    Y6[1278] -- Excluded those who did not own thier home --> Y7[825]
+    Y7[825] -- Excluded those without health insurance --> Y8[783]
+    Y8[783] -- Excluded those who do not attend school --> Y9[774]
+    Y9[774] -- Excluded those with self-evaluated unhealthy diet --> Y10[758]
 
 ```
 :::
-
 
 ### Participants characteristics by Race
 
@@ -852,6 +883,7 @@ flowchart TD
  
  table1(~ age + race_text_nhanes + sex_text + 
           fev1 + fvc +
+          birth_country + 
           smoker_in_household + maternal_smoke +
           mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
           income_poverty_ratio + home_owner + 
