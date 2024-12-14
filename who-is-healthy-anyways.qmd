@@ -368,6 +368,8 @@ Characteristics of participants is summarized in @tbl-table1 .
 #| tbl-cap: Characteristics of Participants Included in the Study
 #TODO this is great, but does not consider survey weights
 #TODO this does not show missingness and value judgments around how we handled it properly.
+
+ 
  table1 <- readRDS("nhanes_2007_2012.rds") %>%
     mutate(fev1 = fev1_pre/1000,
            fvc  = fvc_pre/1000) %>%
@@ -498,6 +500,30 @@ Characteristics of participants is summarized in @tbl-table1 .
                (healthy_diet==2) | 
                (healthy_diet==3)))
          ) 
+ 
+ label(table1$race_text_nhanes) <- "Race and Ethnicity"
+ label(table1$age) <- "Age (years)"
+ label(table1$fev1) <- "FEV1 (L)"
+ label(table1$fvc) <- "FVC (L)"
+ label(table1$sex_text) <- "Biological Sex at Birth"
+ label(table1$smoker_in_household) <- "Smoker in household"
+ label(table1$maternal_smoke) <- "Maternal smoke during pregnancy (For youth)"
+ label(table1$mineral_dusts) <- "Occupational Exposure to Mineral Dusts"
+ label(table1$organic_dusts) <- "Occupational Exposure to Organic Dusts"
+ label(table1$exhaust_fumes) <- "Occupational Exposure to Exhaust Fumes"
+ label(table1$other_fumes) <- "Occupational Exposure to Other Fumes"
+ label(table1$education_adults) <- "Education Level for Adults"
+ label(table1$now_attending_school) <- "Currently Attending School (for youth)"
+ label(table1$healthy_diet) <- "Self-evaluated Diet Health"
+ label(table1$vigorous_work) <- "Vigorous Activity at Work (10 min/week)"
+ label(table1$vigorous_recreational) <- "Recreational Vigorous Activity (10 min/week)"
+ label(table1$moderate_work) <- "Moderate Activity at Work (10 min/week)"
+ label(table1$moderate_recreational) <- "Recreational Moderate Activity (10 min/week)"
+ label(table1$bmi) <- "Body Mass Index"
+ label(table1$income_poverty_ratio) <- "Income to Poverty Ratio"
+ label(table1$home_owner) <- "Home Owner"
+ label(table1$has_insurance) <- "Health Insurance"
+ 
  
  table1(~ age + race_text_nhanes + sex_text + 
           fev1 + fvc +
@@ -809,6 +835,7 @@ Our study underscores the significant influence of social determinants of health
 
 ::: {#supptab-missing-ness-by-race}
 ```{r}
+ 
  table1(~ age + race_text_nhanes + sex_text + 
           fev1 + fvc +
           smoker_in_household + maternal_smoke +
