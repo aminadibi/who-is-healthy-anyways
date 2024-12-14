@@ -12,9 +12,9 @@
 <meta name="author" content="Don Sin">
 <meta name="author" content="Peter Loewen">
 <meta name="author" content="Mohsen Sadatsafavi">
-<meta name="dcterms.date" content="2024-12-11">
+<meta name="dcterms.date" content="2024-12-14">
 
-<title>Who is healthy anyways? The effect of health disparities on racial gaps in lung function</title>
+<title>Who is healthy anyways? The contribution of measurable social determinants to effect of health disparities on racial gaps in lung function</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,6 +59,9 @@ div.csl-indent {
 <script src="who-is-healthy-anyways_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="who-is-healthy-anyways_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="who-is-healthy-anyways_files/libs/bootstrap/bootstrap-973236bd072d72a04ee9cd82dcc9cb29.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="who-is-healthy-anyways_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="who-is-healthy-anyways_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="who-is-healthy-anyways_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <link href="who-is-healthy-anyways_files/libs/table1-1.0/table1_defaults.css" rel="stylesheet">
 
 
@@ -96,7 +99,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Who is healthy anyways? The effect of health disparities on racial gaps in lung function</h1>
+<h1 class="title">Who is healthy anyways? The contribution of measurable social determinants to effect of health disparities on racial gaps in lung function</h1>
 </div>
 
 
@@ -172,7 +175,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 11, 2024</p>
+      <p class="date">December 14, 2024</p>
     </div>
   </div>
   
@@ -186,20 +189,20 @@ div.csl-indent {
 
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<p><strong>RATIONALE:</strong> Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. We hypothesized that measurable disparities will help explain racial gaps in lung function.</p>
-<p><strong>METHODS:</strong> We defined reference populations from 18,359 Black and White NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with occupational exposure to dust/fumes, maternal tobacco use, second-hand smoke exposure,obesity, low physical activity, unhealthy diet, self-assessed poor health, and home ownership. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV<sub>1</sub> and FVC between Black and White adults (≥20) and youth (&lt;20).</p>
-<p><strong>RESULTS:</strong> From the base reference population to the most restrictive, the percentage of Black participants decreased from 20% to 16% in youth and 14% to 7% in adults. The racial gap in lung function was reduced from 0.40 L (95%CI 0.36-0.43) to 0.31 L (95%CI 0.26-0.36) in FEV<sub>1</sub> and from 0.48 L (95%CI 0.44-0.51) to 0.36 (95%CI 0.30-0.42) in FVC in youth but increased in adults.</p>
+<p><strong>RATIONALE:</strong> Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. Previous studies on the racial gap in lung function between White and Black Americans have attributed 35-39% of the gap in adults to sitting height, 2.5-7.5% to poverty, and 2-4.7% to education. In children, sitting height reportedly accounted for 42-53% of the racial gap, while diet and socio-economic accounted for 7-10% of the gap. We hypothesized that disproportionate impact of environmental and social exposures that is measurable in NAHNES data could help explain a larger proportion of racial gaps in lung function than previously reported. Quantifying the contribution of measurable disparities to racial differences in lung function can inform the debate on the proper assessment of lung function impairment across racial groups.</p>
+<p><strong>METHODS:</strong> We defined reference populations from 18,359 Black and White NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV<sub>1</sub> and FVC between Black and White adults (≥20) and youth (&lt;20).</p>
+<p><strong>RESULTS:</strong> From the base reference population to the most restrictive, the percentage of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults. The racial gap in FEV<sub>1</sub> and FVC was reduced by 25% and 26% in children and youth, and by 26% and 19% in adults.</p>
 <p><strong>CONCLUSIONS:</strong> The disparities investigated herein explain up to 25% of the racial gap in lung function among American youth. Further research on adults is required.</p>
 <hr>
 </section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>Racial gaps in measures of lung function have been known since late 18th century. For more than a hundred years, pro-slavery scientists in the US weaponized the lower observed lung function in Black people to argue that Black bodies were inferior and justify White supremacy <span class="citation" data-cites="braun2023">[<a href="#ref-braun2023" role="doc-biblioref">1</a>]</span>. This scientifically racist view was eventually replaced with the notion of innate but benign racial differences in lung function, likely attributable to anthropometric differences. In the twentieth century and with the growing adoption of pre-employment spirometry as a test of fitness for certain workers, occupation standards in the US proposed race-based adjustment of spirometry results to prevent hiring discrimination against Black people <span class="citation" data-cites="townsend2022">[<a href="#ref-townsend2022" role="doc-biblioref">2</a>]</span>. In 2005, the American Thoracic Society (ATS) and the European Respiratory Society (ERS) started recommending race-specific reference equations for interpreting pulmonary function tests <span class="citation" data-cites="pellegrino2005">[<a href="#ref-pellegrino2005" role="doc-biblioref">3</a>]</span>. In the past two decades, race-based lung function reference values have been widely used to guide diagnosis, severity grading, and management of lung diseases, decide priority for lung transplant surgery, as a fitness for employment eligibility in some industries, and to monitor occupational health and adjudicate insurance claims <span class="citation" data-cites="bhakta2023 stanojevic2021">[<a href="#ref-bhakta2023" role="doc-biblioref">4</a>, <a href="#ref-stanojevic2021" role="doc-biblioref">5</a>]</span>.</p>
-<p>In recent years, increased awareness of the history of structural racism and disparities affecting racialized populations has led to calls to revisit race-based equations in medicine <span class="citation" data-cites="vyas2020">[<a href="#ref-vyas2020" role="doc-biblioref">6</a>]</span>. Of note is the growing body of literature suggesting that racialized populations experience a disproportionate level of harmful environmental exposures that might hinder lung growth and lower lung function <span class="citation" data-cites="marciniuk2023">[<a href="#ref-marciniuk2023" role="doc-biblioref">7</a>]</span>.</p>
-<p>Spirometry reference equations are developed with data from from “healthy” volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases <span class="citation" data-cites="quanjer2012 bowerman2023">[<a href="#ref-quanjer2012" role="doc-biblioref">8</a>, <a href="#ref-bowerman2023" role="doc-biblioref">9</a>]</span>. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.</p>
-<p>The effects of social determinants of health (SDoH) on lung function have been discussed in the literature for decades. The 1991 ATS official statements on the interpretative strategies for lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as the main sources of between-individual variability in lung function<span class="citation" data-cites="lungfun1991">[<a href="#ref-lungfun1991" role="doc-biblioref">10</a>]</span>. The statement also mentions racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesizes that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors <span class="citation" data-cites="lungfun1991">[<a href="#ref-lungfun1991" role="doc-biblioref">10</a>]</span>. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors<span class="citation" data-cites="becklake1986">[<a href="#ref-becklake1986" role="doc-biblioref">11</a>]</span>. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.</p>
-<p>Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population<span class="citation" data-cites="holland2022">[<a href="#ref-holland2022" role="doc-biblioref">12</a>]</span>, one focused on adults<span class="citation" data-cites="harik-khan2001">[<a href="#ref-harik-khan2001" role="doc-biblioref">13</a>]</span> and one on children<span class="citation" data-cites="harik-khan2004">[<a href="#ref-harik-khan2004" role="doc-biblioref">14</a>]</span>. The study on adults attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education <span class="citation" data-cites="harik-khan2001">[<a href="#ref-harik-khan2001" role="doc-biblioref">13</a>]</span>. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences <span class="citation" data-cites="harik-khan2004">[<a href="#ref-harik-khan2004" role="doc-biblioref">14</a>]</span>. However, these studies consider a limited set of social exposures, typically comprised of poverty index, BMI, education, employment, and household size and were conducted using older US National Health and Nutrition Examination Survey (NHANES) III survey data (1988–1994).</p>
-<p>We hypothesized that accounting for a more comprehensive set of social and environmental exposures in newer iterations of NHANES data could explain a larger proportion of racial gaps in lung function than previously reported. We have presented a preliminary version of these results in the 2024 European Respiratory Congress in Vienna <span class="citation" data-cites="adibi2024">[<a href="#ref-adibi2024" role="doc-biblioref">15</a>]</span>.</p>
+<p>Racial gaps in measures of lung function have been documented since the late 18<sup>th</sup> century. For more than a hundred years, pro-slavery scientists in the US weaponized the lower observed lung function in Black people to justify White supremacy <span class="citation" data-cites="braun2023">[<a href="#ref-braun2023" role="doc-biblioref">1</a>]</span>. This racist view was eventually replaced with the notion of innate but benign racial differences in lung function, likely attributable to anthropometric differences. In the twentieth century and with the growing adoption of pre-employment spirometry as a test of fitness for certain workers, occupation standards in the US proposed race-based adjustment of spirometry results to prevent hiring discrimination against Black people <span class="citation" data-cites="townsend2022">[<a href="#ref-townsend2022" role="doc-biblioref">2</a>]</span>. Following this, in 2005, the American Thoracic Society (ATS) and the European Respiratory Society (ERS) recommended race-specific reference equations for interpreting pulmonary function tests <span class="citation" data-cites="pellegrino2005">[<a href="#ref-pellegrino2005" role="doc-biblioref">3</a>]</span>. In the past two decades, race-based lung function reference values have been widely used to guide diagnosis, assessment, and management of lung diseases, decide priority for lung transplant surgery, as a fitness for employment eligibility in some industries, and to monitor occupational health and adjudicate insurance claims.</p>
+<p>In recent years, increased awareness of the history of structural racism and disparities affecting racialized populations has led to calls to revisit race-based equations in medicine and examine their potential to perpetuate bias and exacerbate existing health disparities <span class="citation" data-cites="vyas2020">[<a href="#ref-vyas2020" role="doc-biblioref">4</a>]</span>. Of note is the growing body of literature suggesting that racialized populations experience a disproportionate level of harmful environmental exposures that might hinder lung growth and lower lung function <span class="citation" data-cites="marciniuk2023">[<a href="#ref-marciniuk2023" role="doc-biblioref">5</a>]</span>.</p>
+<p>Spirometry reference equations are developed with data from “healthy” volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases <span class="citation" data-cites="quanjer2012 bowerman2023">[<a href="#ref-quanjer2012" role="doc-biblioref">6</a>, <a href="#ref-bowerman2023" role="doc-biblioref">7</a>]</span>. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.</p>
+<p>Indeed, the effects of social determinants of health (SDoH) on lung function have been discussed in the literature for decades. The 1991 ATS official statements on the interpretative strategies for lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as the main sources of between-individual variability in lung function<span class="citation" data-cites="lungfun1991">[<a href="#ref-lungfun1991" role="doc-biblioref">8</a>]</span>. The statement also mentions racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesizes that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors <span class="citation" data-cites="lungfun1991">[<a href="#ref-lungfun1991" role="doc-biblioref">8</a>]</span>. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors<span class="citation" data-cites="becklake1986">[<a href="#ref-becklake1986" role="doc-biblioref">9</a>]</span>. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.</p>
+<p>Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population<span class="citation" data-cites="holland2022">[<a href="#ref-holland2022" role="doc-biblioref">10</a>]</span>, one focused on adults<span class="citation" data-cites="harik-khan2001">[<a href="#ref-harik-khan2001" role="doc-biblioref">11</a>]</span> and one on children<span class="citation" data-cites="harik-khan2004">[<a href="#ref-harik-khan2004" role="doc-biblioref">12</a>]</span>. The study on adults attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education <span class="citation" data-cites="harik-khan2001">[<a href="#ref-harik-khan2001" role="doc-biblioref">11</a>]</span>. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences <span class="citation" data-cites="harik-khan2004">[<a href="#ref-harik-khan2004" role="doc-biblioref">12</a>]</span>. However, these studies consider a limited set of social exposures, typically comprised of poverty index, BMI, education, employment, and household size and were conducted using older US National Health and Nutrition Examination Survey (NHANES) III survey data (1988–1994).</p>
+<p>Our study focuses on whether the proportion of variability that was historically attributed to race can be explained by social determinants of health. We hypothesized that accounting for a more comprehensive set of social and environmental exposures in newer iterations of NHANES data could explain a larger proportion of racial gaps in lung function than previously reported. We have presented a preliminary version of these results in the 2024 European Respiratory Congress in Vienna <span class="citation" data-cites="adibi2024">[<a href="#ref-adibi2024" role="doc-biblioref">13</a>]</span>.</p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -211,7 +214,33 @@ div.csl-indent {
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth. Characteristics of participants is summarized in <a href="#tbl-table1" class="quarto-xref">Table&nbsp;1</a> .</p>
+<p>Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth.</p>
+<p>The flow of participants is shown in <a href="#fig-flowchart" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-flowchart" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-flowchart">flowchart TD
+    B[n=30,442] -- excluded missing FEV1 or FVC --&gt; C[n=20,050]
+    C -- excluded low quality spirometry --&gt; D[n=17,032]
+    D -- included patients self-identified as Black or White --&gt; E[n=10,457]
+    E -- excluded smokers, and those with respiratory diagnoses or symptoms --&gt; F[n=4,843]
+    F -- Adults --&gt; A0[n=2,785]
+    F -- Youth  --&gt; Y0[n=2,058]
+
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Flow of participants
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Characteristics of participants is summarized in <a href="#tbl-table1" class="quarto-xref">Table&nbsp;1</a> .</p>
 <div class="cell">
 <div id="tbl-table1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -232,11 +261,11 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 <tr class="header">
 <th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Adults<br>
-<span class="stratn">(N=7533)</span></span></th>
+<span class="stratn">(N=2785)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Youth<br>
-<span class="stratn">(N=2924)</span></span></th>
+<span class="stratn">(N=2058)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
-<span class="stratn">(N=10457)</span></span></th>
+<span class="stratn">(N=4843)</span></span></th>
 </tr>
 </thead>
 <tbody>
@@ -248,15 +277,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>47.4 (16.4)</td>
-<td>12.5 (3.93)</td>
-<td>37.6 (21.0)</td>
+<td>45.8 (16.2)</td>
+<td>12.1 (3.84)</td>
+<td>31.5 (20.9)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">47.0 [20.0, 79.0]</td>
+<td class="lastrow">45.0 [20.0, 79.0]</td>
 <td class="lastrow">12.0 [6.00, 19.0]</td>
-<td class="lastrow">37.0 [6.00, 79.0]</td>
+<td class="lastrow">25.0 [6.00, 79.0]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">race_text_nhanes</td>
@@ -266,15 +295,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">Non-Hispanic Black</td>
-<td>2420 (32.1%)</td>
-<td>1311 (44.8%)</td>
-<td>3731 (35.7%)</td>
+<td>968 (34.8%)</td>
+<td>921 (44.8%)</td>
+<td>1889 (39.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Non-Hispanic White</td>
-<td class="lastrow">5113 (67.9%)</td>
-<td class="lastrow">1613 (55.2%)</td>
-<td class="lastrow">6726 (64.3%)</td>
+<td class="lastrow">1817 (65.2%)</td>
+<td class="lastrow">1137 (55.2%)</td>
+<td class="lastrow">2954 (61.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">sex_text</td>
@@ -284,15 +313,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">Female</td>
-<td>3864 (51.3%)</td>
-<td>1450 (49.6%)</td>
-<td>5314 (50.8%)</td>
+<td>1559 (56.0%)</td>
+<td>1073 (52.1%)</td>
+<td>2632 (54.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Male</td>
-<td class="lastrow">3669 (48.7%)</td>
-<td class="lastrow">1474 (50.4%)</td>
-<td class="lastrow">5143 (49.2%)</td>
+<td class="lastrow">1226 (44.0%)</td>
+<td class="lastrow">985 (47.9%)</td>
+<td class="lastrow">2211 (45.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">fev1</td>
@@ -302,15 +331,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>3.07 (0.920)</td>
-<td>2.68 (1.04)</td>
-<td>2.96 (0.971)</td>
+<td>3.18 (0.883)</td>
+<td>2.61 (1.00)</td>
+<td>2.93 (0.976)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">3.01 [0.476, 6.92]</td>
-<td class="lastrow">2.55 [0.816, 6.14]</td>
-<td class="lastrow">2.91 [0.476, 6.92]</td>
+<td class="lastrow">3.10 [0.815, 6.92]</td>
+<td class="lastrow">2.44 [0.816, 6.14]</td>
+<td class="lastrow">2.88 [0.815, 6.92]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">fvc</td>
@@ -320,87 +349,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>3.97 (1.11)</td>
-<td>3.15 (1.24)</td>
-<td>3.74 (1.20)</td>
+<td>3.99 (1.08)</td>
+<td>3.03 (1.17)</td>
+<td>3.58 (1.22)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">3.88 [1.10, 8.08]</td>
-<td class="lastrow">3.00 [1.01, 7.21]</td>
-<td class="lastrow">3.69 [1.01, 8.08]</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_100_smoke</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>3775 (50.1%)</td>
-<td>0 (0%)</td>
-<td>3775 (36.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>3756 (49.9%)</td>
-<td>0 (0%)</td>
-<td>3756 (35.9%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2 (0.0%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">2926 (28.0%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">current_smoke</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">Everyday</td>
-<td>1659 (22.0%)</td>
-<td>0 (0%)</td>
-<td>1659 (15.9%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Not at all</td>
-<td>1840 (24.4%)</td>
-<td>0 (0%)</td>
-<td>1840 (17.6%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">Some days</td>
-<td>256 (3.4%)</td>
-<td>0 (0%)</td>
-<td>256 (2.4%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">3778 (50.2%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">6702 (64.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel firstrow">smoker</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>3817 (50.7%)</td>
-<td>164 (5.6%)</td>
-<td>3981 (38.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">No</td>
-<td class="lastrow">3716 (49.3%)</td>
-<td class="lastrow">2760 (94.4%)</td>
-<td class="lastrow">6476 (61.9%)</td>
+<td class="lastrow">3.87 [1.28, 7.93]</td>
+<td class="lastrow">2.87 [1.02, 7.16]</td>
+<td class="lastrow">3.51 [1.02, 7.93]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">smoker_in_household</td>
@@ -410,21 +367,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>5949 (79.0%)</td>
-<td>2341 (80.1%)</td>
-<td>8290 (79.3%)</td>
+<td>2624 (94.2%)</td>
+<td>1679 (81.6%)</td>
+<td>4303 (88.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>1559 (20.7%)</td>
-<td>571 (19.5%)</td>
-<td>2130 (20.4%)</td>
+<td>151 (5.4%)</td>
+<td>370 (18.0%)</td>
+<td>521 (10.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">25 (0.3%)</td>
-<td class="lastrow">12 (0.4%)</td>
-<td class="lastrow">37 (0.4%)</td>
+<td class="lastrow">10 (0.4%)</td>
+<td class="lastrow">9 (0.4%)</td>
+<td class="lastrow">19 (0.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">maternal_smoke</td>
@@ -435,188 +392,20 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 <tr class="odd">
 <td class="rowlabel">No</td>
 <td>0 (0%)</td>
-<td>1718 (58.8%)</td>
-<td>1718 (16.4%)</td>
+<td>1280 (62.2%)</td>
+<td>1280 (26.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
 <td>0 (0%)</td>
-<td>357 (12.2%)</td>
-<td>357 (3.4%)</td>
+<td>260 (12.6%)</td>
+<td>260 (5.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">7533 (100%)</td>
-<td class="lastrow">849 (29.0%)</td>
-<td class="lastrow">8382 (80.2%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_asthma</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>6351 (84.3%)</td>
-<td>2296 (78.5%)</td>
-<td>8647 (82.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>1177 (15.6%)</td>
-<td>625 (21.4%)</td>
-<td>1802 (17.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">5 (0.1%)</td>
-<td class="lastrow">3 (0.1%)</td>
-<td class="lastrow">8 (0.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_bronchitis</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>7064 (93.8%)</td>
-<td>0 (0%)</td>
-<td>7064 (67.6%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>457 (6.1%)</td>
-<td>0 (0%)</td>
-<td>457 (4.4%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">12 (0.2%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">2936 (28.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_emphysema</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>7407 (98.3%)</td>
-<td>0 (0%)</td>
-<td>7407 (70.8%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>120 (1.6%)</td>
-<td>0 (0%)</td>
-<td>120 (1.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">6 (0.1%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">2930 (28.0%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">cough_3_month</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>4255 (56.5%)</td>
-<td>0 (0%)</td>
-<td>4255 (40.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>540 (7.2%)</td>
-<td>0 (0%)</td>
-<td>540 (5.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2738 (36.3%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">5662 (54.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">phlegm_3_month</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>4361 (57.9%)</td>
-<td>0 (0%)</td>
-<td>4361 (41.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>436 (5.8%)</td>
-<td>0 (0%)</td>
-<td>436 (4.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2736 (36.3%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">5660 (54.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">wheezing_past_yr</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>6380 (84.7%)</td>
-<td>2552 (87.3%)</td>
-<td>8932 (85.4%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>1146 (15.2%)</td>
-<td>371 (12.7%)</td>
-<td>1517 (14.5%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">7 (0.1%)</td>
-<td class="lastrow">1 (0.0%)</td>
-<td class="lastrow">8 (0.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">dry_cough_night_past_yr</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>7127 (94.6%)</td>
-<td>2813 (96.2%)</td>
-<td>9940 (95.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>401 (5.3%)</td>
-<td>111 (3.8%)</td>
-<td>512 (4.9%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">5 (0.1%)</td>
-<td class="lastrow">0 (0%)</td>
-<td class="lastrow">5 (0.0%)</td>
+<td class="lastrow">2785 (100%)</td>
+<td class="lastrow">518 (25.2%)</td>
+<td class="lastrow">3303 (68.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">mineral_dusts</td>
@@ -626,21 +415,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>4958 (65.8%)</td>
-<td>406 (13.9%)</td>
-<td>5364 (51.3%)</td>
+<td>2049 (73.6%)</td>
+<td>250 (12.1%)</td>
+<td>2299 (47.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>2421 (32.1%)</td>
-<td>106 (3.6%)</td>
-<td>2527 (24.2%)</td>
+<td>676 (24.3%)</td>
+<td>51 (2.5%)</td>
+<td>727 (15.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">154 (2.0%)</td>
-<td class="lastrow">2412 (82.5%)</td>
-<td class="lastrow">2566 (24.5%)</td>
+<td class="lastrow">60 (2.2%)</td>
+<td class="lastrow">1757 (85.4%)</td>
+<td class="lastrow">1817 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">organic_dusts</td>
@@ -650,21 +439,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>5684 (75.5%)</td>
-<td>411 (14.1%)</td>
-<td>6095 (58.3%)</td>
+<td>2240 (80.4%)</td>
+<td>247 (12.0%)</td>
+<td>2487 (51.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>1707 (22.7%)</td>
-<td>101 (3.5%)</td>
-<td>1808 (17.3%)</td>
+<td>487 (17.5%)</td>
+<td>54 (2.6%)</td>
+<td>541 (11.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">142 (1.9%)</td>
-<td class="lastrow">2412 (82.5%)</td>
-<td class="lastrow">2554 (24.4%)</td>
+<td class="lastrow">58 (2.1%)</td>
+<td class="lastrow">1757 (85.4%)</td>
+<td class="lastrow">1815 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">exhaust_fumes</td>
@@ -674,21 +463,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>5339 (70.9%)</td>
-<td>452 (15.5%)</td>
-<td>5791 (55.4%)</td>
+<td>2179 (78.2%)</td>
+<td>271 (13.2%)</td>
+<td>2450 (50.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>2057 (27.3%)</td>
-<td>60 (2.1%)</td>
-<td>2117 (20.2%)</td>
+<td>549 (19.7%)</td>
+<td>30 (1.5%)</td>
+<td>579 (12.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">137 (1.8%)</td>
-<td class="lastrow">2412 (82.5%)</td>
-<td class="lastrow">2549 (24.4%)</td>
+<td class="lastrow">57 (2.0%)</td>
+<td class="lastrow">1757 (85.4%)</td>
+<td class="lastrow">1814 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">other_fumes</td>
@@ -698,21 +487,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>4973 (66.0%)</td>
-<td>399 (13.6%)</td>
-<td>5372 (51.4%)</td>
+<td>2046 (73.5%)</td>
+<td>248 (12.1%)</td>
+<td>2294 (47.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>2422 (32.2%)</td>
-<td>113 (3.9%)</td>
-<td>2535 (24.2%)</td>
+<td>682 (24.5%)</td>
+<td>53 (2.6%)</td>
+<td>735 (15.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">138 (1.8%)</td>
-<td class="lastrow">2412 (82.5%)</td>
-<td class="lastrow">2550 (24.4%)</td>
+<td class="lastrow">57 (2.0%)</td>
+<td class="lastrow">1757 (85.4%)</td>
+<td class="lastrow">1814 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">income_poverty_ratio</td>
@@ -722,21 +511,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>2.76 (1.68)</td>
-<td>2.27 (1.63)</td>
-<td>2.63 (1.68)</td>
+<td>3.14 (1.65)</td>
+<td>2.34 (1.63)</td>
+<td>2.80 (1.69)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Median [Min, Max]</td>
-<td>2.51 [0, 5.00]</td>
-<td>1.79 [0, 5.00]</td>
-<td>2.31 [0, 5.00]</td>
+<td>3.28 [0, 5.00]</td>
+<td>1.87 [0, 5.00]</td>
+<td>2.71 [0, 5.00]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">486 (6.5%)</td>
-<td class="lastrow">168 (5.7%)</td>
-<td class="lastrow">654 (6.3%)</td>
+<td class="lastrow">183 (6.6%)</td>
+<td class="lastrow">120 (5.8%)</td>
+<td class="lastrow">303 (6.3%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">home_owner</td>
@@ -746,15 +535,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>30 (0.4%)</td>
-<td>16 (0.5%)</td>
-<td>46 (0.4%)</td>
+<td>11 (0.4%)</td>
+<td>10 (0.5%)</td>
+<td>21 (0.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">No</td>
-<td class="lastrow">7503 (99.6%)</td>
-<td class="lastrow">2908 (99.5%)</td>
-<td class="lastrow">10411 (99.6%)</td>
+<td class="lastrow">2774 (99.6%)</td>
+<td class="lastrow">2048 (99.5%)</td>
+<td class="lastrow">4822 (99.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">education_adults</td>
@@ -764,39 +553,39 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">9-11th grade</td>
-<td>1047 (13.9%)</td>
+<td>238 (8.5%)</td>
 <td>0 (0%)</td>
-<td>1047 (10.0%)</td>
+<td>238 (4.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">College graduate or above</td>
-<td>1928 (25.6%)</td>
+<td>1011 (36.3%)</td>
 <td>0 (0%)</td>
-<td>1928 (18.4%)</td>
+<td>1011 (20.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">High school graduate</td>
-<td>1869 (24.8%)</td>
+<td>563 (20.2%)</td>
 <td>0 (0%)</td>
-<td>1869 (17.9%)</td>
+<td>563 (11.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Less than 9th grade</td>
-<td>231 (3.1%)</td>
+<td>56 (2.0%)</td>
 <td>0 (0%)</td>
-<td>231 (2.2%)</td>
+<td>56 (1.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Some college or AA degree</td>
-<td>2455 (32.6%)</td>
+<td>915 (32.9%)</td>
 <td>0 (0%)</td>
-<td>2455 (23.5%)</td>
+<td>915 (18.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">3 (0.0%)</td>
-<td class="lastrow">2924 (100%)</td>
-<td class="lastrow">2927 (28.0%)</td>
+<td class="lastrow">2 (0.1%)</td>
+<td class="lastrow">2058 (100%)</td>
+<td class="lastrow">2060 (42.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">now_attending_school</td>
@@ -807,20 +596,20 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 <tr class="odd">
 <td class="rowlabel">Between grades</td>
 <td>0 (0%)</td>
-<td>427 (14.6%)</td>
-<td>427 (4.1%)</td>
+<td>310 (15.1%)</td>
+<td>310 (6.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">In school</td>
 <td>0 (0%)</td>
-<td>1334 (45.6%)</td>
-<td>1334 (12.8%)</td>
+<td>967 (47.0%)</td>
+<td>967 (20.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">7533 (100%)</td>
-<td class="lastrow">1163 (39.8%)</td>
-<td class="lastrow">8696 (83.2%)</td>
+<td class="lastrow">2785 (100%)</td>
+<td class="lastrow">781 (37.9%)</td>
+<td class="lastrow">3566 (73.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">healthy_diet</td>
@@ -830,39 +619,39 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="odd">
 <td class="rowlabel">Excellent</td>
-<td>707 (9.4%)</td>
-<td>65 (2.2%)</td>
-<td>772 (7.4%)</td>
+<td>292 (10.5%)</td>
+<td>43 (2.1%)</td>
+<td>335 (6.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Fair</td>
-<td>1608 (21.3%)</td>
-<td>194 (6.6%)</td>
-<td>1802 (17.2%)</td>
+<td>494 (17.7%)</td>
+<td>108 (5.2%)</td>
+<td>602 (12.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Good</td>
-<td>3136 (41.6%)</td>
-<td>368 (12.6%)</td>
-<td>3504 (33.5%)</td>
+<td>1208 (43.4%)</td>
+<td>227 (11.0%)</td>
+<td>1435 (29.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Poor</td>
-<td>401 (5.3%)</td>
-<td>42 (1.4%)</td>
-<td>443 (4.2%)</td>
+<td>109 (3.9%)</td>
+<td>22 (1.1%)</td>
+<td>131 (2.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Very good</td>
-<td>1679 (22.3%)</td>
-<td>147 (5.0%)</td>
-<td>1826 (17.5%)</td>
+<td>681 (24.5%)</td>
+<td>95 (4.6%)</td>
+<td>776 (16.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2 (0.0%)</td>
-<td class="lastrow">2108 (72.1%)</td>
-<td class="lastrow">2110 (20.2%)</td>
+<td class="lastrow">1 (0.0%)</td>
+<td class="lastrow">1563 (75.9%)</td>
+<td class="lastrow">1564 (32.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">vigorous_work</td>
@@ -872,21 +661,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>5963 (79.2%)</td>
-<td>1352 (46.2%)</td>
-<td>7315 (70.0%)</td>
+<td>2304 (82.7%)</td>
+<td>901 (43.8%)</td>
+<td>3205 (66.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1570 (20.8%)</td>
-<td>201 (6.9%)</td>
-<td>1771 (16.9%)</td>
+<td>481 (17.3%)</td>
+<td>116 (5.6%)</td>
+<td>597 (12.3%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1371 (46.9%)</td>
-<td class="lastrow">1371 (13.1%)</td>
+<td class="lastrow">1041 (50.6%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">moderate_work</td>
@@ -896,21 +685,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>4467 (59.3%)</td>
-<td>984 (33.7%)</td>
-<td>5451 (52.1%)</td>
+<td>1722 (61.8%)</td>
+<td>651 (31.6%)</td>
+<td>2373 (49.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>3066 (40.7%)</td>
-<td>569 (19.5%)</td>
-<td>3635 (34.8%)</td>
+<td>1063 (38.2%)</td>
+<td>366 (17.8%)</td>
+<td>1429 (29.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1371 (46.9%)</td>
-<td class="lastrow">1371 (13.1%)</td>
+<td class="lastrow">1041 (50.6%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">vigorous_recreational</td>
@@ -920,21 +709,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>5732 (76.1%)</td>
-<td>619 (21.2%)</td>
-<td>6351 (60.7%)</td>
+<td>1944 (69.8%)</td>
+<td>400 (19.4%)</td>
+<td>2344 (48.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1801 (23.9%)</td>
-<td>933 (31.9%)</td>
-<td>2734 (26.1%)</td>
+<td>841 (30.2%)</td>
+<td>617 (30.0%)</td>
+<td>1458 (30.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1372 (46.9%)</td>
-<td class="lastrow">1372 (13.1%)</td>
+<td class="lastrow">1041 (50.6%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">moderate_recreational</td>
@@ -944,21 +733,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>4168 (55.3%)</td>
-<td>767 (26.2%)</td>
-<td>4935 (47.2%)</td>
+<td>1404 (50.4%)</td>
+<td>489 (23.8%)</td>
+<td>1893 (39.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>3364 (44.7%)</td>
-<td>786 (26.9%)</td>
-<td>4150 (39.7%)</td>
+<td>1381 (49.6%)</td>
+<td>528 (25.7%)</td>
+<td>1909 (39.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1 (0.0%)</td>
-<td class="lastrow">1371 (46.9%)</td>
-<td class="lastrow">1372 (13.1%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1041 (50.6%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">bmi</td>
@@ -968,21 +757,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>29.4 (7.06)</td>
-<td>21.8 (6.13)</td>
-<td>27.3 (7.62)</td>
+<td>29.4 (6.89)</td>
+<td>21.2 (5.74)</td>
+<td>25.9 (7.59)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Median [Min, Max]</td>
-<td>28.3 [13.2, 84.9]</td>
-<td>20.5 [12.5, 57.1]</td>
-<td>26.3 [12.5, 84.9]</td>
+<td>28.4 [15.2, 73.4]</td>
+<td>20.0 [12.5, 54.4]</td>
+<td>25.0 [12.5, 73.4]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">34 (0.5%)</td>
-<td class="lastrow">23 (0.8%)</td>
-<td class="lastrow">57 (0.5%)</td>
+<td class="lastrow">8 (0.3%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">23 (0.5%)</td>
 </tr>
 </tbody>
 </table>
@@ -993,8 +782,7 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 </figure>
 </div>
 </div>
-<!--The flow of participants is shown in @fig-flowchart.-->
-<p>From the base reference population to the most restrictive, the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in <a href="#fig-racialgap" class="quarto-xref">Figure&nbsp;1</a>. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.</p>
+<p>From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in <a href="#fig-racialgap" class="quarto-xref">Figure&nbsp;2</a>. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-racialgap" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1003,7 +791,7 @@ Table&nbsp;1: Characteristics of Participants Included in the Study
 <img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Changes in lung function racial gaps in successively more restrictive reference populations
+Figure&nbsp;2: Changes in lung function racial gaps in successively more restrictive reference populations
 </figcaption>
 </figure>
 </div>
@@ -1017,7 +805,7 @@ Figure&nbsp;1: Changes in lung function racial gaps in successively more restric
 </section>
 <section id="home-ownership-bmi-and-occupation" class="level4">
 <h4 class="anchored" data-anchor-id="home-ownership-bmi-and-occupation">Home Ownership, BMI, and Occupation</h4>
-<p>After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in <a href="#fig-racialgap-home-bmi-job" class="quarto-xref">Figure&nbsp;2</a>. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.</p>
+<p>After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in <a href="#fig-racialgap-home-bmi-job" class="quarto-xref">Figure&nbsp;3</a>. After limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes the racial gap in FEV<sub>1</sub> and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-racialgap-home-bmi-job" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1026,7 +814,7 @@ Figure&nbsp;1: Changes in lung function racial gaps in successively more restric
 <img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-home-bmi-job-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-home-bmi-job-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
+Figure&nbsp;3: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
 </figcaption>
 </figure>
 </div>
@@ -1038,13 +826,13 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
-<p>Our results reinforce the critical role of environmental, social, and lifestyle factors in shaping health outcomes and suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. Our findings attribute a higher proportion of racial differences in lung function to social and environmental exposures than previously reported <span class="citation" data-cites="harik-khan2001 harik-khan2004">[<a href="#ref-harik-khan2001" role="doc-biblioref">13</a>, <a href="#ref-harik-khan2004" role="doc-biblioref">14</a>]</span>.</p>
-<p>The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV<sub>1</sub> explained by the studied exposures) suggests that US-specific systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with several studies have reported significantly higher health burdens in US-born racialized people compared to racialized immigrants to the US <span class="citation" data-cites="doamekpor2015 brown2017">[<a href="#ref-doamekpor2015" role="doc-biblioref">16</a>, <a href="#ref-brown2017" role="doc-biblioref">17</a>]</span> and the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities in general <span class="citation" data-cites="nardone2020 schuyler2022 gaffney2021 levy2018">[<a href="#ref-nardone2020" role="doc-biblioref">18</a>–<a href="#ref-levy2018" role="doc-biblioref">21</a>]</span>.</p>
+<p>Our results reinforce the critical role of environmental, social, and lifestyle factors in shaping health outcomes and suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. Our findings attribute a higher proportion of racial differences in lung function to social and environmental exposures than previously reported <span class="citation" data-cites="harik-khan2001 harik-khan2004">[<a href="#ref-harik-khan2001" role="doc-biblioref">11</a>, <a href="#ref-harik-khan2004" role="doc-biblioref">12</a>]</span>.</p>
+<p>The higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV<sub>1</sub> explained by the studied exposures) suggests that US-specific systemic factors such as racism, segregation, red-zoning, and other socio-economic inequities profoundly impact lung health. This aligns with several studies have reported significantly higher health burdens in US-born racialized people compared to racialized immigrants to the US <span class="citation" data-cites="doamekpor2015 brown2017">[<a href="#ref-doamekpor2015" role="doc-biblioref">14</a>, <a href="#ref-brown2017" role="doc-biblioref">15</a>]</span> and the growing body of literature that implicates historical and structural inequities, such as redlining and differential environmental exposures, in perpetuating health disparities among racialized communities in general <span class="citation" data-cites="nardone2020 schuyler2022 gaffney2021 levy2018">[<a href="#ref-nardone2020" role="doc-biblioref">16</a>–<a href="#ref-levy2018" role="doc-biblioref">19</a>]</span>.</p>
 <p>Our analysis revealed that excluding individuals based on home ownership, BMI, and occupational exposures accounts for a significant portion of the explainable racial gap, indicating that financial stability, physical health, and work-related factors are pivotal contributors to lung function disparities.</p>
 <p>Our study highlights the necessity for further research to comprehensively understand the interplay between SDoH, environmental exposures, and lung function across different populations. Future studies should aim to incorporate a wider array of SDoH, such as stress levels, access to healthcare, neighborhood safety, and intergenerational wealth effects. There is also a need for longitudinal studies that can elucidate causal pathways and the potential impact of policy changes on reducing health disparities. Moreover, exploring the intersectionality of race, gender identity, and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global strategies to address lung health disparities.</p>
 <p>Certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. Incomplete understand and limited nature of available data also limits our assessment of complex social and environmental exposures, such as effects of racism, intergenerational wealth effects, life-course exposure to pollutants, violence, stress, and allostatic load. Additionally, the absence of data on gender identity prevented us from analyzing potential differential effects.</p>
 <!--[Does SDoH affect FEV1 beyond race?]-->
-<p>These findings have important implications for clinical practice and policy. Our results show a larger than previously known effect of complex exposures on racial gaps in lung function, and the true proportion is likely higher than our estimates. However, the racial gaps in lung function cannot yet be completely explained by disparities in complex exposures. The previous guidelines that recommended race-specific reference equations for pulmonary function testing risk assumed racial gaps in lung function were normal and reinforced inequities by perpetuating the notion of race as a biological determinant, rather than acknowledging the role of modifiable social factors<span class="citation" data-cites="bhakta2023">[<a href="#ref-bhakta2023" role="doc-biblioref">4</a>]</span>. However, the new race-averaged reference equations also fail to account for our understanding of the the effect size of social and environmental exposures on lung function.</p>
+<p>These findings have important implications for clinical practice and policy. Our results show a larger than previously known effect of complex exposures on racial gaps in lung function, and the true proportion is likely higher than our estimates. However, the racial gaps in lung function cannot yet be completely explained by disparities in complex exposures. The previous guidelines that recommended race-specific reference equations for pulmonary function testing risk assumed racial gaps in lung function were normal and reinforced inequities by perpetuating the notion of race as a biological determinant, rather than acknowledging the role of modifiable social factors<span class="citation" data-cites="bhakta2023">[<a href="#ref-bhakta2023" role="doc-biblioref">20</a>]</span>. However, the new race-averaged reference equations also fail to account for our understanding of the the effect size of social and environmental exposures on lung function.</p>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
@@ -1062,59 +850,56 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 <div id="ref-pellegrino2005" class="csl-entry" role="listitem">
 <div class="csl-left-margin">3 </div><div class="csl-right-inline">Pellegrino R. Interpretative strategies for lung function tests. <em>European Respiratory Journal</em> [Internet] 2005; 26: 948–968. Available from: <a href="http://dx.doi.org/10.1183/09031936.05.00035205">http://dx.doi.org/10.1183/09031936.05.00035205</a>.</div>
 </div>
-<div id="ref-bhakta2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4 </div><div class="csl-right-inline">Bhakta NR, Bime C, Kaminsky DA, <em>et al.</em> Race and Ethnicity in Pulmonary Function Test Interpretation: An Official American Thoracic Society Statement. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2023; 207: 978–995. Available from: <a href="http://dx.doi.org/10.1164/rccm.202302-0310ST">http://dx.doi.org/10.1164/rccm.202302-0310ST</a>.</div>
-</div>
-<div id="ref-stanojevic2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">5 </div><div class="csl-right-inline">Stanojevic S, Kaminsky DA, Miller MR, <em>et al.</em> ERS/ATS technical standard on interpretive strategies for routine lung function tests. <em>European Respiratory Journal</em> [Internet] 2021; 60: 2101499. Available from: <a href="http://dx.doi.org/10.1183/13993003.01499-2021">http://dx.doi.org/10.1183/13993003.01499-2021</a>.</div>
-</div>
 <div id="ref-vyas2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">6 </div><div class="csl-right-inline">Vyas DA, Eisenstein LG, Jones DS. Hidden in Plain Sight <span></span> Reconsidering the Use of Race Correction in Clinical Algorithms. Malina D, ed. <em>New England Journal of Medicine</em> [Internet] 2020; 383: 874–882. Available from: <a href="http://dx.doi.org/10.1056/NEJMms2004740">http://dx.doi.org/10.1056/NEJMms2004740</a>.</div>
+<div class="csl-left-margin">4 </div><div class="csl-right-inline">Vyas DA, Eisenstein LG, Jones DS. Hidden in Plain Sight <span></span> Reconsidering the Use of Race Correction in Clinical Algorithms. Malina D, ed. <em>New England Journal of Medicine</em> [Internet] 2020; 383: 874–882. Available from: <a href="http://dx.doi.org/10.1056/NEJMms2004740">http://dx.doi.org/10.1056/NEJMms2004740</a>.</div>
 </div>
 <div id="ref-marciniuk2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">7 </div><div class="csl-right-inline">Marciniuk DD, Becker EA, Kaminsky DA, <em>et al.</em> Effect of Race and Ethnicity on Pulmonary Function Testing Interpretation. <em>CHEST</em> [Internet] 2023; 164: 461–475. Available from: <a href="http://dx.doi.org/10.1016/j.chest.2023.03.026">http://dx.doi.org/10.1016/j.chest.2023.03.026</a>.</div>
+<div class="csl-left-margin">5 </div><div class="csl-right-inline">Marciniuk DD, Becker EA, Kaminsky DA, <em>et al.</em> Effect of Race and Ethnicity on Pulmonary Function Testing Interpretation. <em>CHEST</em> [Internet] 2023; 164: 461–475. Available from: <a href="http://dx.doi.org/10.1016/j.chest.2023.03.026">http://dx.doi.org/10.1016/j.chest.2023.03.026</a>.</div>
 </div>
 <div id="ref-quanjer2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">8 </div><div class="csl-right-inline">Quanjer PH, Stanojevic S, Cole TJ, <em>et al.</em> Multi-ethnic reference values for spirometry for the 3<span></span>95-yr age range: the global lung function 2012 equations. <em>European Respiratory Journal</em> [Internet] 2012; 40: 1324–1343. Available from: <a href="http://dx.doi.org/10.1183/09031936.00080312">http://dx.doi.org/10.1183/09031936.00080312</a>.</div>
+<div class="csl-left-margin">6 </div><div class="csl-right-inline">Quanjer PH, Stanojevic S, Cole TJ, <em>et al.</em> Multi-ethnic reference values for spirometry for the 3<span></span>95-yr age range: the global lung function 2012 equations. <em>European Respiratory Journal</em> [Internet] 2012; 40: 1324–1343. Available from: <a href="http://dx.doi.org/10.1183/09031936.00080312">http://dx.doi.org/10.1183/09031936.00080312</a>.</div>
 </div>
 <div id="ref-bowerman2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">9 </div><div class="csl-right-inline">Bowerman C, Bhakta NR, Brazzale D, <em>et al.</em> A Race-neutral Approach to the Interpretation of Lung Function Measurements. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2023; 207: 768–774. Available from: <a href="http://dx.doi.org/10.1164/rccm.202205-0963OC">http://dx.doi.org/10.1164/rccm.202205-0963OC</a>.</div>
+<div class="csl-left-margin">7 </div><div class="csl-right-inline">Bowerman C, Bhakta NR, Brazzale D, <em>et al.</em> A Race-neutral Approach to the Interpretation of Lung Function Measurements. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2023; 207: 768–774. Available from: <a href="http://dx.doi.org/10.1164/rccm.202205-0963OC">http://dx.doi.org/10.1164/rccm.202205-0963OC</a>.</div>
 </div>
 <div id="ref-lungfun1991" class="csl-entry" role="listitem">
-<div class="csl-left-margin">10 </div><div class="csl-right-inline">Lung Function Testing: Selection of Reference Values and Interpretative Strategies. <em>American Review of Respiratory Disease</em> [Internet] 1991; 144: 1202–1218. Available from: <a href="http://dx.doi.org/10.1164/ajrccm/144.5.1202">http://dx.doi.org/10.1164/ajrccm/144.5.1202</a>.</div>
+<div class="csl-left-margin">8 </div><div class="csl-right-inline">Lung Function Testing: Selection of Reference Values and Interpretative Strategies. <em>American Review of Respiratory Disease</em> [Internet] 1991; 144: 1202–1218. Available from: <a href="http://dx.doi.org/10.1164/ajrccm/144.5.1202">http://dx.doi.org/10.1164/ajrccm/144.5.1202</a>.</div>
 </div>
 <div id="ref-becklake1986" class="csl-entry" role="listitem">
-<div class="csl-left-margin">11 </div><div class="csl-right-inline">Becklake MR. Concepts of normality applied to the measurement of lung function. <em>The American Journal of Medicine</em> [Internet] 1986; 80: 1158–1164. Available from: <a href="http://dx.doi.org/10.1016/0002-9343(86)90678-9">http://dx.doi.org/10.1016/0002-9343(86)90678-9</a>.</div>
+<div class="csl-left-margin">9 </div><div class="csl-right-inline">Becklake MR. Concepts of normality applied to the measurement of lung function. <em>The American Journal of Medicine</em> [Internet] 1986; 80: 1158–1164. Available from: <a href="http://dx.doi.org/10.1016/0002-9343(86)90678-9">http://dx.doi.org/10.1016/0002-9343(86)90678-9</a>.</div>
 </div>
 <div id="ref-holland2022" class="csl-entry" role="listitem">
-<div class="csl-left-margin">12 </div><div class="csl-right-inline">Holland R, Bowerman C, Stanojevic S. The Contribution of Anthropometry and Socioeconomic Status to Racial Differences in Measures of Lung Function. <em>CHEST</em> [Internet] 2022; 162: 635–646. Available from: <a href="http://dx.doi.org/10.1016/j.chest.2022.04.017">http://dx.doi.org/10.1016/j.chest.2022.04.017</a>.</div>
+<div class="csl-left-margin">10 </div><div class="csl-right-inline">Holland R, Bowerman C, Stanojevic S. The Contribution of Anthropometry and Socioeconomic Status to Racial Differences in Measures of Lung Function. <em>CHEST</em> [Internet] 2022; 162: 635–646. Available from: <a href="http://dx.doi.org/10.1016/j.chest.2022.04.017">http://dx.doi.org/10.1016/j.chest.2022.04.017</a>.</div>
 </div>
 <div id="ref-harik-khan2001" class="csl-entry" role="listitem">
-<div class="csl-left-margin">13 </div><div class="csl-right-inline">HARIK-KHAN RAIDAI, FLEG JEROMEL, MULLER DENISC, <em>et al.</em> The Effect of Anthropometric and Socioeconomic Factors on the Racial Difference in Lung Function. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2001; 164: 1647–1654. Available from: <a href="http://dx.doi.org/10.1164/ajrccm.164.9.2106075">http://dx.doi.org/10.1164/ajrccm.164.9.2106075</a>.</div>
+<div class="csl-left-margin">11 </div><div class="csl-right-inline">HARIK-KHAN RAIDAI, FLEG JEROMEL, MULLER DENISC, <em>et al.</em> The Effect of Anthropometric and Socioeconomic Factors on the Racial Difference in Lung Function. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2001; 164: 1647–1654. Available from: <a href="http://dx.doi.org/10.1164/ajrccm.164.9.2106075">http://dx.doi.org/10.1164/ajrccm.164.9.2106075</a>.</div>
 </div>
 <div id="ref-harik-khan2004" class="csl-entry" role="listitem">
-<div class="csl-left-margin">14 </div><div class="csl-right-inline">Harik-Khan RI. Racial Difference in Lung Function in African-American and White Children: Effect of Anthropometric, Socioeconomic, Nutritional, and Environmental Factors. <em>American Journal of Epidemiology</em> [Internet] 2004; 160: 893–900. Available from: <a href="http://dx.doi.org/10.1093/aje/kwh297">http://dx.doi.org/10.1093/aje/kwh297</a>.</div>
+<div class="csl-left-margin">12 </div><div class="csl-right-inline">Harik-Khan RI. Racial Difference in Lung Function in African-American and White Children: Effect of Anthropometric, Socioeconomic, Nutritional, and Environmental Factors. <em>American Journal of Epidemiology</em> [Internet] 2004; 160: 893–900. Available from: <a href="http://dx.doi.org/10.1093/aje/kwh297">http://dx.doi.org/10.1093/aje/kwh297</a>.</div>
 </div>
 <div id="ref-adibi2024" class="csl-entry" role="listitem">
-<div class="csl-left-margin">15 </div><div class="csl-right-inline">Adibi A, Carlsten C, Brigham E, <em>et al.</em> The effect of health disparities on racial gaps in lung function. <em>European Respiratory Journal</em> [Internet] Eur Respir J; 2024; 64. Available from: <a href="https://publications.ersnet.org//content/erj/64/suppl_68/OA5572">https://publications.ersnet.org//content/erj/64/suppl_68/OA5572</a>.</div>
+<div class="csl-left-margin">13 </div><div class="csl-right-inline">Adibi A, Carlsten C, Brigham E, <em>et al.</em> The effect of health disparities on racial gaps in lung function. <em>European Respiratory Journal</em> [Internet] Eur Respir J; 2024; 64. Available from: <a href="https://publications.ersnet.org//content/erj/64/suppl_68/OA5572">https://publications.ersnet.org//content/erj/64/suppl_68/OA5572</a>.</div>
 </div>
 <div id="ref-doamekpor2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">16 </div><div class="csl-right-inline">Doamekpor LA, Dinwiddie GY. Allostatic Load in Foreign-Born and US-Born Blacks: Evidence From the 2001<span></span>2010 National Health and Nutrition Examination Survey. <em>American Journal of Public Health</em> [Internet] 2015; 105: 591–597. Available from: <a href="http://dx.doi.org/10.2105/AJPH.2014.302285">http://dx.doi.org/10.2105/AJPH.2014.302285</a>.</div>
+<div class="csl-left-margin">14 </div><div class="csl-right-inline">Doamekpor LA, Dinwiddie GY. Allostatic Load in Foreign-Born and US-Born Blacks: Evidence From the 2001<span></span>2010 National Health and Nutrition Examination Survey. <em>American Journal of Public Health</em> [Internet] 2015; 105: 591–597. Available from: <a href="http://dx.doi.org/10.2105/AJPH.2014.302285">http://dx.doi.org/10.2105/AJPH.2014.302285</a>.</div>
 </div>
 <div id="ref-brown2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">17 </div><div class="csl-right-inline">Brown AGM, Houser RF, Mattei J, <em>et al.</em> Hypertension among US-born and foreign-born non-Hispanic Blacks. <em>Journal of Hypertension</em> [Internet] 2017; 35: 2380–2387. Available from: <a href="http://dx.doi.org/10.1097/HJH.0000000000001489">http://dx.doi.org/10.1097/HJH.0000000000001489</a>.</div>
+<div class="csl-left-margin">15 </div><div class="csl-right-inline">Brown AGM, Houser RF, Mattei J, <em>et al.</em> Hypertension among US-born and foreign-born non-Hispanic Blacks. <em>Journal of Hypertension</em> [Internet] 2017; 35: 2380–2387. Available from: <a href="http://dx.doi.org/10.1097/HJH.0000000000001489">http://dx.doi.org/10.1097/HJH.0000000000001489</a>.</div>
 </div>
 <div id="ref-nardone2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">18 </div><div class="csl-right-inline">Nardone A, Casey JA, Morello-Frosch R, <em>et al.</em> Associations between historical residential redlining and current age-adjusted rates of emergency department visits due to asthma across eight cities in California: an ecological study. <em>The Lancet Planetary Health</em> [Internet] 2020; 4: e24–e31. Available from: <a href="http://dx.doi.org/10.1016/S2542-5196(19)30241-4">http://dx.doi.org/10.1016/S2542-5196(19)30241-4</a>.</div>
+<div class="csl-left-margin">16 </div><div class="csl-right-inline">Nardone A, Casey JA, Morello-Frosch R, <em>et al.</em> Associations between historical residential redlining and current age-adjusted rates of emergency department visits due to asthma across eight cities in California: an ecological study. <em>The Lancet Planetary Health</em> [Internet] 2020; 4: e24–e31. Available from: <a href="http://dx.doi.org/10.1016/S2542-5196(19)30241-4">http://dx.doi.org/10.1016/S2542-5196(19)30241-4</a>.</div>
 </div>
 <div id="ref-schuyler2022" class="csl-entry" role="listitem">
-<div class="csl-left-margin">19 </div><div class="csl-right-inline">Schuyler AJ, Wenzel SE. Historical Redlining Impacts Contemporary Environmental and Asthma-related Outcomes in Black Adults. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2022; 206: 824–837. Available from: <a href="http://dx.doi.org/10.1164/rccm.202112-2707OC">http://dx.doi.org/10.1164/rccm.202112-2707OC</a>.</div>
+<div class="csl-left-margin">17 </div><div class="csl-right-inline">Schuyler AJ, Wenzel SE. Historical Redlining Impacts Contemporary Environmental and Asthma-related Outcomes in Black Adults. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2022; 206: 824–837. Available from: <a href="http://dx.doi.org/10.1164/rccm.202112-2707OC">http://dx.doi.org/10.1164/rccm.202112-2707OC</a>.</div>
 </div>
 <div id="ref-gaffney2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">20 </div><div class="csl-right-inline">Gaffney AW, Himmelstein DU, Christiani DC, <em>et al.</em> Socioeconomic Inequality in Respiratory Health in the US From 1959 to 2018. <em>JAMA Internal Medicine</em> [Internet] 2021; 181: 968. Available from: <a href="http://dx.doi.org/10.1001/jamainternmed.2021.2441">http://dx.doi.org/10.1001/jamainternmed.2021.2441</a>.</div>
+<div class="csl-left-margin">18 </div><div class="csl-right-inline">Gaffney AW, Himmelstein DU, Christiani DC, <em>et al.</em> Socioeconomic Inequality in Respiratory Health in the US From 1959 to 2018. <em>JAMA Internal Medicine</em> [Internet] 2021; 181: 968. Available from: <a href="http://dx.doi.org/10.1001/jamainternmed.2021.2441">http://dx.doi.org/10.1001/jamainternmed.2021.2441</a>.</div>
 </div>
 <div id="ref-levy2018" class="csl-entry" role="listitem">
-<div class="csl-left-margin">21 </div><div class="csl-right-inline">Levy JI, Quirós-Alcalá L, Fabian MP, <em>et al.</em> Established and Emerging Environmental Contributors to Disparities in Asthma and Chronic Obstructive Pulmonary Disease. <em>Current Epidemiology Reports</em> [Internet] 2018; 5: 114–124. Available from: <a href="http://dx.doi.org/10.1007/s40471-018-0149-9">http://dx.doi.org/10.1007/s40471-018-0149-9</a>.</div>
+<div class="csl-left-margin">19 </div><div class="csl-right-inline">Levy JI, Quirós-Alcalá L, Fabian MP, <em>et al.</em> Established and Emerging Environmental Contributors to Disparities in Asthma and Chronic Obstructive Pulmonary Disease. <em>Current Epidemiology Reports</em> [Internet] 2018; 5: 114–124. Available from: <a href="http://dx.doi.org/10.1007/s40471-018-0149-9">http://dx.doi.org/10.1007/s40471-018-0149-9</a>.</div>
+</div>
+<div id="ref-bhakta2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">20 </div><div class="csl-right-inline">Bhakta NR, Bime C, Kaminsky DA, <em>et al.</em> Race and Ethnicity in Pulmonary Function Test Interpretation: An Official American Thoracic Society Statement. <em>American Journal of Respiratory and Critical Care Medicine</em> [Internet] 2023; 207: 978–995. Available from: <a href="http://dx.doi.org/10.1164/rccm.202302-0310ST">http://dx.doi.org/10.1164/rccm.202302-0310ST</a>.</div>
 </div>
 </div>
 </section>
@@ -1139,11 +924,11 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 <tr class="header">
 <th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic Black<br>
-<span class="stratn">(N=3731)</span></span></th>
+<span class="stratn">(N=1889)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic White<br>
-<span class="stratn">(N=6726)</span></span></th>
+<span class="stratn">(N=2954)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
-<span class="stratn">(N=10457)</span></span></th>
+<span class="stratn">(N=4843)</span></span></th>
 </tr>
 </thead>
 <tbody>
@@ -1155,15 +940,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>34.6 (21.0)</td>
-<td>39.3 (20.9)</td>
-<td>37.6 (21.0)</td>
+<td>28.8 (19.8)</td>
+<td>33.2 (21.4)</td>
+<td>31.5 (20.9)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">31.0 [6.00, 79.0]</td>
-<td class="lastrow">39.0 [6.00, 79.0]</td>
-<td class="lastrow">37.0 [6.00, 79.0]</td>
+<td class="lastrow">20.0 [6.00, 79.0]</td>
+<td class="lastrow">30.0 [6.00, 79.0]</td>
+<td class="lastrow">25.0 [6.00, 79.0]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">race_text_nhanes</td>
@@ -1173,15 +958,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Non-Hispanic Black</td>
-<td>3731 (100%)</td>
+<td>1889 (100%)</td>
 <td>0 (0%)</td>
-<td>3731 (35.7%)</td>
+<td>1889 (39.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Non-Hispanic White</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">6726 (100%)</td>
-<td class="lastrow">6726 (64.3%)</td>
+<td class="lastrow">2954 (100%)</td>
+<td class="lastrow">2954 (61.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">sex_text</td>
@@ -1191,15 +976,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">Female</td>
-<td>1917 (51.4%)</td>
-<td>3397 (50.5%)</td>
-<td>5314 (50.8%)</td>
+<td>1078 (57.1%)</td>
+<td>1554 (52.6%)</td>
+<td>2632 (54.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Male</td>
-<td class="lastrow">1814 (48.6%)</td>
-<td class="lastrow">3329 (49.5%)</td>
-<td class="lastrow">5143 (49.2%)</td>
+<td class="lastrow">811 (42.9%)</td>
+<td class="lastrow">1400 (47.4%)</td>
+<td class="lastrow">2211 (45.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">fev1</td>
@@ -1209,15 +994,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>2.68 (0.879)</td>
-<td>3.11 (0.985)</td>
-<td>2.96 (0.971)</td>
+<td>2.67 (0.871)</td>
+<td>3.10 (1.00)</td>
+<td>2.93 (0.976)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">2.64 [0.648, 6.14]</td>
-<td class="lastrow">3.09 [0.476, 6.92]</td>
-<td class="lastrow">2.91 [0.476, 6.92]</td>
+<td class="lastrow">2.63 [0.815, 5.60]</td>
+<td class="lastrow">3.08 [0.899, 6.92]</td>
+<td class="lastrow">2.88 [0.815, 6.92]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">fvc</td>
@@ -1227,87 +1012,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>3.32 (1.06)</td>
-<td>3.97 (1.21)</td>
-<td>3.74 (1.20)</td>
+<td>3.21 (1.05)</td>
+<td>3.82 (1.26)</td>
+<td>3.58 (1.22)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">3.27 [1.01, 7.00]</td>
-<td class="lastrow">3.92 [1.03, 8.08]</td>
-<td class="lastrow">3.69 [1.01, 8.08]</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_100_smoke</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>1349 (36.2%)</td>
-<td>2426 (36.1%)</td>
-<td>3775 (36.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>1070 (28.7%)</td>
-<td>2686 (39.9%)</td>
-<td>3756 (35.9%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1312 (35.2%)</td>
-<td class="lastrow">1614 (24.0%)</td>
-<td class="lastrow">2926 (28.0%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">current_smoke</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">Everyday</td>
-<td>499 (13.4%)</td>
-<td>1160 (17.2%)</td>
-<td>1659 (15.9%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Not at all</td>
-<td>447 (12.0%)</td>
-<td>1393 (20.7%)</td>
-<td>1840 (17.6%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">Some days</td>
-<td>123 (3.3%)</td>
-<td>133 (2.0%)</td>
-<td>256 (2.4%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2662 (71.3%)</td>
-<td class="lastrow">4040 (60.1%)</td>
-<td class="lastrow">6702 (64.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel firstrow">smoker</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>1154 (30.9%)</td>
-<td>2827 (42.0%)</td>
-<td>3981 (38.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">No</td>
-<td class="lastrow">2577 (69.1%)</td>
-<td class="lastrow">3899 (58.0%)</td>
-<td class="lastrow">6476 (61.9%)</td>
+<td class="lastrow">3.15 [1.02, 7.00]</td>
+<td class="lastrow">3.79 [1.03, 7.93]</td>
+<td class="lastrow">3.51 [1.02, 7.93]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">smoker_in_household</td>
@@ -1317,21 +1030,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2878 (77.1%)</td>
-<td>5412 (80.5%)</td>
-<td>8290 (79.3%)</td>
+<td>1633 (86.4%)</td>
+<td>2670 (90.4%)</td>
+<td>4303 (88.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>837 (22.4%)</td>
-<td>1293 (19.2%)</td>
-<td>2130 (20.4%)</td>
+<td>246 (13.0%)</td>
+<td>275 (9.3%)</td>
+<td>521 (10.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">16 (0.4%)</td>
-<td class="lastrow">21 (0.3%)</td>
-<td class="lastrow">37 (0.4%)</td>
+<td class="lastrow">10 (0.5%)</td>
+<td class="lastrow">9 (0.3%)</td>
+<td class="lastrow">19 (0.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">maternal_smoke</td>
@@ -1341,189 +1054,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>805 (21.6%)</td>
-<td>913 (13.6%)</td>
-<td>1718 (16.4%)</td>
+<td>580 (30.7%)</td>
+<td>700 (23.7%)</td>
+<td>1280 (26.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>103 (2.8%)</td>
-<td>254 (3.8%)</td>
-<td>357 (3.4%)</td>
+<td>71 (3.8%)</td>
+<td>189 (6.4%)</td>
+<td>260 (5.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2823 (75.7%)</td>
-<td class="lastrow">5559 (82.6%)</td>
-<td class="lastrow">8382 (80.2%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_asthma</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>3018 (80.9%)</td>
-<td>5629 (83.7%)</td>
-<td>8647 (82.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>710 (19.0%)</td>
-<td>1092 (16.2%)</td>
-<td>1802 (17.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">3 (0.1%)</td>
-<td class="lastrow">5 (0.1%)</td>
-<td class="lastrow">8 (0.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_bronchitis</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>2301 (61.7%)</td>
-<td>4763 (70.8%)</td>
-<td>7064 (67.6%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>117 (3.1%)</td>
-<td>340 (5.1%)</td>
-<td>457 (4.4%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1313 (35.2%)</td>
-<td class="lastrow">1623 (24.1%)</td>
-<td class="lastrow">2936 (28.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">ever_emphysema</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>2403 (64.4%)</td>
-<td>5004 (74.4%)</td>
-<td>7407 (70.8%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>17 (0.5%)</td>
-<td>103 (1.5%)</td>
-<td>120 (1.1%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1311 (35.1%)</td>
-<td class="lastrow">1619 (24.1%)</td>
-<td class="lastrow">2930 (28.0%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">cough_3_month</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>1429 (38.3%)</td>
-<td>2826 (42.0%)</td>
-<td>4255 (40.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>113 (3.0%)</td>
-<td>427 (6.3%)</td>
-<td>540 (5.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2189 (58.7%)</td>
-<td class="lastrow">3473 (51.6%)</td>
-<td class="lastrow">5662 (54.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">phlegm_3_month</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>1430 (38.3%)</td>
-<td>2931 (43.6%)</td>
-<td>4361 (41.7%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>113 (3.0%)</td>
-<td>323 (4.8%)</td>
-<td>436 (4.2%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2188 (58.6%)</td>
-<td class="lastrow">3472 (51.6%)</td>
-<td class="lastrow">5660 (54.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">wheezing_past_yr</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>3182 (85.3%)</td>
-<td>5750 (85.5%)</td>
-<td>8932 (85.4%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>548 (14.7%)</td>
-<td>969 (14.4%)</td>
-<td>1517 (14.5%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1 (0.0%)</td>
-<td class="lastrow">7 (0.1%)</td>
-<td class="lastrow">8 (0.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel firstrow">dry_cough_night_past_yr</td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-<td class="firstrow"></td>
-</tr>
-<tr class="odd">
-<td class="rowlabel">No</td>
-<td>3551 (95.2%)</td>
-<td>6389 (95.0%)</td>
-<td>9940 (95.1%)</td>
-</tr>
-<tr class="even">
-<td class="rowlabel">Yes</td>
-<td>180 (4.8%)</td>
-<td>332 (4.9%)</td>
-<td>512 (4.9%)</td>
-</tr>
-<tr class="odd">
-<td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">0 (0%)</td>
-<td class="lastrow">5 (0.1%)</td>
-<td class="lastrow">5 (0.0%)</td>
+<td class="lastrow">1238 (65.5%)</td>
+<td class="lastrow">2065 (69.9%)</td>
+<td class="lastrow">3303 (68.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">mineral_dusts</td>
@@ -1533,21 +1078,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>1786 (47.9%)</td>
-<td>3578 (53.2%)</td>
-<td>5364 (51.3%)</td>
+<td>845 (44.7%)</td>
+<td>1454 (49.2%)</td>
+<td>2299 (47.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>781 (20.9%)</td>
-<td>1746 (26.0%)</td>
-<td>2527 (24.2%)</td>
+<td>238 (12.6%)</td>
+<td>489 (16.6%)</td>
+<td>727 (15.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1164 (31.2%)</td>
-<td class="lastrow">1402 (20.8%)</td>
-<td class="lastrow">2566 (24.5%)</td>
+<td class="lastrow">806 (42.7%)</td>
+<td class="lastrow">1011 (34.2%)</td>
+<td class="lastrow">1817 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">organic_dusts</td>
@@ -1557,21 +1102,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2111 (56.6%)</td>
-<td>3984 (59.2%)</td>
-<td>6095 (58.3%)</td>
+<td>946 (50.1%)</td>
+<td>1541 (52.2%)</td>
+<td>2487 (51.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>457 (12.2%)</td>
-<td>1351 (20.1%)</td>
-<td>1808 (17.3%)</td>
+<td>138 (7.3%)</td>
+<td>403 (13.6%)</td>
+<td>541 (11.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1163 (31.2%)</td>
-<td class="lastrow">1391 (20.7%)</td>
-<td class="lastrow">2554 (24.4%)</td>
+<td class="lastrow">805 (42.6%)</td>
+<td class="lastrow">1010 (34.2%)</td>
+<td class="lastrow">1815 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">exhaust_fumes</td>
@@ -1581,21 +1126,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>1936 (51.9%)</td>
-<td>3855 (57.3%)</td>
-<td>5791 (55.4%)</td>
+<td>880 (46.6%)</td>
+<td>1570 (53.1%)</td>
+<td>2450 (50.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>633 (17.0%)</td>
-<td>1484 (22.1%)</td>
-<td>2117 (20.2%)</td>
+<td>204 (10.8%)</td>
+<td>375 (12.7%)</td>
+<td>579 (12.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1162 (31.1%)</td>
-<td class="lastrow">1387 (20.6%)</td>
-<td class="lastrow">2549 (24.4%)</td>
+<td class="lastrow">805 (42.6%)</td>
+<td class="lastrow">1009 (34.2%)</td>
+<td class="lastrow">1814 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">other_fumes</td>
@@ -1605,21 +1150,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>1873 (50.2%)</td>
-<td>3499 (52.0%)</td>
-<td>5372 (51.4%)</td>
+<td>855 (45.3%)</td>
+<td>1439 (48.7%)</td>
+<td>2294 (47.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>696 (18.7%)</td>
-<td>1839 (27.3%)</td>
-<td>2535 (24.2%)</td>
+<td>229 (12.1%)</td>
+<td>506 (17.1%)</td>
+<td>735 (15.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1162 (31.1%)</td>
-<td class="lastrow">1388 (20.6%)</td>
-<td class="lastrow">2550 (24.4%)</td>
+<td class="lastrow">805 (42.6%)</td>
+<td class="lastrow">1009 (34.2%)</td>
+<td class="lastrow">1814 (37.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">income_poverty_ratio</td>
@@ -1629,21 +1174,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>2.22 (1.58)</td>
-<td>2.84 (1.69)</td>
-<td>2.63 (1.68)</td>
+<td>2.29 (1.58)</td>
+<td>3.11 (1.67)</td>
+<td>2.80 (1.69)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Median [Min, Max]</td>
-<td>1.79 [0, 5.00]</td>
-<td>2.72 [0, 5.00]</td>
-<td>2.31 [0, 5.00]</td>
+<td>1.85 [0, 5.00]</td>
+<td>3.25 [0, 5.00]</td>
+<td>2.71 [0, 5.00]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">327 (8.8%)</td>
-<td class="lastrow">327 (4.9%)</td>
-<td class="lastrow">654 (6.3%)</td>
+<td class="lastrow">163 (8.6%)</td>
+<td class="lastrow">140 (4.7%)</td>
+<td class="lastrow">303 (6.3%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">home_owner</td>
@@ -1653,15 +1198,15 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>25 (0.7%)</td>
-<td>21 (0.3%)</td>
-<td>46 (0.4%)</td>
+<td>12 (0.6%)</td>
+<td>9 (0.3%)</td>
+<td>21 (0.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">No</td>
-<td class="lastrow">3706 (99.3%)</td>
-<td class="lastrow">6705 (99.7%)</td>
-<td class="lastrow">10411 (99.6%)</td>
+<td class="lastrow">1877 (99.4%)</td>
+<td class="lastrow">2945 (99.7%)</td>
+<td class="lastrow">4822 (99.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">education_adults</td>
@@ -1671,39 +1216,39 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">9-11th grade</td>
-<td>438 (11.7%)</td>
-<td>609 (9.1%)</td>
-<td>1047 (10.0%)</td>
+<td>119 (6.3%)</td>
+<td>119 (4.0%)</td>
+<td>238 (4.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">College graduate or above</td>
-<td>430 (11.5%)</td>
-<td>1498 (22.3%)</td>
-<td>1928 (18.4%)</td>
+<td>247 (13.1%)</td>
+<td>764 (25.9%)</td>
+<td>1011 (20.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">High school graduate</td>
-<td>637 (17.1%)</td>
-<td>1232 (18.3%)</td>
-<td>1869 (17.9%)</td>
+<td>222 (11.8%)</td>
+<td>341 (11.5%)</td>
+<td>563 (11.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Less than 9th grade</td>
-<td>77 (2.1%)</td>
-<td>154 (2.3%)</td>
-<td>231 (2.2%)</td>
+<td>25 (1.3%)</td>
+<td>31 (1.0%)</td>
+<td>56 (1.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Some college or AA degree</td>
-<td>838 (22.5%)</td>
-<td>1617 (24.0%)</td>
-<td>2455 (23.5%)</td>
+<td>355 (18.8%)</td>
+<td>560 (19.0%)</td>
+<td>915 (18.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1311 (35.1%)</td>
-<td class="lastrow">1616 (24.0%)</td>
-<td class="lastrow">2927 (28.0%)</td>
+<td class="lastrow">921 (48.8%)</td>
+<td class="lastrow">1139 (38.6%)</td>
+<td class="lastrow">2060 (42.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">now_attending_school</td>
@@ -1713,21 +1258,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Between grades</td>
-<td>130 (3.5%)</td>
-<td>297 (4.4%)</td>
-<td>427 (4.1%)</td>
+<td>91 (4.8%)</td>
+<td>219 (7.4%)</td>
+<td>310 (6.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">In school</td>
-<td>584 (15.7%)</td>
-<td>750 (11.2%)</td>
-<td>1334 (12.8%)</td>
+<td>425 (22.5%)</td>
+<td>542 (18.3%)</td>
+<td>967 (20.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">3017 (80.9%)</td>
-<td class="lastrow">5679 (84.4%)</td>
-<td class="lastrow">8696 (83.2%)</td>
+<td class="lastrow">1373 (72.7%)</td>
+<td class="lastrow">2193 (74.2%)</td>
+<td class="lastrow">3566 (73.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">healthy_diet</td>
@@ -1737,39 +1282,39 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="odd">
 <td class="rowlabel">Excellent</td>
-<td>262 (7.0%)</td>
-<td>510 (7.6%)</td>
-<td>772 (7.4%)</td>
+<td>121 (6.4%)</td>
+<td>214 (7.2%)</td>
+<td>335 (6.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Fair</td>
-<td>706 (18.9%)</td>
-<td>1096 (16.3%)</td>
-<td>1802 (17.2%)</td>
+<td>290 (15.4%)</td>
+<td>312 (10.6%)</td>
+<td>602 (12.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Good</td>
-<td>1166 (31.3%)</td>
-<td>2338 (34.8%)</td>
-<td>3504 (33.5%)</td>
+<td>521 (27.6%)</td>
+<td>914 (30.9%)</td>
+<td>1435 (29.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Poor</td>
-<td>198 (5.3%)</td>
-<td>245 (3.6%)</td>
-<td>443 (4.2%)</td>
+<td>74 (3.9%)</td>
+<td>57 (1.9%)</td>
+<td>131 (2.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Very good</td>
-<td>465 (12.5%)</td>
-<td>1361 (20.2%)</td>
-<td>1826 (17.5%)</td>
+<td>217 (11.5%)</td>
+<td>559 (18.9%)</td>
+<td>776 (16.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">934 (25.0%)</td>
-<td class="lastrow">1176 (17.5%)</td>
-<td class="lastrow">2110 (20.2%)</td>
+<td class="lastrow">666 (35.3%)</td>
+<td class="lastrow">898 (30.4%)</td>
+<td class="lastrow">1564 (32.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">vigorous_work</td>
@@ -1779,21 +1324,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>2645 (70.9%)</td>
-<td>4670 (69.4%)</td>
-<td>7315 (70.0%)</td>
+<td>1275 (67.5%)</td>
+<td>1930 (65.3%)</td>
+<td>3205 (66.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>478 (12.8%)</td>
-<td>1293 (19.2%)</td>
-<td>1771 (16.9%)</td>
+<td>175 (9.3%)</td>
+<td>422 (14.3%)</td>
+<td>597 (12.3%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">608 (16.3%)</td>
-<td class="lastrow">763 (11.3%)</td>
-<td class="lastrow">1371 (13.1%)</td>
+<td class="lastrow">439 (23.2%)</td>
+<td class="lastrow">602 (20.4%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">moderate_work</td>
@@ -1803,21 +1348,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>2112 (56.6%)</td>
-<td>3339 (49.6%)</td>
-<td>5451 (52.1%)</td>
+<td>1003 (53.1%)</td>
+<td>1370 (46.4%)</td>
+<td>2373 (49.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1011 (27.1%)</td>
-<td>2624 (39.0%)</td>
-<td>3635 (34.8%)</td>
+<td>447 (23.7%)</td>
+<td>982 (33.2%)</td>
+<td>1429 (29.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">608 (16.3%)</td>
-<td class="lastrow">763 (11.3%)</td>
-<td class="lastrow">1371 (13.1%)</td>
+<td class="lastrow">439 (23.2%)</td>
+<td class="lastrow">602 (20.4%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">vigorous_recreational</td>
@@ -1827,21 +1372,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>2121 (56.8%)</td>
-<td>4230 (62.9%)</td>
-<td>6351 (60.7%)</td>
+<td>902 (47.8%)</td>
+<td>1442 (48.8%)</td>
+<td>2344 (48.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1002 (26.9%)</td>
-<td>1732 (25.8%)</td>
-<td>2734 (26.1%)</td>
+<td>548 (29.0%)</td>
+<td>910 (30.8%)</td>
+<td>1458 (30.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">608 (16.3%)</td>
-<td class="lastrow">764 (11.4%)</td>
-<td class="lastrow">1372 (13.1%)</td>
+<td class="lastrow">439 (23.2%)</td>
+<td class="lastrow">602 (20.4%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">moderate_recreational</td>
@@ -1851,21 +1396,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>1929 (51.7%)</td>
-<td>3006 (44.7%)</td>
-<td>4935 (47.2%)</td>
+<td>852 (45.1%)</td>
+<td>1041 (35.2%)</td>
+<td>1893 (39.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1194 (32.0%)</td>
-<td>2956 (43.9%)</td>
-<td>4150 (39.7%)</td>
+<td>598 (31.7%)</td>
+<td>1311 (44.4%)</td>
+<td>1909 (39.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">608 (16.3%)</td>
-<td class="lastrow">764 (11.4%)</td>
-<td class="lastrow">1372 (13.1%)</td>
+<td class="lastrow">439 (23.2%)</td>
+<td class="lastrow">602 (20.4%)</td>
+<td class="lastrow">1041 (21.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">bmi</td>
@@ -1875,21 +1420,21 @@ Figure&nbsp;2: Changes in lung function racial gaps after exclusions based on ho
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>27.8 (8.30)</td>
-<td>26.9 (7.20)</td>
-<td>27.3 (7.62)</td>
+<td>26.6 (8.12)</td>
+<td>25.5 (7.21)</td>
+<td>25.9 (7.59)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Median [Min, Max]</td>
-<td>26.8 [12.7, 84.9]</td>
-<td>26.1 [12.5, 73.4]</td>
-<td>26.3 [12.5, 84.9]</td>
+<td>25.5 [12.8, 69.0]</td>
+<td>24.8 [12.5, 73.4]</td>
+<td>25.0 [12.5, 73.4]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">25 (0.7%)</td>
-<td class="lastrow">32 (0.5%)</td>
-<td class="lastrow">57 (0.5%)</td>
+<td class="lastrow">13 (0.7%)</td>
+<td class="lastrow">10 (0.3%)</td>
+<td class="lastrow">23 (0.5%)</td>
 </tr>
 </tbody>
 </table>

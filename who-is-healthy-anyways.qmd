@@ -1,5 +1,5 @@
 ---
-title: "Who is healthy anyways? The effect of health disparities on racial gaps in lung function"
+title: "Who is healthy anyways? The contribution of measurable social determinants to effect of health disparities on racial gaps in lung function"
 format: 
   html:
     toc: true
@@ -54,11 +54,11 @@ execute:
 
 ## Abstract
 
-**RATIONALE:** Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. We hypothesized that measurable disparities will help explain racial gaps in lung function.
+**RATIONALE:** Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations mitigate bias due to disparities at the cost of reduced precision. However, it is unclear what proportion of racial gaps in lung function is due to known disparities. Previous studies on the racial gap in lung function between White and Black Americans have attributed 35-39% of the gap in adults to sitting height, 2.5-7.5% to poverty, and 2-4.7% to education. In children, sitting height reportedly accounted for 42-53% of the racial gap, while diet and socio-economic accounted for 7-10% of the gap. We hypothesized that disproportionate impact of environmental and social exposures that is measurable in NAHNES data could help explain a larger proportion of racial gaps in lung function than previously reported. Quantifying the contribution of measurable disparities to racial differences in lung function can inform the debate on the proper assessment of lung function impairment across racial groups.
 
-**METHODS:** We defined reference populations from 18,359 Black and White NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with occupational exposure to dust/fumes, maternal tobacco use, second-hand smoke exposure,obesity, low physical activity, unhealthy diet, self-assessed poor health, and home ownership. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV~1~ and FVC between Black and White adults (≥20) and youth (\<20).
+**METHODS:** We defined reference populations from 18,359 Black and White NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV~1~ and FVC between Black and White adults (≥20) and youth (\<20).
 
-**RESULTS:** From the base reference population to the most restrictive, the percentage of Black participants decreased from 20% to 16% in youth and 14% to 7% in adults. The racial gap in lung function was reduced from 0.40 L (95%CI 0.36-0.43) to 0.31 L (95%CI 0.26-0.36) in FEV~1~ and from 0.48 L (95%CI 0.44-0.51) to 0.36 (95%CI 0.30-0.42) in FVC in youth but increased in adults.
+**RESULTS:** From the base reference population to the most restrictive, the percentage of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults. The racial gap in FEV~1~ and FVC was reduced by 25% and 26% in children and youth, and by 26% and 19% in adults.
 
 **CONCLUSIONS:** The disparities investigated herein explain up to 25% of the racial gap in lung function among American youth. Further research on adults is required.
 
@@ -66,17 +66,17 @@ execute:
 
 ## Background
 
-Racial gaps in measures of lung function have been known since late 18th century. For more than a hundred years, pro-slavery scientists in the US weaponized the lower observed lung function in Black people to argue that Black bodies were inferior and justify White supremacy [@braun2023]. This scientifically racist view was eventually replaced with the notion of innate but benign racial differences in lung function, likely attributable to anthropometric differences. In the twentieth century and with the growing adoption of pre-employment spirometry as a test of fitness for certain workers, occupation standards in the US proposed race-based adjustment of spirometry results to prevent hiring discrimination against Black people [@townsend2022]. In 2005, the American Thoracic Society (ATS) and the European Respiratory Society (ERS) started recommending race-specific reference equations for interpreting pulmonary function tests [@pellegrino2005]. In the past two decades, race-based lung function reference values have been widely used to guide diagnosis, severity grading, and management of lung diseases, decide priority for lung transplant surgery, as a fitness for employment eligibility in some industries, and to monitor occupational health and adjudicate insurance claims [@bhakta2023; @stanojevic2021].
+Racial gaps in measures of lung function have been documented since the late 18^th^ century. For more than a hundred years, pro-slavery scientists in the US weaponized the lower observed lung function in Black people to justify White supremacy [@braun2023]. This racist view was eventually replaced with the notion of innate but benign racial differences in lung function, likely attributable to anthropometric differences. In the twentieth century and with the growing adoption of pre-employment spirometry as a test of fitness for certain workers, occupation standards in the US proposed race-based adjustment of spirometry results to prevent hiring discrimination against Black people [@townsend2022]. Following this, in 2005, the American Thoracic Society (ATS) and the European Respiratory Society (ERS) recommended race-specific reference equations for interpreting pulmonary function tests [@pellegrino2005]. In the past two decades, race-based lung function reference values have been widely used to guide diagnosis, assessment, and management of lung diseases, decide priority for lung transplant surgery, as a fitness for employment eligibility in some industries, and to monitor occupational health and adjudicate insurance claims.
 
-In recent years, increased awareness of the history of structural racism and disparities affecting racialized populations has led to calls to revisit race-based equations in medicine [@vyas2020]. Of note is the growing body of literature suggesting that racialized populations experience a disproportionate level of harmful environmental exposures that might hinder lung growth and lower lung function [@marciniuk2023].
+In recent years, increased awareness of the history of structural racism and disparities affecting racialized populations has led to calls to revisit race-based equations in medicine and examine their potential to perpetuate bias and exacerbate existing health disparities [@vyas2020]. Of note is the growing body of literature suggesting that racialized populations experience a disproportionate level of harmful environmental exposures that might hinder lung growth and lower lung function [@marciniuk2023].
 
-Spirometry reference equations are developed with data from from "healthy" volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases [@quanjer2012; @bowerman2023]. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.
+Spirometry reference equations are developed with data from "healthy" volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases [@quanjer2012; @bowerman2023]. This rather loose definition of what constitutes as healthy could potentially lead to a biased reference populations in which White volunteers have higher lung function values, simply because they were less likely to have been exposed to environmental and social factors that diminish lung function.
 
-The effects of social determinants of health (SDoH) on lung function have been discussed in the literature for decades. The 1991 ATS official statements on the interpretative strategies for lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as the main sources of between-individual variability in lung function[@lungfun1991]. The statement also mentions racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesizes that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors [@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
+Indeed, the effects of social determinants of health (SDoH) on lung function have been discussed in the literature for decades. The 1991 ATS official statements on the interpretative strategies for lung function testing discussed the effects of environmental factors, smoking, indoor and outdoor air pollution, occupational exposures, built environment and socio-economic factors as the main sources of between-individual variability in lung function[@lungfun1991]. The statement also mentions racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesizes that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors [@lungfun1991]. A 1986 review of between-individual variation in FVC attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors[@becklake1986]. Our study focuses on the proportion of variability that was historically attributed to race can be explained by social determinants of health.
 
 Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population[@holland2022], one focused on adults[@harik-khan2001] and one on children[@harik-khan2004]. The study on adults attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education [@harik-khan2001]. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences [@harik-khan2004]. However, these studies consider a limited set of social exposures, typically comprised of poverty index, BMI, education, employment, and household size and were conducted using older US National Health and Nutrition Examination Survey (NHANES) III survey data (1988–1994).
 
-We hypothesized that accounting for a more comprehensive set of social and environmental exposures in newer iterations of NHANES data could explain a larger proportion of racial gaps in lung function than previously reported. We have presented a preliminary version of these results in the 2024 European Respiratory Congress in Vienna [@adibi2024].
+Our study focuses on whether the proportion of variability that was historically attributed to race can be explained by social determinants of health. We hypothesized that accounting for a more comprehensive set of social and environmental exposures in newer iterations of NHANES data could explain a larger proportion of racial gaps in lung function than previously reported. We have presented a preliminary version of these results in the 2024 European Respiratory Congress in Vienna [@adibi2024].
 
 ## Methods
 
@@ -101,6 +101,7 @@ library(patchwork)
 library(hrbrthemes)
 library(table1)
 library(rspiro)
+library(stringr)
 
 compute_gap_reduction <- function(df, measure) {
   df %>% 
@@ -140,7 +141,8 @@ createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', Bir
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") 
+    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
   
   message(paste0("NHANES N (excluding missing or low quality spiro: ", 
                  (nhanes %>% count())))
@@ -342,7 +344,24 @@ return(refs)
 
 ## Results
 
-Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth. Characteristics of participants is summarized in @tbl-table1 .
+Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high quality spirometry. This included 7,533 adults and 2,924 youth.
+
+The flow of participants is shown in @fig-flowchart.
+
+```{mermaid, include=T}
+%%| label: fig-flowchart
+%%| fig-cap: Flow of participants
+flowchart TD
+    B[n=30,442] -- excluded missing FEV1 or FVC --> C[n=20,050]
+    C -- excluded low quality spirometry --> D[n=17,032]
+    D -- included patients self-identified as Black or White --> E[n=10,457]
+    E -- excluded smokers, and those with respiratory diagnoses or symptoms --> F[n=4,843]
+    F -- Adults --> A0[n=2,785]
+    F -- Youth  --> Y0[n=2,058]
+
+```
+
+Characteristics of participants is summarized in @tbl-table1 .
 
 ```{r}
 #| label: tbl-table1
@@ -357,6 +376,18 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
     filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
     filter(race %in% c(3,4)) %>%
+    filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
     mutate(age_group = ifelse(age>=20, "Adults", "Youth"),
           sex_text   = case_match(sex,
                                      "1" ~ "Male"  ,
@@ -466,53 +497,17 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
                (healthy_diet==1) | 
                (healthy_diet==2) | 
                (healthy_diet==3)))
-         )
+         ) 
  
  table1(~ age + race_text_nhanes + sex_text + 
-           fev1 + fvc +
-          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
-          ever_asthma + ever_bronchitis + ever_emphysema + 
-          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
+          fev1 + fvc +
+          smoker_in_household + maternal_smoke +
           mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
           income_poverty_ratio + home_owner + 
           education_adults + now_attending_school + 
           healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
           | age_group, table1)
  
-```
-
-<!--The flow of participants is shown in @fig-flowchart.-->
-
-```{mermaid, include=F}
-%%| label: fig-flowchart
-%%| fig-cap: Flow of participants
-flowchart TD
-    B[NHANES 2007-2012, n=30,442] -- excluded missing FEV1 or FVC --> C[n=20,050]
-    C -- excluded low quality spirometry --> D[n=17,032]
-    D -- included patients self-identified as Black or White --> E[n=10,457]
-    E -- adults --> A0[n=7,533]
-    E -- Youth  --> Y0[n=2,924]
-    A0-- ref 1  --> A1(n=2,785)
-    A1-- ref 2  --> A2(n=1,566)
-    A2-- ref 3  --> A3(n=1,108)
-    A3-- ref 4  --> A4(n=1,108)
-    A4-- ref 5  --> A5(n=1,055)
-    A5-- ref 6  --> A6(n=714)
-    A6-- ref 7  --> A7(n=502)
-    A7-- ref 8  --> A8(n=461)
-    A8-- ref 9  --> A9(n=378)
-    A9-- ref 10 --> A10(n=341)
-    Y0-- ref 1  --> Y1(n=2,058)
-    Y1-- ref 2  --> Y2(n=1,951)
-    Y2-- ref 3  --> Y3(n=1,795)
-    Y3-- ref 4  --> Y4(n=1,547)
-    Y4-- ref 5  --> Y5(n=1,357)
-    Y5-- ref 6  --> Y6(n=1,278)
-    Y6-- ref 7  --> Y7(n=825)
-    Y7-- ref 8  --> Y8(n=783)
-    Y8-- ref 9  --> Y9(n=774)
-    Y9-- ref 10 --> Y10(n=758)
-
 ```
 
 ```{r}
@@ -609,11 +604,11 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
     p <- ggplot(refs_df_percent) +
       geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2.5) +
+      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
       scale_y_continuous(labels=scales::percent) +
       ggtitle(title) +
       labs(x = "", y = "Percentage") +
-      guides(fill=guide_legend(title="Race and Ethnicity")) +
+      guides(fill=guide_legend(title="Race")) +
       theme_few() + theme(axis.text.x = element_blank())
     
     if (suppress_legend) {
@@ -652,7 +647,7 @@ predPlot <- function(df) {
 
 ```
 
-From the base reference population to the most restrictive, the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.
+From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap
@@ -678,7 +673,7 @@ We also looked at the racial gap in lung function from the most permissive to th
 
 #### Home Ownership, BMI, and Occupation
 
-After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.
+After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes the racial gap in FEV~1~ and FVC was reduced by 20% and 16% in adults, and 21% and 19% in youth.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap-home-bmi-job
@@ -712,7 +707,8 @@ createCohort3Factor <- function (ageGroup,sex='all') {
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") 
+    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
   
   message(paste0("NHANES N (excluding missing or low quality spiro: ", 
                  (nhanes %>% count())))
@@ -814,10 +810,8 @@ Our study underscores the significant influence of social determinants of health
 ::: {#supptab-missing-ness-by-race}
 ```{r}
  table1(~ age + race_text_nhanes + sex_text + 
-           fev1 + fvc +
-          ever_100_smoke + current_smoke + smoker + smoker_in_household + maternal_smoke +
-          ever_asthma + ever_bronchitis + ever_emphysema + 
-          cough_3_month + phlegm_3_month + wheezing_past_yr +  dry_cough_night_past_yr +
+          fev1 + fvc +
+          smoker_in_household + maternal_smoke +
           mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
           income_poverty_ratio + home_owner + 
           education_adults + now_attending_school + 
