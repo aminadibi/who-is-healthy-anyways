@@ -86,7 +86,7 @@ Occupational exposure was defined as having ever been exposed to either mineral 
 
 For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function.
 
-In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone to see whether poverty can be a good proxy for SDoH.
+In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone to see whether poverty can be a good proxy for SDoH. To examine the effects of our choice of SDoH to account for, we conducted a leave-one-out analysis, where we reproduced the results 9 times, each time leaving one of the SDoH out of the successively defined reference populations.
 
 All data preparation and analysis was performed in R v4.4.2 using reproducible Quarto documents. A fully reproducible analysis code is publicly available at <https://github.com/aminadibi/who-is-healthy-anyways/>.
 
@@ -840,6 +840,8 @@ plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"
 
 In the supplementary material, we also explored the intersection of self-identified race and country of origin. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 24% and 25% in youth, and by 35% and 23% in adults among US born participants (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV~1~ and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
 
+In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV~1~ and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV~1~ and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (@suppfig-leaveoneout).
+
 ## Discussion
 
 Our results reinforce the critical role of environmental, social, and lifestyle factors in shaping health outcomes and suggest that a substantial portion of the racial gap in lung function can be explained by SDoH, with up to 26% of the gap in adults, and as much as 35% in males under 20 years of age, attributed to these factors. Our findings attribute a higher proportion of racial differences in lung function to social and environmental exposures than previously reported [@harik-khan2001; @harik-khan2004].
@@ -867,10 +869,10 @@ Our study underscores the significant influence of SDoH on lung function and sho
 
 ## Appendices
 
-### Participant Flow Across Successive Reference Equations
+### Participant Flow Across Successive Reference Populations
 
 ::: {#suppfig-flowrefs}
-Flow of participants across different reference equations
+Flow of participants across different reference populations
 
 ```{mermaid, include=T}
 flowchart TD
@@ -896,7 +898,7 @@ flowchart TD
 ```
 :::
 
-### Participants characteristics by Race
+### Participants Characteristics by Race
 
 ::: {#supptab-missing-ness-by-race}
 ```{r}
@@ -995,6 +997,59 @@ plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePover
 
 Changes in lung function racial gaps based on income to poverty ratio
 :::
+
+### Leave-one-out Analysis
+
+::: {#suppfig-leaveoneout}
+
+Leaving out job exposure
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-2], refs_youth[-2])
+```
+
+Leaving out physical activity
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-3], refs_youth[-3])
+```
+
+Leaving out maternal smoke
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-4], refs_youth[-4])
+```
+
+Leaving out second-hand smoke exposure
+```{r, warning=FALSE, message=FALSE} 
+ plot_racial_gap_change(refs_adult[-5], refs_youth[-5])
+```
+Leaving out obesity
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-6], refs_youth[-6])
+```
+
+Leaving out homeowneship
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-7], refs_youth[-7])
+```
+
+Leaving out health insurance
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-8], refs_youth[-8])
+```
+
+Leaving out education
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-9], refs_youth[-9])
+``` 
+
+Leaving out diet health
+```{r, warning=FALSE, message=FALSE}
+ plot_racial_gap_change(refs_adult[-10], refs_youth[-10])
+```
+
+Leave one out analysis
+:::
+
+### 
 
 ````{=html}
 <!-- 
