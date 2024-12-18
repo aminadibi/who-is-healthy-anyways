@@ -87,12 +87,13 @@ div.csl-indent {
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a>
   <ul class="collapse">
-  <li><a href="#participant-flow-across-successive-reference-equations" id="toc-participant-flow-across-successive-reference-equations" class="nav-link" data-scroll-target="#participant-flow-across-successive-reference-equations">Participant Flow Across Successive Reference Equations</a></li>
-  <li><a href="#participants-characteristics-by-race" id="toc-participants-characteristics-by-race" class="nav-link" data-scroll-target="#participants-characteristics-by-race">Participants characteristics by Race</a></li>
+  <li><a href="#participant-flow-across-successive-reference-populations" id="toc-participant-flow-across-successive-reference-populations" class="nav-link" data-scroll-target="#participant-flow-across-successive-reference-populations">Participant Flow Across Successive Reference Populations</a></li>
+  <li><a href="#participants-characteristics-by-race" id="toc-participants-characteristics-by-race" class="nav-link" data-scroll-target="#participants-characteristics-by-race">Participants Characteristics by Race</a></li>
   <li><a href="#separate-analysis-by-biological-sex" id="toc-separate-analysis-by-biological-sex" class="nav-link" data-scroll-target="#separate-analysis-by-biological-sex">Separate Analysis by Biological Sex</a></li>
   <li><a href="#intersection-of-race-and-country-of-birth" id="toc-intersection-of-race-and-country-of-birth" class="nav-link" data-scroll-target="#intersection-of-race-and-country-of-birth">Intersection of Race and Country of Birth</a></li>
+  <li><a href="#other-race-groups" id="toc-other-race-groups" class="nav-link" data-scroll-target="#other-race-groups">Other Race Groups</a></li>
   <li><a href="#income-to-poverty-ratio" id="toc-income-to-poverty-ratio" class="nav-link" data-scroll-target="#income-to-poverty-ratio">Income to Poverty Ratio</a></li>
-  <li><a href="#leave-one-out-analysis" id="toc-leave-one-out-analysis" class="nav-link" data-scroll-target="#leave-one-out-analysis">Leave-one-out Analysis</a></li>
+  <li><a href="#leave-one-out-analysis-1" id="toc-leave-one-out-analysis-1" class="nav-link" data-scroll-target="#leave-one-out-analysis-1">Leave-one-out Analysis</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
@@ -211,14 +212,14 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>We used data from three cycles of NHANES (2007-2012) with appropriate sampling weights to account for complex survey design. We included self-identified Black and White individuals with valid height recording and baseline spirometry that either met or exceeded ATS collection standards. We defined 10 increasingly healthier reference populations. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmed occupational exposures, physical inactivity, maternal smoking, obesity (defined as body-mass-index≥30), no home ownership, no insurance, lower education, and self-declared unhealthy diet.</p>
 <p>Occupational exposure was defined as having ever been exposed to either mineral dusts, organic dusts, exhaust fumes, or other fumes at work. Indivdiuals who did not have at least 10 minutes of vigorous or moderate activity in a typical week, either for work or recreationally, were considered physically inactive. Lower educated individuals were defined as adults 20 years of age and older with a high school or a GED degree or lower, and 6-19 years old who were neither in school nor on vacation from school. Individuals with self-declared their dietary health as either poor or fair were considered to have a unhealthy diet.</p>
-<p>For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (&lt;20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function.</p>
+<p>For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (&lt;20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function. We repeated the main analysis separately for individuals who self-identified as “Non-Hispanic Asian” (only available in NHANES 2011-2012), “Mexican-American”, “Other Hispanic”, and “Other, including multiracial”.</p>
 <p>In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone to see whether poverty can be a good proxy for SDoH. To examine the effects of our choice of SDoH to account for, we conducted a leave-one-out analysis, where we reproduced the results 9 times, each time leaving one of the SDoH out of the successively defined reference populations.</p>
 <p>All data preparation and analysis was performed in R v4.4.2 using reproducible Quarto documents. A fully reproducible analysis code is publicly available at <a href="https://github.com/aminadibi/who-is-healthy-anyways/" class="uri">https://github.com/aminadibi/who-is-healthy-anyways/</a>.</p>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high-quality spirometry. This included 7,533 adults and 2,924 youths.</p>
-<p>The flow of participants is shown in <a href="#fig-flowchart" class="quarto-xref">Figure&nbsp;1</a>. Participant flow across successive reference populations is shown in <a href="#suppfig-flowrefs" class="quarto-xref">Figure S1</a>.</p>
+<p>The flow of participants up to the baseline reference population is shown in <a href="#fig-flowchart" class="quarto-xref">Figure&nbsp;1</a>. Participant flow across successive reference populations is shown in <a href="#suppfig-flowrefs" class="quarto-xref">Figure S1</a>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-flowchart" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -809,7 +810,7 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </figure>
 </div>
 </div>
-<p>From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in <a href="#fig-racialgap" class="quarto-xref">Figure&nbsp;2</a>. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.</p>
+<p>From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in <a href="#fig-racialgap" class="quarto-xref">Figure&nbsp;2</a>. The reduction in the proportion of Black participants after multiple exclusions based on SDoH confirms disproportionate impact of these factors on Black individuals in the US. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-racialgap" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -832,7 +833,7 @@ Figure&nbsp;2: Changes in lung function racial gaps in successively more restric
 </section>
 <section id="home-ownership-bmi-and-occupation" class="level4">
 <h4 class="anchored" data-anchor-id="home-ownership-bmi-and-occupation">Home Ownership, BMI, and Occupation</h4>
-<p>After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in <a href="#fig-racialgap-home-bmi-job" class="quarto-xref">Figure&nbsp;3</a>. After limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes the racial gap in FEV<sub>1</sub> and FVC was reduced by 21% and 19% in youth and 20% and 16% in adults.</p>
+<p>After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in <a href="#fig-racialgap-home-bmi-job" class="quarto-xref">Figure&nbsp;3</a>. Limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes reduced the racial gap in FEV<sub>1</sub> and FVC by 21% and 19% in youth and 20% and 16% in adults.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-racialgap-home-bmi-job" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -847,8 +848,18 @@ Figure&nbsp;3: Changes in lung function racial gaps after exclusions based on ho
 </div>
 </div>
 </div>
-<p>In the supplementary material, we also explored the intersection of self-identified race and country of origin. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 24% and 25% in youth, and by 35% and 23% in adults among US born participants (<a href="#suppfig-usborn" class="quarto-xref">Figure S4</a>). Black and White individuals born outside of the US had higher FEV<sub>1</sub> and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (<a href="#supptab-fig1byusborn" class="quarto-xref">Table S2</a>). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (<a href="#supptab-fig1byusborn" class="quarto-xref">Table S2</a>).</p>
-<p>In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV<sub>1</sub> and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV<sub>1</sub> and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (<a href="#suppfig-leaveoneout" class="quarto-xref">Figure S6</a>).</p>
+</section>
+<section id="country-of-birth" class="level4">
+<h4 class="anchored" data-anchor-id="country-of-birth">Country of Birth</h4>
+<p>We also explored the intersection of self-identified race and country of birth. After excluding those with various social and environmental exposures, the racial gap in FEV<sub>1</sub> and FVC was reduced by 24% and 25% in US-born youth, and by 35% and 23% in US-born adults (<a href="#suppfig-usborn" class="quarto-xref">Figure S4</a>). Black and White individuals born outside of the US had higher FEV<sub>1</sub> and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (<a href="#supptab-fig1byusborn" class="quarto-xref">Table S2</a>). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (<a href="#supptab-fig1byusborn" class="quarto-xref">Table S2</a>).</p>
+</section>
+<section id="other-race-categories" class="level4">
+<h4 class="anchored" data-anchor-id="other-race-categories">Other Race Categories</h4>
+<p>Excluding individuals with various SDoH did not reduce the proportion of Asian individuals, nor did it reduce FEV<sub>1</sub> or FVC gap between Asian and White individuals in the US (<a href="#suppfig-Asian" class="quarto-xref">Figure S5</a>). Among successive reference populations, the proportion of Mexican-Americans did decrease, confirming disproportionate impact of these exposures on Mexican-American population. Mexican-American and White populations had similar FEV<sub>1</sub> and FVC at baseline, nonetheless, excluding individuals with various exposures resulted in slightly larger FEV<sub>1</sub> and FVC values in Mexican-Americans compared to White individuals (<a href="#suppfig-Mexican" class="quarto-xref">Figure S6</a>). We observed somewhat similar results for non-Mexican Hispanic population (<strong>?@suppfig-Hispanic</strong>).</p>
+</section>
+<section id="leave-one-out-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="leave-one-out-analysis">Leave-one-out Analysis</h4>
+<p>In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV<sub>1</sub> and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV<sub>1</sub> and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (<a href="#suppfig-leavejob" class="quarto-xref">Figure S11</a> to <a href="#suppfig-leavediet" class="quarto-xref">Figure S19</a>).</p>
 </section>
 </section>
 </section>
@@ -933,12 +944,12 @@ Figure&nbsp;3: Changes in lung function racial gaps after exclusions based on ho
 </section>
 <section id="appendices" class="level2">
 <h2 class="anchored" data-anchor-id="appendices">Appendices</h2>
-<section id="participant-flow-across-successive-reference-equations" class="level3">
-<h3 class="anchored" data-anchor-id="participant-flow-across-successive-reference-equations">Participant Flow Across Successive Reference Equations</h3>
+<section id="participant-flow-across-successive-reference-populations" class="level3">
+<h3 class="anchored" data-anchor-id="participant-flow-across-successive-reference-populations">Participant Flow Across Successive Reference Populations</h3>
 <div id="suppfig-flowrefs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-suppfig figure">
 <div aria-describedby="suppfig-flowrefs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<p>Flow of participants across different reference equations</p>
+<p>Flow of participants across different reference populations</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -978,7 +989,7 @@ Figure S1
 </div>
 </section>
 <section id="participants-characteristics-by-race" class="level3">
-<h3 class="anchored" data-anchor-id="participants-characteristics-by-race">Participants characteristics by Race</h3>
+<h3 class="anchored" data-anchor-id="participants-characteristics-by-race">Participants Characteristics by Race</h3>
 <div id="supptab-missing-ness-by-race" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-supptab figure">
 <div aria-describedby="supptab-missing-ness-by-race-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2486,12 +2497,11 @@ Table S2: Characteristics of Black Participants Included in the Baseline Referen
 </figure>
 </div>
 </section>
-<section id="income-to-poverty-ratio" class="level3">
-<h3 class="anchored" data-anchor-id="income-to-poverty-ratio">Income to Poverty Ratio</h3>
-<p>When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in <a href="#suppfig-incomepovertyratio" class="quarto-xref">Figure S5</a>. The proportion of racial gap in FEV<sub>1</sub> and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.</p>
-<div id="suppfig-incomepovertyratio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<section id="other-race-groups" class="level3">
+<h3 class="anchored" data-anchor-id="other-race-groups">Other Race Groups</h3>
+<div id="suppfig-Asian" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-suppfig figure">
-<div aria-describedby="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="suppfig-Asian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2502,18 +2512,15 @@ Table S2: Characteristics of Black Participants Included in the Baseline Referen
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S5: Changes in lung function racial gaps based on income to poverty ratio
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Asian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S5: Asian vs.&nbsp;White Population
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="leave-one-out-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="leave-one-out-analysis">Leave-one-out Analysis</h3>
-<div id="suppfig-leaveoneout" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="suppfig-Mexican" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-suppfig figure">
-<div aria-describedby="suppfig-leaveoneout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<p>Leaving out job exposure</p>
+<div aria-describedby="suppfig-Mexican-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p>Mexican-American vs.&nbsp;White</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2523,7 +2530,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out physical activity</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Mexican-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S6: Mexican-American vs.&nbsp;White population
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-hispanic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-hispanic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2533,7 +2548,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out maternal smoke</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-hispanic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S7: Other Hispanic vs.&nbsp;White population
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-Other" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-Other-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2543,7 +2566,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out second-hand smoke exposure</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Other-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S8: Other Race Including Multiracial vs.&nbsp;White
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-mexicanblack" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-mexicanblack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2553,7 +2584,19 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out obesity</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig quarto-uncaptioned" id="suppfig-mexicanblack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S9
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="income-to-poverty-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="income-to-poverty-ratio">Income to Poverty Ratio</h3>
+<p>When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in <a href="#suppfig-incomepovertyratio" class="quarto-xref">Figure S10</a>. The proportion of racial gap in FEV<sub>1</sub> and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.</p>
+<div id="suppfig-incomepovertyratio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2563,7 +2606,18 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out homeowneship</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S10: Changes in lung function racial gaps based on income to poverty ratio
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="leave-one-out-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="leave-one-out-analysis-1">Leave-one-out Analysis</h3>
+<div id="suppfig-leavejob" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavejob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2573,7 +2627,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out health insurance</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavejob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S11: Leaving out job exposure
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leavephysicalactivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavephysicalactivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2583,7 +2645,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out education</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavephysicalactivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S12: Leaving out physical activity
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leavematernalsmoke" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavematernalsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2593,7 +2663,15 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<p>Leaving out diet health</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavematernalsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S13: Leaving out maternal smoke
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leavesecondhandsmoke" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavesecondhandsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2604,8 +2682,98 @@ Figure S5: Changes in lung function racial gaps based on income to poverty ratio
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveoneout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S6: Leave one out analysis
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavesecondhandsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S14: Leaving out second-hand smoke exposure
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leaveobesity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leaveobesity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveobesity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S15: Leaving out obesity
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leavehomeowner" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavehomeowner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavehomeowner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S16: Leaving out homeownership
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leaveinsurance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leaveinsurance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveinsurance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S17: Leaving out health insurance
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leaveeducation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leaveeducation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveeducation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S18: Leaving out education
+</figcaption>
+</figure>
+</div>
+<div id="suppfig-leavediet" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-suppfig figure">
+<div aria-describedby="suppfig-leavediet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavediet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S19: Leaving out diet health
 </figcaption>
 </figure>
 </div>
@@ -2755,7 +2923,7 @@ Ignoring unknown aesthetics: fill
 :::
 
 ::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-1.png){width=672}
+![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-33-1.png){width=672}
 :::
 :::
 

@@ -84,7 +84,7 @@ We used data from three cycles of NHANES (2007-2012) with appropriate sampling w
 
 Occupational exposure was defined as having ever been exposed to either mineral dusts, organic dusts, exhaust fumes, or other fumes at work. Indivdiuals who did not have at least 10 minutes of vigorous or moderate activity in a typical week, either for work or recreationally, were considered physically inactive. Lower educated individuals were defined as adults 20 years of age and older with a high school or a GED degree or lower, and 6-19 years old who were neither in school nor on vacation from school. Individuals with self-declared their dietary health as either poor or fair were considered to have a unhealthy diet.
 
-For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function.
+For each reference population, the racial gap was calculated as the average difference between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function. We repeated the main analysis separately for individuals who self-identified as "Non-Hispanic Asian" (only available in NHANES 2011-2012), "Mexican-American", "Other Hispanic", and "Other, including multiracial".
 
 In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone to see whether poverty can be a good proxy for SDoH. To examine the effects of our choice of SDoH to account for, we conducted a leave-one-out analysis, where we reproduced the results 9 times, each time leaving one of the SDoH out of the successively defined reference populations.
 
@@ -110,7 +110,7 @@ compute_gap_reduction <- function(df, measure) {
     round(2)
 }
 
-createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE) {
+createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4)) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
     stop("Invalid age group")
   if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
@@ -141,22 +141,25 @@ createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', Bir
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
-    mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
+    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
+    # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
   
   message(paste0("NHANES N (excluding missing or low quality spiro: ", 
                  (nhanes %>% count())))
   
   if (BirthCountry=='all'){
       nhanes_bw <- nhanes %>%
-        filter(race %in% c(3,4))
+        filter(race %in% includedRace) %>%
+        mutate(race=factor(race, levels=includedRace))
   } else  {
           nhanes_bw <- nhanes %>%
-            filter(race %in% c(3,4)) %>%
-            filter(birth_country==BirthCountry)
+            filter(race %in% includedRace) %>%
+            filter(birth_country==BirthCountry) %>%
+            mutate(race=factor(race, levels=includedRace))
+
   } 
 
-  message(paste0("NHANES Black and White N (excluding missing or low quality spiro: ", 
+  message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
                  (nhanes_bw %>% count())))
   
 if (ageGroup=="adult") {
@@ -185,41 +188,41 @@ if (ageGroup=="all_ages") {
 
 ref0 <- nhanes_bw %>%
    mutate(
-        race_spiro_gli2012            = case_match(race_text_nhanes,
-                                     "Non-Hispanic White" ~ "1"  ,
-                                     "Non-Hispanic Black" ~ "2" ,
-                                     "Non-Hispanic Asian" ~ "4", 
-                                     "Mexican American" ~ "1", 
-                                     "Other Hispanic" ~ "1",
-                                     "Other Race - Including Multi-Racial" ~ "5"
-                                     ),
+        # race_spiro_gli2012            = case_match(race_text_nhanes,
+        #                              "Non-Hispanic White" ~ "1"  ,
+        #                              "Non-Hispanic Black" ~ "2" ,
+        #                              "Non-Hispanic Asian" ~ "4", 
+        #                              "Mexican American" ~ "1", 
+        #                              "Other Hispanic" ~ "1",
+        #                              "Other Race - Including Multi-Racial" ~ "5"
+        #                              ),
         sex_text           = case_match(sex,
                                      "1" ~ "Male"  ,
                                      "2" ~ "Female" ),
-        predicted_fev1_gli2012 = rspiro::pred_GLI(age=age, height=height/100, 
-                                                  gender=sex, ethnicity=race_spiro_gli2012,
-                                                  param="FEV1"),
-        predicted_fev1_gli_global = rspiro::pred_GLIgl(age=age, height=height/100, 
-                                                  gender=sex, 
-                                                  param="FEV1"),
-        perc_pred_fev1_gli2012 = rspiro::pctpred_GLI(age=age, height=height/100, 
-                                                  gender=sex, ethnicity=race_spiro_gli2012,
-                                                  FEV1=fev1),
-        zscore_fev1_gli2012 = rspiro::zscore_GLI(age=age, height=height/100, 
-                                                  gender=sex, ethnicity=race_spiro_gli2012,
-                                                  FEV1=fev1),
-        perc_pred_fev1_gli2012_whiteforall = rspiro::pctpred_GLI(age=age, height=height/100, 
-                                                  gender=sex, ethnicity=1,
-                                                  FEV1=fev1),
-        perc_pred_fev1_gli2012_otherforall = rspiro::pctpred_GLI(age=age, height=height/100, 
-                                                  gender=sex, ethnicity=5,
-                                                  FEV1=fev1),
-        perc_pred_fev1_gli_global = rspiro::pctpred_GLIgl(age=age, height=height/100, 
-                                                  gender=sex,
-                                                  FEV1=fev1),
-        zscore_fev1_gli_global = rspiro::zscore_GLIgl(age=age, height=height/100, 
-                                                  gender=sex,
-                                                  FEV1=fev1)
+        # predicted_fev1_gli2012 = rspiro::pred_GLI(age=age, height=height/100, 
+        #                                           gender=sex, ethnicity=race_spiro_gli2012,
+        #                                           param="FEV1"),
+        # predicted_fev1_gli_global = rspiro::pred_GLIgl(age=age, height=height/100, 
+        #                                           gender=sex, 
+        #                                           param="FEV1"),
+        # perc_pred_fev1_gli2012 = rspiro::pctpred_GLI(age=age, height=height/100, 
+        #                                           gender=sex, ethnicity=race_spiro_gli2012,
+        #                                           FEV1=fev1),
+        # zscore_fev1_gli2012 = rspiro::zscore_GLI(age=age, height=height/100, 
+        #                                           gender=sex, ethnicity=race_spiro_gli2012,
+        #                                           FEV1=fev1),
+        # perc_pred_fev1_gli2012_whiteforall = rspiro::pctpred_GLI(age=age, height=height/100, 
+        #                                           gender=sex, ethnicity=1,
+        #                                           FEV1=fev1),
+        # perc_pred_fev1_gli2012_otherforall = rspiro::pctpred_GLI(age=age, height=height/100, 
+        #                                           gender=sex, ethnicity=5,
+        #                                           FEV1=fev1),
+        # perc_pred_fev1_gli_global = rspiro::pctpred_GLIgl(age=age, height=height/100, 
+        #                                           gender=sex,
+        #                                           FEV1=fev1),
+        # zscore_fev1_gli_global = rspiro::zscore_GLIgl(age=age, height=height/100, 
+        #                                           gender=sex,
+        #                                           FEV1=fev1)
       
         ) 
   
@@ -346,7 +349,7 @@ return(refs)
 
 Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 10,457 participants had valid height and high-quality spirometry. This included 7,533 adults and 2,924 youths.
 
-The flow of participants is shown in @fig-flowchart. Participant flow across successive reference populations is shown in @suppfig-flowrefs.
+The flow of participants up to the baseline reference population is shown in @fig-flowchart. Participant flow across successive reference populations is shown in @suppfig-flowrefs.
 
 ```{mermaid, include=T}
 %%| label: fig-flowchart
@@ -570,16 +573,18 @@ Characteristics of participants is summarized in @tbl-table1 .
 
 ```{r}
 
-race_estimate <- function(df, outcome, single_sex=FALSE) {
+race_estimate <- function(df, outcome, single_sex=FALSE, includedRace) {
   if (single_sex) {formula_text <- as.formula(paste0(outcome, " ~ age + height + race"))}
   else {formula_text <- as.formula(paste0(outcome, " ~ sex + age + height + race"))}
   lm_fit <- lm(formula_text, data=df, weights=MEC6YR)
-  res <- (tidy(lm_fit, conf.int=TRUE)%>%filter(term=='race4')) 
+  res <- (tidy(lm_fit, conf.int=TRUE) %>% filter(str_detect(term, "race")))
+            
+#filter(term==paste0('race', includedRace[includedRace!=3]))) 
   return(res)
 }
 
 plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                   metric1="fev1", metric2="fvc"){
+                                   metric1="fev1", metric2="fvc", includedRace=c(3,4)){
   
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
@@ -592,22 +597,22 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
   
   race_coeffs_fev1_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>% 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>% 
     mutate(sequence=sequence_adult_df$ref,
            Measure = metric1) 
   
   race_coeffs_fev1_youth <-
-    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>%
+    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>%
     mutate(sequence=sequence_youth_df$ref,
            Measure = metric1) 
   
   race_coeffs_fvc_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>%
+    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>%
     mutate(sequence=sequence_adult_df$ref,
            Measure = metric2)
   
   race_coeffs_fvc_youth <- 
-    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>% 
+    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>% 
     mutate(sequence=sequence_youth_df$ref,
            Measure = metric2)
   
@@ -628,10 +633,20 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   
   # Plot Racial Gap
   plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
+    
+    base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
+    base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
+    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
+    ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
+    ylim_high <- max(-1*(race_coeffs$conf.low))
+
     p <- ggplot(race_coeffs%>%filter(Measure==measure), aes(y=-estimate, x=sequence)) + 
-      geom_point() +
+      geom_point(size=0.7) +
       geom_errorbar(aes(ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-      ylim(0, 1.2) + 
+      geom_hline(yintercept = base_low, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_high, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_ref, colour="salmon", linetype='dotted') +
+      ylim(ylim_low-0.1, ylim_high+0.1) + 
       ylab(paste0(str_to_upper(measure), " Gap (L)")) +
       xlab("") +
       theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
@@ -709,7 +724,7 @@ predPlot <- function(df) {
 
 ```
 
-From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.
+From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. The reduction in the proportion of Black participants after multiple exclusions based on SDoH confirms disproportionate impact of these factors on Black individuals in the US. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 26% and 19% in adults, and 25% and 26% in youth.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap
@@ -735,7 +750,7 @@ We also looked at the racial gap in lung function from the most permissive to th
 
 #### Home Ownership, BMI, and Occupation
 
-After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. After limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes the racial gap in FEV~1~ and FVC was reduced by 21% and 19% in youth and 20% and 16% in adults.
+After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. Limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes reduced the racial gap in FEV~1~ and FVC by 21% and 19% in youth and 20% and 16% in adults.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap-home-bmi-job
@@ -838,9 +853,17 @@ return(refs)
 plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
 ```
 
-In the supplementary material, we also explored the intersection of self-identified race and country of origin. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 24% and 25% in youth, and by 35% and 23% in adults among US born participants (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV~1~ and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
+#### Country of Birth
 
-In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV~1~ and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV~1~ and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (@suppfig-leaveoneout).
+We also explored the intersection of self-identified race and country of birth. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 24% and 25% in US-born youth, and by 35% and 23% in US-born adults (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV~1~ and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
+
+#### Other Race Categories
+
+Excluding individuals with various SDoH did not reduce the proportion of Asian individuals, nor did it reduce FEV~1~ or FVC gap between Asian and White individuals in the US (@suppfig-Asian). Among successive reference populations, the proportion of Mexican-Americans did decrease, confirming disproportionate impact of these exposures on Mexican-American population. Mexican-American and White populations had similar FEV~1~ and FVC at baseline, nonetheless, excluding individuals with various exposures resulted in slightly larger FEV~1~ and FVC values in Mexican-Americans compared to White individuals (@suppfig-Mexican). We observed somewhat similar results for non-Mexican Hispanic population (@suppfig-Hispanic).
+
+#### Leave-one-out Analysis
+
+In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV~1~ and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV~1~ and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (@suppfig-leavejob to @suppfig-leavediet).
 
 ## Discussion
 
@@ -981,6 +1004,96 @@ table1(~ age + race_text_nhanes + sex_text +
 Characteristics of Black Participants Included in the Baseline Reference Population by Country of Birth
 :::
 
+### Other Race Groups
+
+::: {#suppfig-Asian}
+
+
+```{r, message=F, warning=F}
+refs_adult_asian <- createCohort("adult", includedRace=c(3,6))
+message("Adult counts:")
+message(map_df(refs_adult_asian, count))
+
+refs_youth_asian <- createCohort("youth", includedRace=c(3,6))
+message("Youth counts:")
+message(map_df(refs_youth_asian, count))
+
+plot_racial_gap_change(refs_adult_asian, refs_youth_asian, includedRace=c(3,6))
+```
+Asian vs. White Population
+::: 
+
+::: {#suppfig-Mexican}
+Mexican-American vs. White
+
+```{r, message=F, warning=F}
+
+refs_adult_mex <- createCohort("adult", includedRace=c(3,1))
+message("Adult counts:")
+message(map_df(refs_adult_mex, count))
+
+refs_youth_mex <- createCohort("youth", includedRace=c(3,1))
+message("Youth counts:")
+message(map_df(refs_youth_mex, count))
+
+plot_racial_gap_change(refs_adult_mex, refs_youth_mex, includedRace=c(3,1))
+
+```
+Mexican-American vs. White population
+::: 
+
+::: {#suppfig-hispanic}
+
+```{r, message=F, warning=F}
+
+refs_adult_hisp <- createCohort("adult", includedRace=c(3,2))
+message("Adult counts:")
+message(map_df(refs_adult_hisp, count))
+
+refs_youth_hisp <- createCohort("youth", includedRace=c(3,2))
+message("Youth counts:")
+message(map_df(refs_youth_hisp, count))
+
+plot_racial_gap_change(refs_adult_hisp, refs_youth_hisp, includedRace=c(3,2))
+```
+Other Hispanic vs. White population
+:::
+
+::: {#suppfig-Other}
+
+```{r, message=F, warning=F}
+
+refs_adult_oth <- createCohort("adult", includedRace=c(3,7))
+message("Adult counts:")
+message(map_df(refs_adult_oth, count))
+
+refs_youth_oth <- createCohort("youth", includedRace=c(3,7))
+message("Youth counts:")
+message(map_df(refs_youth_oth, count))
+
+plot_racial_gap_change(refs_adult_oth, refs_youth_oth, includedRace=c(3,7))
+
+```
+Other Race Including Multiracial vs. White
+
+:::
+
+
+::: {#suppfig-mexicanblack}
+```{r, message=F, warning=F}
+
+refs_adult_mex_bl <- createCohort("adult", includedRace=c(4,1))
+message("Adult counts:")
+message(map_df(refs_adult_mex_bl, count))
+
+refs_youth_mex_bl <- createCohort("youth", includedRace=c(4,1))
+message("Youth counts:")
+message(map_df(refs_youth_mex_bl, count))
+
+plot_racial_gap_change(refs_adult_mex_bl, refs_youth_mex_bl, includedRace=c(4,1))
+```
+:::
+
 ### Income to Poverty Ratio
 
 When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @suppfig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
@@ -1000,53 +1113,80 @@ Changes in lung function racial gaps based on income to poverty ratio
 
 ### Leave-one-out Analysis
 
-::: {#suppfig-leaveoneout}
+::: {#suppfig-leavejob}
 
-Leaving out job exposure
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-2], refs_youth[-2])
 ```
+Leaving out job exposure
+:::
 
-Leaving out physical activity
+::: {#suppfig-leavephysicalactivity}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-3], refs_youth[-3])
 ```
+Leaving out physical activity
 
-Leaving out maternal smoke
+:::
+
+::: {#suppfig-leavematernalsmoke}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-4], refs_youth[-4])
 ```
+Leaving out maternal smoke
+:::
 
-Leaving out second-hand smoke exposure
-```{r, warning=FALSE, message=FALSE} 
+::: {#suppfig-leavesecondhandsmoke}
+
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-5], refs_youth[-5])
 ```
-Leaving out obesity
+Leaving out second-hand smoke exposure
+:::
+
+::: {#suppfig-leaveobesity}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-6], refs_youth[-6])
 ```
+Leaving out obesity
+:::
 
-Leaving out homeowneship
+::: {#suppfig-leavehomeowner}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-7], refs_youth[-7])
 ```
+Leaving out homeownership
+:::
 
-Leaving out health insurance
+::: {#suppfig-leaveinsurance}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-8], refs_youth[-8])
 ```
+Leaving out health insurance
+:::
 
-Leaving out education
+::: {#suppfig-leaveeducation}
+
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-9], refs_youth[-9])
-``` 
+```
+Leaving out education
 
-Leaving out diet health
+:::
+
+::: {#suppfig-leavediet}
+
 ```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-10], refs_youth[-10])
 ```
 
-Leave one out analysis
+Leaving out diet health
 :::
 
 ### 
