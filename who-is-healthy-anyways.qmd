@@ -110,9 +110,14 @@ compute_gap_reduction <- function(df, measure, type) {
       filter(Measure == measure) %>%
       summarise(Reduction = 100*(last(estimate) - first(estimate)) / first(estimate)) %>% 
       round(2) } else if (type=="abs"){
-          df %>% 
-      filter(Measure == measure) %>%
-      summarise(Reduction = (last(estimate) - first(estimate)) %>% round(2)) 
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(Reduction = (last(estimate) - first(estimate)) %>% round(2)) 
+      } else if (type=="baseline") {
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(Reduction = (first(estimate)) %>% round(2)) 
+      
     } else
     {stop("Invalid type for compute_gap_reduction")}
   
@@ -646,11 +651,15 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     measures <- c(metric1, metric2)
     for (measure in measures) {
       message(paste0("For ", measure, " in ", age_group, 
-                     ", the percentage reduction in gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
+                     ", the baseline gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " L"))
       message(paste0("For ", measure, " in ", age_group, 
-                     ", the absolute reduction in gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="abs")))
+                     ", the absolute change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="abs"), " L"))
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the percentage change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
+
     }
   }
 
