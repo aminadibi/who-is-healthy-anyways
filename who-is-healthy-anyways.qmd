@@ -378,6 +378,227 @@ Of the 18,359 self-identified Black and White participants in NHANES 2007-2012, 
 
 The flow of participants up to the baseline reference population is shown in @fig-flowchart. Participant flow across successive reference populations is shown in @suppfig-flowrefs.
 
+Characteristics of participants is summarized in @tbl-table1 .
+
+
+```{r}
+
+race_estimate <- function(df, outcome, single_sex=FALSE, includedRace) {
+  if (single_sex) {formula_text <- as.formula(paste0(outcome, " ~ age + height + race"))}
+  else {formula_text <- as.formula(paste0(outcome, " ~ sex + age + height + race"))}
+  lm_fit <- lm(formula_text, data=df, weights=MEC6YR)
+  res <- (tidy(lm_fit, conf.int=TRUE) %>% filter(str_detect(term, "race")))
+            
+#filter(term==paste0('race', includedRace[includedRace!=3]))) 
+  return(res)
+}
+
+plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
+                                   metric1="fev1", metric2="fvc", includedRace=c(3,4)){
+  
+  sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
+  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
+  names(sequence_adult_df) <- 'ref'
+  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
+  
+  sequence_youth <- lapply(refs_youth_list, function(x) unique(x$ref))
+  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
+  names(sequence_youth_df) <- 'ref'
+  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
+  
+  race_coeffs_fev1_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>% 
+    mutate(sequence=sequence_adult_df$ref,
+           Measure = metric1) 
+  
+  race_coeffs_fev1_youth <-
+    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>%
+    mutate(sequence=sequence_youth_df$ref,
+           Measure = metric1) 
+  
+  race_coeffs_fvc_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>%
+    mutate(sequence=sequence_adult_df$ref,
+           Measure = metric2)
+  
+  race_coeffs_fvc_youth <- 
+    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>% 
+    mutate(sequence=sequence_youth_df$ref,
+           Measure = metric2)
+  
+  race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
+  race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
+  
+  # report Gap Reduction
+  gap_reduction_messages <- function(race_coeffs, age_group) {
+    measures <- c(metric1, metric2)
+    for (measure in measures) {
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the baseline gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " L"))
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the absolute change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="abs"), " L"))
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the percentage change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
+
+    }
+  }
+
+  gap_reduction_messages(race_coeffs_adult, "adults")
+  gap_reduction_messages(race_coeffs_youth, "youth")
+  
+  # Plot Racial Gap
+  plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
+    
+    base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
+    base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
+    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
+    ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
+    ylim_high <- max(-1*(race_coeffs$conf.low))
+
+    p <- ggplot(race_coeffs%>%filter(Measure==measure), aes(y=-estimate, x=sequence)) + 
+      geom_point(size=0.7) +
+      geom_errorbar(aes(ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
+      geom_hline(yintercept = base_low, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_high, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_ref, colour="salmon", linetype='dotted') +
+      ylim(ylim_low-0.1, ylim_high+0.1) + 
+      ylab(paste0(str_to_upper(measure), " Gap (L)")) +
+      xlab("") +
+      theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+    
+    if (suppress_legend) {
+      p <- p +  theme(legend.position="none")
+    }
+    return(p)
+  }
+  
+  racial_gap_fev1_adult <- plot_racial_gap(race_coeffs_adult, "adults", measure="fev1")
+  racial_gap_fvc_adult  <- plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
+
+  racial_gap_fev1_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1", suppress_legend=TRUE)
+
+    racial_gap_fvc_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc", suppress_legend=TRUE)
+
+  # Combine refs_df_adult and refs_df_youth
+  combine_refs_df <- function(refs_list) {
+    refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]] %>% mutate(ref = i)))
+    refs_df %>%
+      mutate(ref=factor(ref)) %>%
+      group_by(ref) %>%
+      count(race_text_nhanes, wt = MEC6YR) %>%
+      mutate(perc = n / sum(n)) %>%
+      ungroup()
+  }
+  
+  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
+  refs_df_percent_youth <- combine_refs_df(refs_youth_list)
+
+  plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
+    p <- ggplot(refs_df_percent) +
+      geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
+      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
+      scale_y_continuous(labels=scales::percent) +
+      ggtitle(title) +
+      labs(x = "", y = "Participants") +
+      guides(fill=guide_legend(title="Race")) +
+      theme_few() + theme(axis.text.x = element_blank())
+    
+    if (suppress_legend) {
+      p <- p +  theme(legend.position="none", axis.text.x=element_blank())
+    }
+    return(p)
+  }
+
+  gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
+  gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Youth (<20 yrs)", suppress_legend=TRUE)
+
+    p <- (((gap_perc_black_youth/racial_gap_fev1_youth/racial_gap_fvc_youth) + 
+           plot_layout(axes = "collect")) | 
+          ((gap_perc_black_adult/racial_gap_fev1_adult/racial_gap_fvc_adult) + 
+             plot_layout(axes = "collect")) ) + 
+    plot_annotation(tag_levels = 'A') 
+  
+  return(p)
+}
+
+
+predPlot <- function(df) {
+  lm_fit_with_race <- lm(fev1 ~ sex + age + height + race, data=df)
+  df <- df %>%
+    mutate(.pred = predict(lm_fit_with_race, df))
+  
+  ggplot(df) +
+    geom_point(aes(y=fev1, x=age), size=0.1, alpha=0.4, colour='salmon') + 
+    geom_smooth(aes(y=fev1, x=age), colour='salmon') +
+    geom_point(aes(y=.pred, x=age), size=0.1, alpha=0.4) +
+    geom_smooth(aes(y=.pred, x=age)) +
+    facet_wrap(~sex) + 
+    theme_few()
+  
+}
+
+```
+
+From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. The reduction in the proportion of Black participants after multiple exclusions based on SDoH confirms disproportionate impact of these factors on Black individuals in the US.
+
+In the baseline reference population, average FEV~1~ and FVC were 0.35 L and 0.42 L higher in White youth compared with Black youth, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.50 L for FEV~1~ and 0.69 for FVC. After excluding those with unfavourable SDoH, the racial gap in FEV~1~ and FVC was reduced by 25% and 26% in youth and by 26% and 19% in adults (@fig-racialgap).
+
+Excluding individuals with various SDoH did not reduce the proportion of Asian individuals (@suppfig-Asian). In the baseline reference population, average FEV~1~ and FVC were 0.18 L and 0.31 L higher in White youth compared with Asian youth, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.37 L for FEV~1~ and 0.50 for FVC. After excluding those with unfavourable SDoH, the racial gap in FEV~1~ and FVC was reduced by 7% and 13% in youth but, surprisingly, increased by 14% and 11% in adults (@suppfig-Asian).
+
+Among successive reference populations, the proportion of Mexican-Americans substantially decreased, confirming disproportionate impact of these exposures on Mexican-American population, compared to White population. Mexican-American youth had slightly higher FEV~1~ and FVC at baseline compared to White youth. Average FEV~1~ and FVC were 0.06 L and 0.04 L higher in Mexican-American youth compared to White youth, after adjusting for age, height, and biological sex at birth. Mexican-American and White adults had similar adjusted FEV~1~ and FVC at baseline (@suppfig-Mexican). Excluding individuals with unfavourable SDoH resulted in higher FEV~1~ and FVC values for Mexican-American population compared to White population. Adjusted average FEV~1~ and FVC values for Mexican-American youth were 0.09 L and 0.06 L higher than White youth. For adults, average FEV~1~ and FVC were both higher by 0.03 L compared to White adults (@suppfig-Mexican).
+
+The appendix includes additional results for non-Mexican Hispanic population (@suppfig-hispanic) and those who identified as "Other-including multiracial" (@suppfig-Other).
+
+
+### Secondary and Sensitivity Analyses
+
+#### Biological Sex
+
+We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 16% and 19% in youth, and by 27% and 20% in adults, respectively (appendix @suppfig-females). In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 35% and 34% in youth and by 14% and 8% in adults (appendix @suppfig-males).
+
+#### Home Ownership, BMI, and Occupation
+
+After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. Limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes reduced the racial gap in FEV~1~ and FVC by 21% and 19% in youth and 20% and 16% in adults.
+
+
+#### Country of Birth
+
+We also explored the intersection of self-identified race and country of birth. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 24% and 25% in US-born youth, and by 35% and 23% in US-born adults (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV~1~ and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
+
+#### Leave-one-out Analysis
+
+In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV~1~ and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV~1~ and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (@suppfig-leavejob to @suppfig-leavediet).
+
+## Discussion
+
+Our results show that a higher than previously reported proportion of racial differences in lung function between Black and White Americans can be explained by differences in SDoH [@harik-khan2001; @harik-khan2004]. Within studied SDoH variables in NHANES 2007-2012, we were able to explain 26% of the racial gap in lung function in adults, and as much as 35% of the gap in males under 20 years of age. The true contribution of SDoH to racial gaps in lung function is likely much higher, as only some aspects of SDoH are properly captured in NHANES. The difficulty of measuring SDoH and our incomplete and evolving understanding of the complex interplay between racism, social, and environmental factors suggest that what we see might just be the tip of the iceberg.
+
+Our results are consistent with a growing body of literature that implicates historical and structural inequities in perpetuating health disparities among racialized communities [@nardone2020; @schuyler2022; @gaffney2021; @levy2018]. However, we also observed a higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV1 explained by the studied exposures). This might be related to US-specific systemic factors such as the enduring impact of slavery, segregation, redlining, and other inequities and injustices that profoundly affect lung health. Supporting this notion, some studies have reported significantly higher levels of allostatic load and hypertension in US-born self-identified Black individuals compared to Black immigrants to the US [@doamekpor2015; @brown2017].
+
+For Asian people,
+
+Introducing nine additional exclusion criteria to reference populations significantly minimized racial disparities in lung function in our study. Our exploratory analysis revealed that occupational exposures, obesity, and non-home ownership were the three exclusion criteria most responsible for explaining the racial gap in lung function.
+
+What are the implications for lung function reference equations? Since these equations are designed to predict healthy lung function, they need to make an assumption about the nature of racial gaps in lung function, either explicitly or implicitly. For decades, ATS lung function testing guidelines have acknowledged the effects of social and environmental factors on the variability of lung function across populations [@lungfun1991]. However, race-specific lung function reference equations implicitly assumed racial gaps in lung function were normal and benign, the same way that differences based on biological sex at birth, height, and age, were considered normal. This practice was at odds with the recognized role of SDoH, reinforced inequities not just by perpetuating the notion of race as a biological determinant, but also by failing to account for the fact that at least some of the observed racial gap may be pathological, due to injury caused by SDoH. In 2023, the ATS statement on race and ethnicity in pulmonary function testing advocated for a significant shift in practice. The statement acknowledged the importance and complexity of these exposures, rejected fixed differences between races, and embraced a more uncertain race-averaged reference equation, instead of the misleading statistical accuracy of the previous race-based equations [@bhakta2023].
+
+The newly recommended race-averaged GLI-Global reference equations no longer assume that racial differences in lung function are normal and benign differences. However, do they assume these differences are solely due to disproportionate environmental exposures and SDoH? The answer seems to be no, as GLI-Global equations use averages of race-specific reference lung function projections, as opposed to projecting the highest race-specific value for all [@bowerman2023].
+
+Developing unbiased, fair, and practical lung function reference equations is challenging because of our limited understanding of complex exposures, lack of good representative data, and diverse applications of pulmonary function tests. Recognizing the good faith efforts of those working diligently to find a balance between feasibility, practicality, and an ideal accounting for all potential biases, one potential way forward, at least for some use cases of spirometry, involves explicitly accounting for effect of complex exposures. This does not require asking patients for their exposure history or social determinants at the point of care and can be achieved by tightening the inclusion criteria in the reference populations. Excluding individuals with unfavourable SDoH from reference populations results in a more uniformly healthy reference population across racial identities and makes the dataset less biased. However, this approach may reduce the racial representativeness of the data due to disproportionate exposures. Ensuring a sufficiently large and representative initial sample may allow oversampling to achieve representativeness across all groups.
+
+Proposals for developing lung function standards using data from participants of "middle-class origin who live and work in clean environments" have appeared in the literature as early as 1984 [@Myers1984]. There is also precedence for choosing reference populations based on favourable SDoH outside of lung function testing. One prominent example is the WHO Multicentre Growth Reference Study that was conducted to create birth to 2-years growth standards [@mercedes2004]. The study's sites were chosen through a meticulous process that took into account geographical and ethnic representativeness, and included affluent communities in the cities of New Delhi, Muscat, Accra, Oslo, Davis, and Pelotas. The eligibility criteria for individual mother and children included no health, environmental, and economic constraints on growth, mother's willingness to follow WHO feeding recommendations, among others [@mercedes2004].
+
+Our study highlights the necessity for further research to understand the interplay between SDoH, environmental exposures, and lung function across different populations. Future studies should aim to incorporate a wider array of SDoH, such as stress levels, access to healthcare, neighborhood safety, and intergenerational effects, including those related to wealth, social status, poverty, and trauma. There is also a need for longitudinal studies that can elucidate causal pathways and the potential impact of policy changes on reducing health disparities. Exploring the intersectionality of race and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global and localized strategies to address lung health disparities.
+
+Certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. Incomplete understanding and limited nature of available data also limits our assessment of complex social and environmental exposures and identities, such as effects of racism, intergenerational wealth effects, life-course exposure to pollutants, gender identity, violence, stress, and allostatic load.
+
+## Conclusions
+
+Our study underscores the significant influence of social determinants of health on lung function and shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES 2007-2012.
+
+
 ```{mermaid, include=T}
 %%| label: fig-flowchart
 %%| fig-cap: Flow of participants
@@ -391,7 +612,7 @@ flowchart TD
 
 ```
 
-Characteristics of participants is summarized in @tbl-table1 .
+
 
 ```{r}
 #| label: tbl-table1
@@ -598,176 +819,6 @@ Characteristics of participants is summarized in @tbl-table1 .
  
 ```
 
-```{r}
-
-race_estimate <- function(df, outcome, single_sex=FALSE, includedRace) {
-  if (single_sex) {formula_text <- as.formula(paste0(outcome, " ~ age + height + race"))}
-  else {formula_text <- as.formula(paste0(outcome, " ~ sex + age + height + race"))}
-  lm_fit <- lm(formula_text, data=df, weights=MEC6YR)
-  res <- (tidy(lm_fit, conf.int=TRUE) %>% filter(str_detect(term, "race")))
-            
-#filter(term==paste0('race', includedRace[includedRace!=3]))) 
-  return(res)
-}
-
-plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                   metric1="fev1", metric2="fvc", includedRace=c(3,4)){
-  
-  sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
-  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
-  names(sequence_adult_df) <- 'ref'
-  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
-  
-  sequence_youth <- lapply(refs_youth_list, function(x) unique(x$ref))
-  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
-  names(sequence_youth_df) <- 'ref'
-  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
-  
-  race_coeffs_fev1_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>% 
-    mutate(sequence=sequence_adult_df$ref,
-           Measure = metric1) 
-  
-  race_coeffs_fev1_youth <-
-    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex, includedRace=includedRace)) %>%
-    mutate(sequence=sequence_youth_df$ref,
-           Measure = metric1) 
-  
-  race_coeffs_fvc_adult <- 
-    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>%
-    mutate(sequence=sequence_adult_df$ref,
-           Measure = metric2)
-  
-  race_coeffs_fvc_youth <- 
-    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex, includedRace=includedRace)) %>% 
-    mutate(sequence=sequence_youth_df$ref,
-           Measure = metric2)
-  
-  race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
-  race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
-  
-  # report Gap Reduction
-  gap_reduction_messages <- function(race_coeffs, age_group) {
-    measures <- c(metric1, metric2)
-    for (measure in measures) {
-      message(paste0("For ", measure, " in ", age_group, 
-                     ", the baseline gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " L"))
-      message(paste0("For ", measure, " in ", age_group, 
-                     ", the absolute change in gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="abs"), " L"))
-      message(paste0("For ", measure, " in ", age_group, 
-                     ", the percentage change in gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
-
-    }
-  }
-
-  gap_reduction_messages(race_coeffs_adult, "adults")
-  gap_reduction_messages(race_coeffs_youth, "youth")
-  
-  # Plot Racial Gap
-  plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
-    
-    base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
-    base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
-    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
-    ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
-    ylim_high <- max(-1*(race_coeffs$conf.low))
-
-    p <- ggplot(race_coeffs%>%filter(Measure==measure), aes(y=-estimate, x=sequence)) + 
-      geom_point(size=0.7) +
-      geom_errorbar(aes(ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
-      geom_hline(yintercept = base_low, colour="salmon", linetype='dashed') +
-      geom_hline(yintercept = base_high, colour="salmon", linetype='dashed') +
-      geom_hline(yintercept = base_ref, colour="salmon", linetype='dotted') +
-      ylim(ylim_low-0.1, ylim_high+0.1) + 
-      ylab(paste0(str_to_upper(measure), " Gap (L)")) +
-      xlab("") +
-      theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-    
-    if (suppress_legend) {
-      p <- p +  theme(legend.position="none")
-    }
-    return(p)
-  }
-  
-  racial_gap_fev1_adult <- plot_racial_gap(race_coeffs_adult, "adults", measure="fev1")
-  racial_gap_fvc_adult  <- plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
-
-  racial_gap_fev1_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1", suppress_legend=TRUE)
-
-    racial_gap_fvc_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc", suppress_legend=TRUE)
-
-  # Combine refs_df_adult and refs_df_youth
-  combine_refs_df <- function(refs_list) {
-    refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]] %>% mutate(ref = i)))
-    refs_df %>%
-      mutate(ref=factor(ref)) %>%
-      group_by(ref) %>%
-      count(race_text_nhanes, wt = MEC6YR) %>%
-      mutate(perc = n / sum(n)) %>%
-      ungroup()
-  }
-  
-  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
-  refs_df_percent_youth <- combine_refs_df(refs_youth_list)
-
-  plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
-    p <- ggplot(refs_df_percent) +
-      geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
-      scale_y_continuous(labels=scales::percent) +
-      ggtitle(title) +
-      labs(x = "", y = "Participants") +
-      guides(fill=guide_legend(title="Race")) +
-      theme_few() + theme(axis.text.x = element_blank())
-    
-    if (suppress_legend) {
-      p <- p +  theme(legend.position="none", axis.text.x=element_blank())
-    }
-    return(p)
-  }
-
-  gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
-  gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Youth (<20 yrs)", suppress_legend=TRUE)
-
-    p <- (((gap_perc_black_youth/racial_gap_fev1_youth/racial_gap_fvc_youth) + 
-           plot_layout(axes = "collect")) | 
-          ((gap_perc_black_adult/racial_gap_fev1_adult/racial_gap_fvc_adult) + 
-             plot_layout(axes = "collect")) ) + 
-    plot_annotation(tag_levels = 'A') 
-  
-  return(p)
-}
-
-
-predPlot <- function(df) {
-  lm_fit_with_race <- lm(fev1 ~ sex + age + height + race, data=df)
-  df <- df %>%
-    mutate(.pred = predict(lm_fit_with_race, df))
-  
-  ggplot(df) +
-    geom_point(aes(y=fev1, x=age), size=0.1, alpha=0.4, colour='salmon') + 
-    geom_smooth(aes(y=fev1, x=age), colour='salmon') +
-    geom_point(aes(y=.pred, x=age), size=0.1, alpha=0.4) +
-    geom_smooth(aes(y=.pred, x=age)) +
-    facet_wrap(~sex) + 
-    theme_few()
-  
-}
-
-```
-
-From the base reference population to the most restrictive, the number of included participants decreased from 4,843 to 1,099, while the proportion of Black participants decreased from 19% to 9% in youth and 14% to 4% in adults, as shown in @fig-racialgap. The reduction in the proportion of Black participants after multiple exclusions based on SDoH confirms disproportionate impact of these factors on Black individuals in the US.
-
-In the baseline reference population, average FEV~1~ and FVC were 0.35 L and 0.42 L higher in White youth compared with Black youth, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.50 L for FEV~1~ and 0.69 for FVC. After excluding those with unfavourable SDoH, the racial gap in FEV~1~ and FVC was reduced by 25% and 26% in youth and by 26% and 19% in adults (@fig-racialgap).
-
-Excluding individuals with various SDoH did not reduce the proportion of Asian individuals (@suppfig-Asian). In the baseline reference population, average FEV~1~ and FVC were 0.18 L and 0.31 L higher in White youth compared with Asian youth, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.37 L for FEV~1~ and 0.50 for FVC. After excluding those with unfavourable SDoH, the racial gap in FEV~1~ and FVC was reduced by 7% and 13% in youth but, surprisingly, increased by 14% and 11% in adults (@suppfig-Asian).
-
-Among successive reference populations, the proportion of Mexican-Americans substantially decreased, confirming disproportionate impact of these exposures on Mexican-American population, compared to White population. Mexican-American youth had slightly higher FEV~1~ and FVC at baseline compared to White youth. Average FEV~1~ and FVC were 0.06 L and 0.04 L higher in Mexican-American youth compared to White youth, after adjusting for age, height, and biological sex at birth. Mexican-American and White adults had similar adjusted FEV~1~ and FVC at baseline (@suppfig-Mexican). Excluding individuals with unfavourable SDoH resulted in higher FEV~1~ and FVC values for Mexican-American population compared to White population. Adjusted average FEV~1~ and FVC values for Mexican-American youth were 0.09 L and 0.06 L higher than White youth. For adults, average FEV~1~ and FVC were both higher by 0.03 L (@suppfig-Mexican).
-
-The appendix includes additional results for non-Mexican Hispanic population (@suppfig-hispanic) and those who identified as "Other-including multiracial" (@suppfig-Other).
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap
@@ -785,15 +836,7 @@ plot_racial_gap_change(refs_adult, refs_youth)
 
 ```
 
-### Secondary and Sensitivity Analyses
 
-#### Biological Sex
-
-We also looked at the racial gap in lung function from the most permissive to the most restrictive reference population, separately for females and males. In females, the proportion of Black participants decreased from 20% to 10% in youth and 15% to 5% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 16% and 19% in youth, and by 27% and 20% in adults, respectively (appendix @suppfig-females). In males, the proportion of Black participants decreased from 17% to 8% in youth and 12% to 4% in adults. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 35% and 34% in youth and by 14% and 8% in adults (appendix @suppfig-males).
-
-#### Home Ownership, BMI, and Occupation
-
-After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. Limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes reduced the racial gap in FEV~1~ and FVC by 21% and 19% in youth and 20% and 16% in adults.
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap-home-bmi-job
@@ -896,39 +939,6 @@ return(refs)
 plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
 ```
 
-#### Country of Birth
-
-We also explored the intersection of self-identified race and country of birth. After excluding those with various social and environmental exposures, the racial gap in FEV~1~ and FVC was reduced by 24% and 25% in US-born youth, and by 35% and 23% in US-born adults (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV~1~ and FVC, were less exposed to second-hand and maternal smoking, had healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
-
-#### Leave-one-out Analysis
-
-In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV~1~ and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV~1~ and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (@suppfig-leavejob to @suppfig-leavediet).
-
-## Discussion
-
-Our results show that a higher than previously reported proportion of racial differences in lung function between Black and White Americans can be explained by differences in SDoH [@harik-khan2001; @harik-khan2004]. Within studied SDoH variables in NHANES 2007-2012, we were able to explain 26% of the racial gap in lung function in adults, and as much as 35% of the gap in males under 20 years of age. The true contribution of SDoH to racial gaps in lung function is likely much higher, as only some aspects of SDoH are properly captured in NHANES. The difficulty of measuring SDoH and our incomplete and evolving understanding of the complex interplay between racism, social, and environmental factors suggest that what we see might just be the tip of the iceberg.
-
-Our results are consistent with a growing body of literature that implicates historical and structural inequities in perpetuating health disparities among racialized communities [@nardone2020; @schuyler2022; @gaffney2021; @levy2018]. However, we also observed a higher explained proportion of the racial gap in lung function among individuals born in the US (i.e., up to 36% of the racial gap in adult FEV1 explained by the studied exposures). This might be related to US-specific systemic factors such as the enduring impact of slavery, segregation, redlining, and other inequities and injustices that profoundly affect lung health. Supporting this notion, some studies have reported significantly higher levels of allostatic load and hypertension in US-born self-identified Black individuals compared to Black immigrants to the US [@doamekpor2015; @brown2017].
-
-For Asian people,
-
-Introducing nine additional exclusion criteria to reference populations significantly minimized racial disparities in lung function in our study. Our exploratory analysis revealed that occupational exposures, obesity, and non-home ownership were the three exclusion criteria most responsible for explaining the racial gap in lung function.
-
-What are the implications for lung function reference equations? Since these equations are designed to predict healthy lung function, they need to make an assumption about the nature of racial gaps in lung function, either explicitly or implicitly. For decades, ATS lung function testing guidelines have acknowledged the effects of social and environmental factors on the variability of lung function across populations [@lungfun1991]. However, race-specific lung function reference equations implicitly assumed racial gaps in lung function were normal and benign, the same way that differences based on biological sex at birth, height, and age, were considered normal. This practice was at odds with the recognized role of SDoH, reinforced inequities not just by perpetuating the notion of race as a biological determinant, but also by failing to account for the fact that at least some of the observed racial gap may be pathological, due to injury caused by SDoH. In 2023, the ATS statement on race and ethnicity in pulmonary function testing advocated for a significant shift in practice. The statement acknowledged the importance and complexity of these exposures, rejected fixed differences between races, and embraced a more uncertain race-averaged reference equation, instead of the misleading statistical accuracy of the previous race-based equations [@bhakta2023].
-
-The newly recommended race-averaged GLI-Global reference equations no longer assume that racial differences in lung function are normal and benign differences. However, do they assume these differences are solely due to disproportionate environmental exposures and SDoH? The answer seems to be no, as GLI-Global equations use averages of race-specific reference lung function projections, as opposed to projecting the highest race-specific value for all [@bowerman2023].
-
-Developing unbiased, fair, and practical lung function reference equations is challenging because of our limited understanding of complex exposures, lack of good representative data, and diverse applications of pulmonary function tests. Recognizing the good faith efforts of those working diligently to find a balance between feasibility, practicality, and an ideal accounting for all potential biases, one potential way forward, at least for some use cases of spirometry, involves explicitly accounting for effect of complex exposures. This does not require asking patients for their exposure history or social determinants at the point of care and can be achieved by tightening the inclusion criteria in the reference populations. Excluding individuals with unfavourable SDoH from reference populations results in a more uniformly healthy reference population across racial identities and makes the dataset less biased. However, this approach may reduce the racial representativeness of the data due to disproportionate exposures. Ensuring a sufficiently large and representative initial sample may allow oversampling to achieve representativeness across all groups.
-
-Proposals for developing lung function standards using data from participants of "middle-class origin who live and work in clean environments" have appeared in the literature as early as 1984 [@Myers1984]. There is also precedence for choosing reference populations based on favourable SDoH outside of lung function testing. One prominent example is the WHO Multicentre Growth Reference Study that was conducted to create birth to 2-years growth standards [@mercedes2004]. The study's sites were chosen through a meticulous process that took into account geographical and ethnic representativeness, and included affluent communities in the cities of New Delhi, Muscat, Accra, Oslo, Davis, and Pelotas. The eligibility criteria for individual mother and children included no health, environmental, and economic constraints on growth, mother's willingness to follow WHO feeding recommendations, among others [@mercedes2004].
-
-Our study highlights the necessity for further research to understand the interplay between SDoH, environmental exposures, and lung function across different populations. Future studies should aim to incorporate a wider array of SDoH, such as stress levels, access to healthcare, neighborhood safety, and intergenerational effects, including those related to wealth, social status, poverty, and trauma. There is also a need for longitudinal studies that can elucidate causal pathways and the potential impact of policy changes on reducing health disparities. Exploring the intersectionality of race and other demographic factors could provide a more nuanced understanding of how diverse identities influence lung health outcomes. Expanding research to include international cohorts could enhance the generalizability of findings and support the development of global and localized strategies to address lung health disparities.
-
-Certain limitations must be acknowledged. Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. Incomplete understanding and limited nature of available data also limits our assessment of complex social and environmental exposures and identities, such as effects of racism, intergenerational wealth effects, life-course exposure to pollutants, gender identity, violence, stress, and allostatic load.
-
-## Conclusions
-
-Our study underscores the significant influence of social determinants of health on lung function and shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES 2007-2012.
 
 ## References
 
