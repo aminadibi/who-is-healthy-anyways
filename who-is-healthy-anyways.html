@@ -242,7 +242,7 @@ div.csl-indent {
 </section>
 <section id="leave-one-out-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="leave-one-out-analysis">Leave-one-out Analysis</h4>
-<p>In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV<sub>1</sub> and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV<sub>1</sub> and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (<a href="#suppfig-leavejob" class="quarto-xref">Figure S11</a> to <a href="#suppfig-leavediet" class="quarto-xref">Figure S19</a>).</p>
+<p>In the leave-one-out analysis for the youth, the proportion of racial gap explained by SDoH remained consistent at 25% for FEV<sub>1</sub> and 26% for FVC. In the leave-one-out analysis for adults, the proportion of racial gap explained by SDoH was consistently 26% for FEV<sub>1</sub> and 19% for FVC, except for when diet health was not accounted for, in which case the proportion of racial gaps explained by SDoH was 29% for FEV1 and 18% for FVC. Further details are provided in the supplement (<a href="#suppfig-leavejob" class="quarto-xref">Figure S10</a> to <a href="#suppfig-leavediet" class="quarto-xref">Figure S18</a>).</p>
 </section>
 </section>
 </section>
@@ -270,11 +270,10 @@ div.csl-indent {
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-flowchart">flowchart TD
     B[n=30,442] -- excluded missing FEV1 or FVC --&gt; C[n=20,050]
-    C -- excluded low quality spirometry --&gt; D[n=17,032]
-    D -- included patients self-identified as Black or White --&gt; E[n=10,457]
-    E -- excluded smokers, and those with respiratory diagnoses or symptoms --&gt; F[n=4,843]
-    F -- Adults --&gt; A0[n=2,785]
-    F -- Youth  --&gt; Y0[n=2,058]
+    C -- excluded low quality spirometry --&gt; E[n=17,032]
+    E -- excluded smokers, and those with respiratory diagnoses or symptoms --&gt; F[n=8,802]
+    F -- Adults --&gt; A0[n=4,832]
+    F -- Youth  --&gt; Y0[n=3,970]
 
 </pre>
 </div>
@@ -306,11 +305,11 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <tr class="header">
 <th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Adults<br>
-<span class="stratn">(N=2785)</span></span></th>
+<span class="stratn">(N=4832)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Youth<br>
-<span class="stratn">(N=2058)</span></span></th>
+<span class="stratn">(N=3970)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
-<span class="stratn">(N=4843)</span></span></th>
+<span class="stratn">(N=8802)</span></span></th>
 </tr>
 </thead>
 <tbody>
@@ -322,15 +321,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>46 (16)</td>
+<td>45 (16)</td>
 <td>12 (3.8)</td>
-<td>31 (21)</td>
+<td>30 (20)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">45 [20, 79]</td>
-<td class="lastrow">12 [6.0, 19]</td>
-<td class="lastrow">25 [6.0, 79]</td>
+<td class="lastrow">43 [20, 79]</td>
+<td class="lastrow">11 [6.0, 19]</td>
+<td class="lastrow">23 [6.0, 79]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Race and Ethnicity</td>
@@ -339,16 +338,40 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <td class="firstrow"></td>
 </tr>
 <tr class="odd">
-<td class="rowlabel">Non-Hispanic Black</td>
-<td>968 (34.8%)</td>
-<td>921 (44.8%)</td>
-<td>1889 (39.0%)</td>
+<td class="rowlabel">Mexican American</td>
+<td>928 (19.2%)</td>
+<td>1055 (26.6%)</td>
+<td>1983 (22.5%)</td>
 </tr>
 <tr class="even">
-<td class="rowlabel lastrow">Non-Hispanic White</td>
-<td class="lastrow">1817 (65.2%)</td>
-<td class="lastrow">1137 (55.2%)</td>
-<td class="lastrow">2954 (61.0%)</td>
+<td class="rowlabel">Non-Hispanic Asian</td>
+<td>328 (6.8%)</td>
+<td>186 (4.7%)</td>
+<td>514 (5.8%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Non-Hispanic Black</td>
+<td>968 (20.0%)</td>
+<td>921 (23.2%)</td>
+<td>1889 (21.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Non-Hispanic White</td>
+<td>1817 (37.6%)</td>
+<td>1137 (28.6%)</td>
+<td>2954 (33.6%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Other Hispanic</td>
+<td>567 (11.7%)</td>
+<td>467 (11.8%)</td>
+<td>1034 (11.7%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Other Race - Including Multi-Racial</td>
+<td class="lastrow">224 (4.6%)</td>
+<td class="lastrow">204 (5.1%)</td>
+<td class="lastrow">428 (4.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Biological Sex at Birth</td>
@@ -358,15 +381,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">Female</td>
-<td>1559 (56.0%)</td>
-<td>1073 (52.1%)</td>
-<td>2632 (54.3%)</td>
+<td>2772 (57.4%)</td>
+<td>2016 (50.8%)</td>
+<td>4788 (54.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Male</td>
-<td class="lastrow">1226 (44.0%)</td>
-<td class="lastrow">985 (47.9%)</td>
-<td class="lastrow">2211 (45.7%)</td>
+<td class="lastrow">2060 (42.6%)</td>
+<td class="lastrow">1954 (49.2%)</td>
+<td class="lastrow">4014 (45.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">FEV1 (L)</td>
@@ -376,15 +399,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>3.2 (0.88)</td>
-<td>2.6 (1.0)</td>
-<td>2.9 (0.98)</td>
+<td>3.1 (0.85)</td>
+<td>2.6 (0.98)</td>
+<td>2.9 (0.95)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">3.1 [0.82, 6.9]</td>
+<td class="lastrow">3.1 [0.51, 6.9]</td>
 <td class="lastrow">2.4 [0.82, 6.1]</td>
-<td class="lastrow">2.9 [0.82, 6.9]</td>
+<td class="lastrow">2.8 [0.51, 6.9]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">FVC (L)</td>
@@ -394,15 +417,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>4.0 (1.1)</td>
-<td>3.0 (1.2)</td>
-<td>3.6 (1.2)</td>
+<td>3.9 (1.0)</td>
+<td>3.0 (1.1)</td>
+<td>3.5 (1.2)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
-<td class="lastrow">3.9 [1.3, 7.9]</td>
-<td class="lastrow">2.9 [1.0, 7.2]</td>
-<td class="lastrow">3.5 [1.0, 7.9]</td>
+<td class="lastrow">3.8 [0.70, 7.9]</td>
+<td class="lastrow">2.8 [0.96, 7.2]</td>
+<td class="lastrow">3.4 [0.70, 7.9]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Smoker in household</td>
@@ -412,21 +435,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2624 (94.2%)</td>
-<td>1679 (81.6%)</td>
-<td>4303 (88.8%)</td>
+<td>4592 (95.0%)</td>
+<td>3474 (87.5%)</td>
+<td>8066 (91.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>151 (5.4%)</td>
-<td>370 (18.0%)</td>
-<td>521 (10.8%)</td>
+<td>220 (4.6%)</td>
+<td>477 (12.0%)</td>
+<td>697 (7.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">10 (0.4%)</td>
-<td class="lastrow">9 (0.4%)</td>
-<td class="lastrow">19 (0.4%)</td>
+<td class="lastrow">20 (0.4%)</td>
+<td class="lastrow">19 (0.5%)</td>
+<td class="lastrow">39 (0.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Maternal smoke during pregnancy (For youth)</td>
@@ -437,20 +460,20 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <tr class="odd">
 <td class="rowlabel">No</td>
 <td>0 (0%)</td>
-<td>1280 (62.2%)</td>
-<td>1280 (26.4%)</td>
+<td>2673 (67.3%)</td>
+<td>2673 (30.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
 <td>0 (0%)</td>
-<td>260 (12.6%)</td>
-<td>260 (5.4%)</td>
+<td>333 (8.4%)</td>
+<td>333 (3.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2785 (100%)</td>
-<td class="lastrow">518 (25.2%)</td>
-<td class="lastrow">3303 (68.2%)</td>
+<td class="lastrow">4832 (100%)</td>
+<td class="lastrow">964 (24.3%)</td>
+<td class="lastrow">5796 (65.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Occupational Exposure to Mineral Dusts</td>
@@ -460,21 +483,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2049 (73.6%)</td>
-<td>250 (12.1%)</td>
-<td>2299 (47.5%)</td>
+<td>3486 (72.1%)</td>
+<td>415 (10.5%)</td>
+<td>3901 (44.3%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>676 (24.3%)</td>
-<td>51 (2.5%)</td>
-<td>727 (15.0%)</td>
+<td>1124 (23.3%)</td>
+<td>101 (2.5%)</td>
+<td>1225 (13.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">60 (2.2%)</td>
-<td class="lastrow">1757 (85.4%)</td>
-<td class="lastrow">1817 (37.5%)</td>
+<td class="lastrow">222 (4.6%)</td>
+<td class="lastrow">3454 (87.0%)</td>
+<td class="lastrow">3676 (41.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Occupational Exposure to Organic Dusts</td>
@@ -484,21 +507,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2240 (80.4%)</td>
-<td>247 (12.0%)</td>
-<td>2487 (51.4%)</td>
+<td>3821 (79.1%)</td>
+<td>411 (10.4%)</td>
+<td>4232 (48.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>487 (17.5%)</td>
-<td>54 (2.6%)</td>
-<td>541 (11.2%)</td>
+<td>789 (16.3%)</td>
+<td>105 (2.6%)</td>
+<td>894 (10.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">58 (2.1%)</td>
-<td class="lastrow">1757 (85.4%)</td>
-<td class="lastrow">1815 (37.5%)</td>
+<td class="lastrow">222 (4.6%)</td>
+<td class="lastrow">3454 (87.0%)</td>
+<td class="lastrow">3676 (41.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Occupational Exposure to Exhaust Fumes</td>
@@ -508,21 +531,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2179 (78.2%)</td>
-<td>271 (13.2%)</td>
-<td>2450 (50.6%)</td>
+<td>3814 (78.9%)</td>
+<td>468 (11.8%)</td>
+<td>4282 (48.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>549 (19.7%)</td>
-<td>30 (1.5%)</td>
-<td>579 (12.0%)</td>
+<td>799 (16.5%)</td>
+<td>48 (1.2%)</td>
+<td>847 (9.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">57 (2.0%)</td>
-<td class="lastrow">1757 (85.4%)</td>
-<td class="lastrow">1814 (37.5%)</td>
+<td class="lastrow">219 (4.5%)</td>
+<td class="lastrow">3454 (87.0%)</td>
+<td class="lastrow">3673 (41.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Occupational Exposure to Other Fumes</td>
@@ -532,21 +555,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
-<td>2046 (73.5%)</td>
-<td>248 (12.1%)</td>
-<td>2294 (47.4%)</td>
+<td>3485 (72.1%)</td>
+<td>420 (10.6%)</td>
+<td>3905 (44.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
-<td>682 (24.5%)</td>
-<td>53 (2.6%)</td>
-<td>735 (15.2%)</td>
+<td>1128 (23.3%)</td>
+<td>96 (2.4%)</td>
+<td>1224 (13.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">57 (2.0%)</td>
-<td class="lastrow">1757 (85.4%)</td>
-<td class="lastrow">1814 (37.5%)</td>
+<td class="lastrow">219 (4.5%)</td>
+<td class="lastrow">3454 (87.0%)</td>
+<td class="lastrow">3673 (41.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Income to Poverty Ratio</td>
@@ -556,21 +579,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
-<td>3.1 (1.6)</td>
-<td>2.3 (1.6)</td>
 <td>2.8 (1.7)</td>
+<td>2.1 (1.6)</td>
+<td>2.5 (1.7)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Median [Min, Max]</td>
-<td>3.3 [0, 5.0]</td>
-<td>1.9 [0, 5.0]</td>
-<td>2.7 [0, 5.0]</td>
+<td>2.6 [0, 5.0]</td>
+<td>1.6 [0, 5.0]</td>
+<td>2.1 [0, 5.0]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">183 (6.6%)</td>
-<td class="lastrow">120 (5.8%)</td>
-<td class="lastrow">303 (6.3%)</td>
+<td class="lastrow">445 (9.2%)</td>
+<td class="lastrow">332 (8.4%)</td>
+<td class="lastrow">777 (8.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Home Owner</td>
@@ -580,15 +603,15 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>11 (0.4%)</td>
-<td>10 (0.5%)</td>
-<td>21 (0.4%)</td>
+<td>29 (0.6%)</td>
+<td>27 (0.7%)</td>
+<td>56 (0.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">No</td>
-<td class="lastrow">2774 (99.6%)</td>
-<td class="lastrow">2048 (99.5%)</td>
-<td class="lastrow">4822 (99.6%)</td>
+<td class="lastrow">4803 (99.4%)</td>
+<td class="lastrow">3943 (99.3%)</td>
+<td class="lastrow">8746 (99.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Health Insurance</td>
@@ -597,22 +620,34 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <td class="firstrow"></td>
 </tr>
 <tr class="even">
+<td class="rowlabel">Don't Know</td>
+<td>1 (0.0%)</td>
+<td>12 (0.3%)</td>
+<td>13 (0.1%)</td>
+</tr>
+<tr class="odd">
 <td class="rowlabel">No</td>
-<td>427 (15.3%)</td>
-<td>164 (8.0%)</td>
-<td>591 (12.2%)</td>
+<td>1200 (24.8%)</td>
+<td>550 (13.9%)</td>
+<td>1750 (19.9%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Refused</td>
+<td>1 (0.0%)</td>
+<td>3 (0.1%)</td>
+<td>4 (0.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>2358 (84.7%)</td>
-<td>1886 (91.6%)</td>
-<td>4244 (87.6%)</td>
+<td>3629 (75.1%)</td>
+<td>3405 (85.8%)</td>
+<td>7034 (79.9%)</td>
 </tr>
 <tr class="even">
-<td class="rowlabel lastrow">Don't Know</td>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1 (0.0%)</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">8 (0.4%)</td>
-<td class="lastrow">8 (0.2%)</td>
+<td class="lastrow">1 (0.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Education Level for Adults</td>
@@ -622,39 +657,39 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">College graduate or above</td>
-<td>1011 (36.3%)</td>
+<td>1495 (30.9%)</td>
 <td>0 (0%)</td>
-<td>1011 (20.9%)</td>
+<td>1495 (17.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Some college or AA degree</td>
-<td>915 (32.9%)</td>
+<td>1382 (28.6%)</td>
 <td>0 (0%)</td>
-<td>915 (18.9%)</td>
+<td>1382 (15.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">High school graduate</td>
-<td>563 (20.2%)</td>
+<td>930 (19.2%)</td>
 <td>0 (0%)</td>
-<td>563 (11.6%)</td>
+<td>930 (10.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">9-11th grade</td>
-<td>238 (8.5%)</td>
+<td>543 (11.2%)</td>
 <td>0 (0%)</td>
-<td>238 (4.9%)</td>
+<td>543 (6.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Less than 9th grade</td>
-<td>56 (2.0%)</td>
+<td>476 (9.9%)</td>
 <td>0 (0%)</td>
-<td>56 (1.2%)</td>
+<td>476 (5.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2 (0.1%)</td>
-<td class="lastrow">2058 (100%)</td>
-<td class="lastrow">2060 (42.5%)</td>
+<td class="lastrow">6 (0.1%)</td>
+<td class="lastrow">3970 (100%)</td>
+<td class="lastrow">3976 (45.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Currently Attending School (for youth)</td>
@@ -665,20 +700,20 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <tr class="odd">
 <td class="rowlabel">Between grades</td>
 <td>0 (0%)</td>
-<td>310 (15.1%)</td>
-<td>310 (6.4%)</td>
+<td>429 (10.8%)</td>
+<td>429 (4.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">In school</td>
 <td>0 (0%)</td>
-<td>967 (47.0%)</td>
-<td>967 (20.0%)</td>
+<td>1928 (48.6%)</td>
+<td>1928 (21.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">2785 (100%)</td>
-<td class="lastrow">781 (37.9%)</td>
-<td class="lastrow">3566 (73.6%)</td>
+<td class="lastrow">4832 (100%)</td>
+<td class="lastrow">1613 (40.6%)</td>
+<td class="lastrow">6445 (73.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Self-evaluated Diet Health</td>
@@ -688,39 +723,39 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="odd">
 <td class="rowlabel">Excellent</td>
-<td>292 (10.5%)</td>
-<td>43 (2.1%)</td>
-<td>335 (6.9%)</td>
+<td>456 (9.4%)</td>
+<td>68 (1.7%)</td>
+<td>524 (6.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Very good</td>
-<td>681 (24.5%)</td>
-<td>95 (4.6%)</td>
-<td>776 (16.0%)</td>
+<td>1068 (22.1%)</td>
+<td>174 (4.4%)</td>
+<td>1242 (14.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Good</td>
-<td>1208 (43.4%)</td>
-<td>227 (11.0%)</td>
-<td>1435 (29.6%)</td>
+<td>2133 (44.1%)</td>
+<td>428 (10.8%)</td>
+<td>2561 (29.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Fair</td>
-<td>494 (17.7%)</td>
-<td>108 (5.2%)</td>
-<td>602 (12.4%)</td>
+<td>996 (20.6%)</td>
+<td>208 (5.2%)</td>
+<td>1204 (13.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Poor</td>
-<td>109 (3.9%)</td>
-<td>22 (1.1%)</td>
-<td>131 (2.7%)</td>
+<td>176 (3.6%)</td>
+<td>42 (1.1%)</td>
+<td>218 (2.5%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">1 (0.0%)</td>
-<td class="lastrow">1563 (75.9%)</td>
-<td class="lastrow">1564 (32.3%)</td>
+<td class="lastrow">3 (0.1%)</td>
+<td class="lastrow">3050 (76.8%)</td>
+<td class="lastrow">3053 (34.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Vigorous Activity at Work (10 min/week)</td>
@@ -730,21 +765,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>2304 (82.7%)</td>
-<td>901 (43.8%)</td>
-<td>3205 (66.2%)</td>
+<td>4040 (83.6%)</td>
+<td>1765 (44.5%)</td>
+<td>5805 (66.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>481 (17.3%)</td>
-<td>116 (5.6%)</td>
-<td>597 (12.3%)</td>
+<td>792 (16.4%)</td>
+<td>165 (4.2%)</td>
+<td>957 (10.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1041 (50.6%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">2040 (51.4%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Moderate Activity at Work (10 min/week)</td>
@@ -754,21 +789,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>1722 (61.8%)</td>
-<td>651 (31.6%)</td>
-<td>2373 (49.0%)</td>
+<td>3119 (64.5%)</td>
+<td>1316 (33.1%)</td>
+<td>4435 (50.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1063 (38.2%)</td>
-<td>366 (17.8%)</td>
-<td>1429 (29.5%)</td>
+<td>1713 (35.5%)</td>
+<td>614 (15.5%)</td>
+<td>2327 (26.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1041 (50.6%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">2040 (51.4%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Recreational Vigorous Activity (10 min/week)</td>
@@ -778,21 +813,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>1944 (69.8%)</td>
-<td>400 (19.4%)</td>
-<td>2344 (48.4%)</td>
+<td>3468 (71.8%)</td>
+<td>766 (19.3%)</td>
+<td>4234 (48.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>841 (30.2%)</td>
-<td>617 (30.0%)</td>
-<td>1458 (30.1%)</td>
+<td>1364 (28.2%)</td>
+<td>1164 (29.3%)</td>
+<td>2528 (28.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1041 (50.6%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">2040 (51.4%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Recreational Moderate Activity (10 min/week)</td>
@@ -802,21 +837,21 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
-<td>1404 (50.4%)</td>
-<td>489 (23.8%)</td>
-<td>1893 (39.1%)</td>
+<td>2681 (55.5%)</td>
+<td>986 (24.8%)</td>
+<td>3667 (41.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
-<td>1381 (49.6%)</td>
-<td>528 (25.7%)</td>
-<td>1909 (39.4%)</td>
+<td>2151 (44.5%)</td>
+<td>944 (23.8%)</td>
+<td>3095 (35.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">1041 (50.6%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">2040 (51.4%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Body Mass Index</td>
@@ -826,9 +861,9 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
-<td>29 (6.9)</td>
+<td>29 (6.4)</td>
 <td>21 (5.7)</td>
-<td>26 (7.6)</td>
+<td>25 (7.1)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Median [Min, Max]</td>
@@ -838,9 +873,9 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
-<td class="lastrow">8 (0.3%)</td>
-<td class="lastrow">15 (0.7%)</td>
-<td class="lastrow">23 (0.5%)</td>
+<td class="lastrow">15 (0.3%)</td>
+<td class="lastrow">23 (0.6%)</td>
+<td class="lastrow">38 (0.4%)</td>
 </tr>
 </tbody>
 </table>
@@ -859,7 +894,7 @@ Table&nbsp;1: Characteristics of Participants Included in the Baseline Reference
 <img src="who-is-healthy-anyways_files/figure-html/fig-popchange-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-popchange-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Changes in population composition in successively more restrictive reference populations
+Figure&nbsp;2: Changes in population composition in successively more restrictive reference populations. Each reference population adds additional exclusion criteria based on social determinants of health. Race and ethnicity groups that experience a decline in their percentage of the population compared to the reference baseline (moving from left to right) are disproportionately affected by the harmful social determinants of health that are being considered here.
 </figcaption>
 </figure>
 </div>
@@ -873,7 +908,7 @@ Figure&nbsp;2: Changes in population composition in successively more restrictiv
 <img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Changes in lung function racial gaps in successively more restrictive reference populations
+Figure&nbsp;3: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -887,7 +922,7 @@ Figure&nbsp;3: Changes in lung function racial gaps in successively more restric
 <img src="who-is-healthy-anyways_files/figure-html/fig-racialgap-home-bmi-job-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-racialgap-home-bmi-job-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
+Figure&nbsp;4: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -985,24 +1020,24 @@ Figure&nbsp;4: Changes in lung function racial gaps after exclusions based on ho
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
-    A1["Adults, n=2785"] -- Excluded those with occupational exposures --&gt; A2[1566]
-    A2["1566"] -- Excluded those not physically active --&gt; A3[1108]
-    A3[1108] -- Excluded those with maternal smoking exposure --&gt; A4[1108]
-    A4[1108] -- Excluded those with second-hand smoking exposure --&gt; A5[1055]
-    A5[1055] -- Excluded obese individuals --&gt; A6[714]
-    A6[714] -- Excluded those who did not own thier home --&gt; A7[502]
-    A7[502] -- Excluded those without health insurance --&gt; A8[461]
-    A8[461] -- Excluded those who did not ever attend college --&gt; A9[378]
-    A9[378] -- Excluded those with self-evaluated unhealthy diet --&gt; A10[341]
-    Y1["Youth, n=2,058"] -- Excluded those with occupational exposures --&gt; Y2[1951]
-    Y2[1951] -- Excluded those not physically active --&gt; Y3[1795]
-    Y3[1795] -- Excluded with maternal smoking exposure --&gt; Y4[1547]
-    Y4[1547] -- Excluded those with second-hand smoking exposure --&gt; Y5[1357]
-    Y5[1357] -- Excluded obese individuals --&gt; Y6[1278]
-    Y6[1278] -- Excluded those who did not own thier home --&gt; Y7[825]
-    Y7[825] -- Excluded those without health insurance --&gt; Y8[783]
-    Y8[783] -- Excluded those who do not attend school --&gt; Y9[774]
-    Y9[774] -- Excluded those with self-evaluated unhealthy diet --&gt; Y10[758]
+    A1["Adults, n=4,832"] -- Excluded those with occupational exposures --&gt; A2[2798]
+    A2["2798"] -- Excluded those not physically active --&gt; A3[1835]
+    A3[1835] -- Excluded those with maternal smoking exposure --&gt; A4[1835]
+    A4[1835] -- Excluded those with second-hand smoking exposure --&gt; A5[1761]
+    A5[1761] -- Excluded obese individuals --&gt; A6[1258]
+    A6[1258] -- Excluded those who did not own thier home --&gt; A7[816]
+    A7[816] -- Excluded those without health insurance --&gt; A8[711]
+    A8[711] -- Excluded those who did not ever attend college --&gt; A9[571]
+    A9[571] -- Excluded those with self-evaluated unhealthy diet --&gt; A10[514]
+    Y1["Youth, n=3,970"] -- Excluded those with occupational exposures --&gt; Y2[3767]
+    Y2[3767] -- Excluded those not physically active --&gt; Y3[3432]
+    Y3[3432] -- Excluded with maternal smoking exposure --&gt; Y4[3116]
+    Y4[3116] -- Excluded those with second-hand smoking exposure --&gt; Y5[2866]
+    Y5[2866] -- Excluded obese individuals --&gt; Y6[2687]
+    Y6[2687] -- Excluded those who did not own thier home --&gt; Y7[1592]
+    Y7[1592] -- Excluded those without health insurance --&gt; Y8[1455]
+    Y8[1455] -- Excluded those who do not attend school --&gt; Y9[1441]
+    Y9[1441] -- Excluded those with self-evaluated unhealthy diet --&gt; Y10[1407]
 
 </pre>
 </div>
@@ -1027,20 +1062,32 @@ Figure S1
 <div class="Rtable1">
 <table class="Rtable1 caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
 <th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Mexican American<br>
+<span class="stratn">(N=1983)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic Asian<br>
+<span class="stratn">(N=514)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic Black<br>
 <span class="stratn">(N=1889)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Non-Hispanic White<br>
 <span class="stratn">(N=2954)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Other Hispanic<br>
+<span class="stratn">(N=1034)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Other Race - Including Multi-Racial<br>
+<span class="stratn">(N=428)</span></span></th>
 <th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
-<span class="stratn">(N=4843)</span></span></th>
+<span class="stratn">(N=8802)</span></span></th>
 </tr>
 </thead>
 <tbody>
@@ -1049,558 +1096,990 @@ Figure S1
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
+<td>26 (18)</td>
+<td>31 (19)</td>
 <td>29 (20)</td>
 <td>33 (21)</td>
-<td>31 (21)</td>
+<td>30 (20)</td>
+<td>27 (18)</td>
+<td>30 (20)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">18 [6.0, 79]</td>
+<td class="lastrow">27 [6.0, 79]</td>
 <td class="lastrow">20 [6.0, 79]</td>
 <td class="lastrow">30 [6.0, 79]</td>
-<td class="lastrow">25 [6.0, 79]</td>
+<td class="lastrow">24 [6.0, 78]</td>
+<td class="lastrow">21 [6.0, 75]</td>
+<td class="lastrow">23 [6.0, 79]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Race and Ethnicity</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mexican American</td>
+<td>1983 (100%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>1983 (22.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Non-Hispanic Asian</td>
+<td>0 (0%)</td>
+<td>514 (100%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>514 (5.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Non-Hispanic Black</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
 <td>1889 (100%)</td>
 <td>0 (0%)</td>
-<td>1889 (39.0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>1889 (21.5%)</td>
 </tr>
 <tr class="even">
-<td class="rowlabel lastrow">Non-Hispanic White</td>
+<td class="rowlabel">Non-Hispanic White</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>2954 (100%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>2954 (33.6%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Other Hispanic</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>1034 (100%)</td>
+<td>0 (0%)</td>
+<td>1034 (11.7%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Other Race - Including Multi-Racial</td>
 <td class="lastrow">0 (0%)</td>
-<td class="lastrow">2954 (100%)</td>
-<td class="lastrow">2954 (61.0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">428 (100%)</td>
+<td class="lastrow">428 (4.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Biological Sex at Birth</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Female</td>
+<td>1057 (53.3%)</td>
+<td>292 (56.8%)</td>
 <td>1078 (57.1%)</td>
 <td>1554 (52.6%)</td>
-<td>2632 (54.3%)</td>
+<td>581 (56.2%)</td>
+<td>226 (52.8%)</td>
+<td>4788 (54.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Male</td>
+<td class="lastrow">926 (46.7%)</td>
+<td class="lastrow">222 (43.2%)</td>
 <td class="lastrow">811 (42.9%)</td>
 <td class="lastrow">1400 (47.4%)</td>
-<td class="lastrow">2211 (45.7%)</td>
+<td class="lastrow">453 (43.8%)</td>
+<td class="lastrow">202 (47.2%)</td>
+<td class="lastrow">4014 (45.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">FEV1 (L)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
+<td>2.9 (0.91)</td>
+<td>2.7 (0.85)</td>
 <td>2.7 (0.87)</td>
 <td>3.1 (1.0)</td>
-<td>2.9 (0.98)</td>
+<td>2.8 (0.92)</td>
+<td>2.8 (0.97)</td>
+<td>2.9 (0.95)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">2.9 [0.95, 5.8]</td>
+<td class="lastrow">2.7 [0.51, 5.8]</td>
 <td class="lastrow">2.6 [0.82, 5.6]</td>
 <td class="lastrow">3.1 [0.90, 6.9]</td>
-<td class="lastrow">2.9 [0.82, 6.9]</td>
+<td class="lastrow">2.8 [0.89, 5.8]</td>
+<td class="lastrow">2.8 [0.79, 5.3]</td>
+<td class="lastrow">2.8 [0.51, 6.9]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">FVC (L)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
+<td>3.4 (1.1)</td>
+<td>3.2 (1.0)</td>
 <td>3.2 (1.0)</td>
 <td>3.8 (1.3)</td>
-<td>3.6 (1.2)</td>
+<td>3.4 (1.1)</td>
+<td>3.4 (1.2)</td>
+<td>3.5 (1.2)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">3.4 [1.2, 7.0]</td>
+<td class="lastrow">3.2 [0.70, 6.7]</td>
 <td class="lastrow">3.1 [1.0, 7.0]</td>
 <td class="lastrow">3.8 [1.0, 7.9]</td>
-<td class="lastrow">3.5 [1.0, 7.9]</td>
+<td class="lastrow">3.3 [1.1, 7.4]</td>
+<td class="lastrow">3.4 [1.0, 6.6]</td>
+<td class="lastrow">3.4 [0.70, 7.9]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Birth Country</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Don't know</td>
+<td>1 (0.1%)</td>
 <td>0 (0%)</td>
 <td>0 (0%)</td>
 <td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>1 (0.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Other countries</td>
+<td>776 (39.1%)</td>
+<td>339 (66.0%)</td>
 <td>194 (10.3%)</td>
 <td>150 (5.1%)</td>
-<td>344 (7.1%)</td>
+<td>540 (52.2%)</td>
+<td>170 (39.7%)</td>
+<td>2169 (24.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Refused</td>
+<td>4 (0.2%)</td>
 <td>0 (0%)</td>
 <td>0 (0%)</td>
 <td>0 (0%)</td>
+<td>1 (0.1%)</td>
+<td>1 (0.2%)</td>
+<td>6 (0.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">US</td>
+<td class="lastrow">1202 (60.6%)</td>
+<td class="lastrow">175 (34.0%)</td>
 <td class="lastrow">1695 (89.7%)</td>
 <td class="lastrow">2804 (94.9%)</td>
-<td class="lastrow">4499 (92.9%)</td>
+<td class="lastrow">493 (47.7%)</td>
+<td class="lastrow">257 (60.0%)</td>
+<td class="lastrow">6626 (75.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Smoker in household</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>1881 (94.9%)</td>
+<td>498 (96.9%)</td>
 <td>1633 (86.4%)</td>
 <td>2670 (90.4%)</td>
-<td>4303 (88.8%)</td>
+<td>983 (95.1%)</td>
+<td>401 (93.7%)</td>
+<td>8066 (91.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>94 (4.7%)</td>
+<td>14 (2.7%)</td>
 <td>246 (13.0%)</td>
 <td>275 (9.3%)</td>
-<td>521 (10.8%)</td>
+<td>42 (4.1%)</td>
+<td>26 (6.1%)</td>
+<td>697 (7.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">8 (0.4%)</td>
+<td class="lastrow">2 (0.4%)</td>
 <td class="lastrow">10 (0.5%)</td>
 <td class="lastrow">9 (0.3%)</td>
-<td class="lastrow">19 (0.4%)</td>
+<td class="lastrow">9 (0.9%)</td>
+<td class="lastrow">1 (0.2%)</td>
+<td class="lastrow">39 (0.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Maternal smoke during pregnancy (For youth)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>797 (40.2%)</td>
+<td>117 (22.8%)</td>
 <td>580 (30.7%)</td>
 <td>700 (23.7%)</td>
-<td>1280 (26.4%)</td>
+<td>339 (32.8%)</td>
+<td>140 (32.7%)</td>
+<td>2673 (30.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>32 (1.6%)</td>
+<td>6 (1.2%)</td>
 <td>71 (3.8%)</td>
 <td>189 (6.4%)</td>
-<td>260 (5.4%)</td>
+<td>17 (1.6%)</td>
+<td>18 (4.2%)</td>
+<td>333 (3.8%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1154 (58.2%)</td>
+<td class="lastrow">391 (76.1%)</td>
 <td class="lastrow">1238 (65.5%)</td>
 <td class="lastrow">2065 (69.9%)</td>
-<td class="lastrow">3303 (68.2%)</td>
+<td class="lastrow">678 (65.6%)</td>
+<td class="lastrow">270 (63.1%)</td>
+<td class="lastrow">5796 (65.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Occupational Exposure to Mineral Dusts</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>684 (34.5%)</td>
+<td>292 (56.8%)</td>
 <td>845 (44.7%)</td>
 <td>1454 (49.2%)</td>
-<td>2299 (47.5%)</td>
+<td>437 (42.3%)</td>
+<td>189 (44.2%)</td>
+<td>3901 (44.3%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>291 (14.7%)</td>
+<td>27 (5.3%)</td>
 <td>238 (12.6%)</td>
 <td>489 (16.6%)</td>
-<td>727 (15.0%)</td>
+<td>132 (12.8%)</td>
+<td>48 (11.2%)</td>
+<td>1225 (13.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1008 (50.8%)</td>
+<td class="lastrow">195 (37.9%)</td>
 <td class="lastrow">806 (42.7%)</td>
 <td class="lastrow">1011 (34.2%)</td>
-<td class="lastrow">1817 (37.5%)</td>
+<td class="lastrow">465 (45.0%)</td>
+<td class="lastrow">191 (44.6%)</td>
+<td class="lastrow">3676 (41.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Occupational Exposure to Organic Dusts</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>761 (38.4%)</td>
+<td>292 (56.8%)</td>
 <td>946 (50.1%)</td>
 <td>1541 (52.2%)</td>
-<td>2487 (51.4%)</td>
+<td>489 (47.3%)</td>
+<td>203 (47.4%)</td>
+<td>4232 (48.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>212 (10.7%)</td>
+<td>27 (5.3%)</td>
 <td>138 (7.3%)</td>
 <td>403 (13.6%)</td>
-<td>541 (11.2%)</td>
+<td>80 (7.7%)</td>
+<td>34 (7.9%)</td>
+<td>894 (10.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1010 (50.9%)</td>
+<td class="lastrow">195 (37.9%)</td>
 <td class="lastrow">805 (42.6%)</td>
 <td class="lastrow">1010 (34.2%)</td>
-<td class="lastrow">1815 (37.5%)</td>
+<td class="lastrow">465 (45.0%)</td>
+<td class="lastrow">191 (44.6%)</td>
+<td class="lastrow">3676 (41.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Occupational Exposure to Exhaust Fumes</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>832 (42.0%)</td>
+<td>301 (58.6%)</td>
 <td>880 (46.6%)</td>
 <td>1570 (53.1%)</td>
-<td>2450 (50.6%)</td>
+<td>494 (47.8%)</td>
+<td>205 (47.9%)</td>
+<td>4282 (48.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>143 (7.2%)</td>
+<td>18 (3.5%)</td>
 <td>204 (10.8%)</td>
 <td>375 (12.7%)</td>
-<td>579 (12.0%)</td>
+<td>75 (7.3%)</td>
+<td>32 (7.5%)</td>
+<td>847 (9.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1008 (50.8%)</td>
+<td class="lastrow">195 (37.9%)</td>
 <td class="lastrow">805 (42.6%)</td>
 <td class="lastrow">1009 (34.2%)</td>
-<td class="lastrow">1814 (37.5%)</td>
+<td class="lastrow">465 (45.0%)</td>
+<td class="lastrow">191 (44.6%)</td>
+<td class="lastrow">3673 (41.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Occupational Exposure to Other Fumes</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>710 (35.8%)</td>
+<td>279 (54.3%)</td>
 <td>855 (45.3%)</td>
 <td>1439 (48.7%)</td>
-<td>2294 (47.4%)</td>
+<td>437 (42.3%)</td>
+<td>185 (43.2%)</td>
+<td>3905 (44.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Yes</td>
+<td>265 (13.4%)</td>
+<td>40 (7.8%)</td>
 <td>229 (12.1%)</td>
 <td>506 (17.1%)</td>
-<td>735 (15.2%)</td>
+<td>132 (12.8%)</td>
+<td>52 (12.1%)</td>
+<td>1224 (13.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1008 (50.8%)</td>
+<td class="lastrow">195 (37.9%)</td>
 <td class="lastrow">805 (42.6%)</td>
 <td class="lastrow">1009 (34.2%)</td>
-<td class="lastrow">1814 (37.5%)</td>
+<td class="lastrow">465 (45.0%)</td>
+<td class="lastrow">191 (44.6%)</td>
+<td class="lastrow">3673 (41.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Income to Poverty Ratio</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Mean (SD)</td>
+<td>1.7 (1.3)</td>
+<td>3.1 (1.7)</td>
 <td>2.3 (1.6)</td>
 <td>3.1 (1.7)</td>
-<td>2.8 (1.7)</td>
+<td>2.0 (1.5)</td>
+<td>2.7 (1.7)</td>
+<td>2.5 (1.7)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Median [Min, Max]</td>
+<td>1.3 [0, 5.0]</td>
+<td>3.2 [0, 5.0]</td>
 <td>1.9 [0, 5.0]</td>
 <td>3.3 [0, 5.0]</td>
-<td>2.7 [0, 5.0]</td>
+<td>1.6 [0, 5.0]</td>
+<td>2.2 [0, 5.0]</td>
+<td>2.1 [0, 5.0]</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">237 (12.0%)</td>
+<td class="lastrow">59 (11.5%)</td>
 <td class="lastrow">163 (8.6%)</td>
 <td class="lastrow">140 (4.7%)</td>
-<td class="lastrow">303 (6.3%)</td>
+<td class="lastrow">133 (12.9%)</td>
+<td class="lastrow">45 (10.5%)</td>
+<td class="lastrow">777 (8.8%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Home Owner</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
+<td>19 (1.0%)</td>
+<td>5 (1.0%)</td>
 <td>12 (0.6%)</td>
 <td>9 (0.3%)</td>
-<td>21 (0.4%)</td>
+<td>9 (0.9%)</td>
+<td>2 (0.5%)</td>
+<td>56 (0.6%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">No</td>
+<td class="lastrow">1964 (99.0%)</td>
+<td class="lastrow">509 (99.0%)</td>
 <td class="lastrow">1877 (99.4%)</td>
 <td class="lastrow">2945 (99.7%)</td>
-<td class="lastrow">4822 (99.6%)</td>
+<td class="lastrow">1025 (99.1%)</td>
+<td class="lastrow">426 (99.5%)</td>
+<td class="lastrow">8746 (99.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Health Insurance</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Don't Know</td>
+<td>4 (0.2%)</td>
+<td>1 (0.2%)</td>
 <td>7 (0.4%)</td>
 <td>1 (0.0%)</td>
-<td>8 (0.2%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>13 (0.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">No</td>
+<td>726 (36.6%)</td>
+<td>71 (13.8%)</td>
 <td>294 (15.6%)</td>
 <td>297 (10.1%)</td>
-<td>591 (12.2%)</td>
+<td>284 (27.5%)</td>
+<td>78 (18.2%)</td>
+<td>1750 (19.9%)</td>
 </tr>
 <tr class="odd">
-<td class="rowlabel lastrow">Yes</td>
-<td class="lastrow">1588 (84.1%)</td>
-<td class="lastrow">2656 (89.9%)</td>
-<td class="lastrow">4244 (87.6%)</td>
+<td class="rowlabel">Refused</td>
+<td>3 (0.2%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>1 (0.2%)</td>
+<td>4 (0.0%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Yes</td>
+<td>1250 (63.0%)</td>
+<td>442 (86.0%)</td>
+<td>1588 (84.1%)</td>
+<td>2656 (89.9%)</td>
+<td>750 (72.5%)</td>
+<td>348 (81.3%)</td>
+<td>7034 (79.9%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (0.2%)</td>
+<td class="lastrow">1 (0.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Education Level for Adults</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">College graduate or above</td>
+<td>96 (4.8%)</td>
+<td>178 (34.6%)</td>
 <td>247 (13.1%)</td>
 <td>764 (25.9%)</td>
-<td>1011 (20.9%)</td>
+<td>95 (9.2%)</td>
+<td>115 (26.9%)</td>
+<td>1495 (17.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Some college or AA degree</td>
+<td>202 (10.2%)</td>
+<td>72 (14.0%)</td>
 <td>355 (18.8%)</td>
 <td>560 (19.0%)</td>
-<td>915 (18.9%)</td>
+<td>142 (13.7%)</td>
+<td>51 (11.9%)</td>
+<td>1382 (15.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">High school graduate</td>
+<td>170 (8.6%)</td>
+<td>40 (7.8%)</td>
 <td>222 (11.8%)</td>
 <td>341 (11.5%)</td>
-<td>563 (11.6%)</td>
+<td>126 (12.2%)</td>
+<td>31 (7.2%)</td>
+<td>930 (10.6%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">9-11th grade</td>
+<td>188 (9.5%)</td>
+<td>20 (3.9%)</td>
 <td>119 (6.3%)</td>
 <td>119 (4.0%)</td>
-<td>238 (4.9%)</td>
+<td>84 (8.1%)</td>
+<td>13 (3.0%)</td>
+<td>543 (6.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Less than 9th grade</td>
+<td>271 (13.7%)</td>
+<td>18 (3.5%)</td>
 <td>25 (1.3%)</td>
 <td>31 (1.0%)</td>
-<td>56 (1.2%)</td>
+<td>119 (11.5%)</td>
+<td>12 (2.8%)</td>
+<td>476 (5.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1056 (53.3%)</td>
+<td class="lastrow">186 (36.2%)</td>
 <td class="lastrow">921 (48.8%)</td>
 <td class="lastrow">1139 (38.6%)</td>
-<td class="lastrow">2060 (42.5%)</td>
+<td class="lastrow">468 (45.3%)</td>
+<td class="lastrow">206 (48.1%)</td>
+<td class="lastrow">3976 (45.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Currently Attending School (for youth)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Between grades</td>
+<td>52 (2.6%)</td>
+<td>0 (0%)</td>
 <td>91 (4.8%)</td>
 <td>219 (7.4%)</td>
-<td>310 (6.4%)</td>
+<td>37 (3.6%)</td>
+<td>30 (7.0%)</td>
+<td>429 (4.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">In school</td>
+<td>625 (31.5%)</td>
+<td>0 (0%)</td>
 <td>425 (22.5%)</td>
 <td>542 (18.3%)</td>
-<td>967 (20.0%)</td>
+<td>240 (23.2%)</td>
+<td>96 (22.4%)</td>
+<td>1928 (21.9%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1306 (65.9%)</td>
+<td class="lastrow">514 (100%)</td>
 <td class="lastrow">1373 (72.7%)</td>
 <td class="lastrow">2193 (74.2%)</td>
-<td class="lastrow">3566 (73.6%)</td>
+<td class="lastrow">757 (73.2%)</td>
+<td class="lastrow">302 (70.6%)</td>
+<td class="lastrow">6445 (73.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel firstrow">Self-evaluated Diet Health</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Excellent</td>
+<td>63 (3.2%)</td>
+<td>53 (10.3%)</td>
 <td>121 (6.4%)</td>
 <td>214 (7.2%)</td>
-<td>335 (6.9%)</td>
+<td>47 (4.5%)</td>
+<td>26 (6.1%)</td>
+<td>524 (6.0%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Very good</td>
+<td>147 (7.4%)</td>
+<td>120 (23.3%)</td>
 <td>217 (11.5%)</td>
 <td>559 (18.9%)</td>
-<td>776 (16.0%)</td>
+<td>128 (12.4%)</td>
+<td>71 (16.6%)</td>
+<td>1242 (14.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Good</td>
+<td>520 (26.2%)</td>
+<td>167 (32.5%)</td>
 <td>521 (27.6%)</td>
 <td>914 (30.9%)</td>
-<td>1435 (29.6%)</td>
+<td>312 (30.2%)</td>
+<td>127 (29.7%)</td>
+<td>2561 (29.1%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Fair</td>
+<td>369 (18.6%)</td>
+<td>36 (7.0%)</td>
 <td>290 (15.4%)</td>
 <td>312 (10.6%)</td>
-<td>602 (12.4%)</td>
+<td>160 (15.5%)</td>
+<td>37 (8.6%)</td>
+<td>1204 (13.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Poor</td>
+<td>55 (2.8%)</td>
+<td>6 (1.2%)</td>
 <td>74 (3.9%)</td>
 <td>57 (1.9%)</td>
-<td>131 (2.7%)</td>
+<td>20 (1.9%)</td>
+<td>6 (1.4%)</td>
+<td>218 (2.5%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">829 (41.8%)</td>
+<td class="lastrow">132 (25.7%)</td>
 <td class="lastrow">666 (35.3%)</td>
 <td class="lastrow">898 (30.4%)</td>
-<td class="lastrow">1564 (32.3%)</td>
+<td class="lastrow">367 (35.5%)</td>
+<td class="lastrow">161 (37.6%)</td>
+<td class="lastrow">3053 (34.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Vigorous Activity at Work (10 min/week)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
+<td>1224 (61.7%)</td>
+<td>409 (79.6%)</td>
 <td>1275 (67.5%)</td>
 <td>1930 (65.3%)</td>
-<td>3205 (66.2%)</td>
+<td>687 (66.4%)</td>
+<td>280 (65.4%)</td>
+<td>5805 (66.0%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
+<td>195 (9.8%)</td>
+<td>27 (5.3%)</td>
 <td>175 (9.3%)</td>
 <td>422 (14.3%)</td>
-<td>597 (12.3%)</td>
+<td>99 (9.6%)</td>
+<td>39 (9.1%)</td>
+<td>957 (10.9%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">564 (28.4%)</td>
+<td class="lastrow">78 (15.2%)</td>
 <td class="lastrow">439 (23.2%)</td>
 <td class="lastrow">602 (20.4%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">248 (24.0%)</td>
+<td class="lastrow">109 (25.5%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Moderate Activity at Work (10 min/week)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
+<td>951 (48.0%)</td>
+<td>343 (66.7%)</td>
 <td>1003 (53.1%)</td>
 <td>1370 (46.4%)</td>
-<td>2373 (49.0%)</td>
+<td>549 (53.1%)</td>
+<td>219 (51.2%)</td>
+<td>4435 (50.4%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
+<td>468 (23.6%)</td>
+<td>93 (18.1%)</td>
 <td>447 (23.7%)</td>
 <td>982 (33.2%)</td>
-<td>1429 (29.5%)</td>
+<td>237 (22.9%)</td>
+<td>100 (23.4%)</td>
+<td>2327 (26.4%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">564 (28.4%)</td>
+<td class="lastrow">78 (15.2%)</td>
 <td class="lastrow">439 (23.2%)</td>
 <td class="lastrow">602 (20.4%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">248 (24.0%)</td>
+<td class="lastrow">109 (25.5%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Recreational Vigorous Activity (10 min/week)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
+<td>910 (45.9%)</td>
+<td>269 (52.3%)</td>
 <td>902 (47.8%)</td>
 <td>1442 (48.8%)</td>
-<td>2344 (48.4%)</td>
+<td>539 (52.1%)</td>
+<td>172 (40.2%)</td>
+<td>4234 (48.1%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
+<td>509 (25.7%)</td>
+<td>167 (32.5%)</td>
 <td>548 (29.0%)</td>
 <td>910 (30.8%)</td>
-<td>1458 (30.1%)</td>
+<td>247 (23.9%)</td>
+<td>147 (34.3%)</td>
+<td>2528 (28.7%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">564 (28.4%)</td>
+<td class="lastrow">78 (15.2%)</td>
 <td class="lastrow">439 (23.2%)</td>
 <td class="lastrow">602 (20.4%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">248 (24.0%)</td>
+<td class="lastrow">109 (25.5%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Recreational Moderate Activity (10 min/week)</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">No</td>
+<td>904 (45.6%)</td>
+<td>216 (42.0%)</td>
 <td>852 (45.1%)</td>
 <td>1041 (35.2%)</td>
-<td>1893 (39.1%)</td>
+<td>490 (47.4%)</td>
+<td>164 (38.3%)</td>
+<td>3667 (41.7%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Yes</td>
+<td>515 (26.0%)</td>
+<td>220 (42.8%)</td>
 <td>598 (31.7%)</td>
 <td>1311 (44.4%)</td>
-<td>1909 (39.4%)</td>
+<td>296 (28.6%)</td>
+<td>155 (36.2%)</td>
+<td>3095 (35.2%)</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">564 (28.4%)</td>
+<td class="lastrow">78 (15.2%)</td>
 <td class="lastrow">439 (23.2%)</td>
 <td class="lastrow">602 (20.4%)</td>
-<td class="lastrow">1041 (21.5%)</td>
+<td class="lastrow">248 (24.0%)</td>
+<td class="lastrow">109 (25.5%)</td>
+<td class="lastrow">2040 (23.2%)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel firstrow">Body Mass Index</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
 </tr>
 <tr class="odd">
 <td class="rowlabel">Mean (SD)</td>
+<td>25 (6.8)</td>
+<td>23 (4.8)</td>
 <td>27 (8.1)</td>
 <td>26 (7.2)</td>
-<td>26 (7.6)</td>
+<td>25 (6.6)</td>
+<td>23 (6.1)</td>
+<td>25 (7.1)</td>
 </tr>
 <tr class="even">
 <td class="rowlabel">Median [Min, Max]</td>
+<td>25 [13, 54]</td>
+<td>22 [13, 43]</td>
 <td>26 [13, 69]</td>
 <td>25 [13, 73]</td>
+<td>25 [13, 53]</td>
+<td>23 [13, 52]</td>
 <td>25 [13, 73]</td>
 </tr>
 <tr class="odd">
 <td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">7 (0.4%)</td>
+<td class="lastrow">3 (0.6%)</td>
 <td class="lastrow">13 (0.7%)</td>
 <td class="lastrow">10 (0.3%)</td>
-<td class="lastrow">23 (0.5%)</td>
+<td class="lastrow">3 (0.3%)</td>
+<td class="lastrow">2 (0.5%)</td>
+<td class="lastrow">38 (0.4%)</td>
 </tr>
 </tbody>
 </table>
@@ -1631,7 +2110,7 @@ Table S1: Characteristics of Participants Included in the Baseline Reference Pop
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-females-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S2: Changes in lung function racial gaps for female participants
+Figure S2: Changes in lung function racial gaps between female Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -1649,7 +2128,7 @@ Figure S2: Changes in lung function racial gaps for female participants
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-males-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S3: Changes in lung function racial gaps for male participants
+Figure S3: Changes in lung function racial gaps between male Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -2542,7 +3021,7 @@ Table S2: Characteristics of Black Participants Included in the Baseline Referen
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Asian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S5: Asian vs.&nbsp;White Population
+Figure S5: Changes in lung function racial gaps between Asian and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -2561,7 +3040,7 @@ Figure S5: Asian vs.&nbsp;White Population
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Mexican-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S6: Mexican-American vs.&nbsp;White population
+Figure S6: Changes in lung function racial gaps between Mexican-American and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. Negative values indicated higher lung function in the Mexican-American population.
 </figcaption>
 </figure>
 </div>
@@ -2579,7 +3058,7 @@ Figure S6: Mexican-American vs.&nbsp;White population
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-hispanic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S7: Other Hispanic vs.&nbsp;White population
+Figure S7: Changes in lung function racial gaps between Other Hispanic and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
@@ -2597,13 +3076,17 @@ Figure S7: Other Hispanic vs.&nbsp;White population
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-Other-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S8: Other Race Including Multiracial vs.&nbsp;White
+Figure S8: Changes in lung function racial gaps between Other race including multi-racial and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
-<div id="suppfig-mexicanblack" class="quarto-float quarto-figure quarto-figure-center anchored">
+</section>
+<section id="income-to-poverty-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="income-to-poverty-ratio">Income to Poverty Ratio</h3>
+<p>When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in <a href="#suppfig-incomepovertyratio" class="quarto-xref">Figure S9</a>. The proportion of racial gap in FEV<sub>1</sub> and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.</p>
+<div id="suppfig-incomepovertyratio" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-suppfig figure">
-<div aria-describedby="suppfig-mexicanblack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2614,18 +3097,18 @@ Figure S8: Other Race Including Multiracial vs.&nbsp;White
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig quarto-uncaptioned" id="suppfig-mexicanblack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S9
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure S9: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="income-to-poverty-ratio" class="level3">
-<h3 class="anchored" data-anchor-id="income-to-poverty-ratio">Income to Poverty Ratio</h3>
-<p>When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in <a href="#suppfig-incomepovertyratio" class="quarto-xref">Figure S10</a>. The proportion of racial gap in FEV<sub>1</sub> and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.</p>
-<div id="suppfig-incomepovertyratio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<section id="leave-one-out-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="leave-one-out-analysis-1">Leave-one-out Analysis</h3>
+<p>Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. In each of the figures below, one of the original SDoH-based exclusion criteria are left out. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.</p>
+<div id="suppfig-leavejob" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-suppfig figure">
-<div aria-describedby="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="suppfig-leavejob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2636,29 +3119,8 @@ Figure S9
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-incomepovertyratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S10: Changes in lung function racial gaps based on income to poverty ratio
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="leave-one-out-analysis-1" class="level3">
-<h3 class="anchored" data-anchor-id="leave-one-out-analysis-1">Leave-one-out Analysis</h3>
-<div id="suppfig-leavejob" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-suppfig figure">
-<div aria-describedby="suppfig-leavejob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavejob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S11: Leaving out job exposure
+Figure S10: Leaving out job exposure
 </figcaption>
 </figure>
 </div>
@@ -2669,14 +3131,14 @@ Figure S11: Leaving out job exposure
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavephysicalactivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S12: Leaving out physical activity
+Figure S11: Leaving out physical activity
 </figcaption>
 </figure>
 </div>
@@ -2687,14 +3149,14 @@ Figure S12: Leaving out physical activity
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavematernalsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S13: Leaving out maternal smoke
+Figure S12: Leaving out maternal smoke
 </figcaption>
 </figure>
 </div>
@@ -2705,14 +3167,14 @@ Figure S13: Leaving out maternal smoke
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavesecondhandsmoke-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S14: Leaving out second-hand smoke exposure
+Figure S13: Leaving out second-hand smoke exposure
 </figcaption>
 </figure>
 </div>
@@ -2723,14 +3185,14 @@ Figure S14: Leaving out second-hand smoke exposure
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveobesity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S15: Leaving out obesity
+Figure S14: Leaving out obesity
 </figcaption>
 </figure>
 </div>
@@ -2741,14 +3203,14 @@ Figure S15: Leaving out obesity
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavehomeowner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S16: Leaving out homeownership
+Figure S15: Leaving out homeownership
 </figcaption>
 </figure>
 </div>
@@ -2759,14 +3221,14 @@ Figure S16: Leaving out homeownership
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveinsurance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S17: Leaving out health insurance
+Figure S16: Leaving out health insurance
 </figcaption>
 </figure>
 </div>
@@ -2777,14 +3239,14 @@ Figure S17: Leaving out health insurance
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leaveeducation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S18: Leaving out education
+Figure S17: Leaving out education
 </figcaption>
 </figure>
 </div>
@@ -2795,14 +3257,14 @@ Figure S18: Leaving out education
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="who-is-healthy-anyways_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-suppfig" id="suppfig-leavediet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure S19: Leaving out diet health
+Figure S18: Leaving out diet health
 </figcaption>
 </figure>
 </div>
@@ -3013,18 +3475,8 @@ For fvc in youth, the percentage change in gap was 4.35%
 
 :::
 
-::: {.cell-output .cell-output-stderr}
-
-```
-Warning in geom_text(aes(x = ref, y = perc, fill = race_text_nhanes, label = scales::percent(perc, : Ignoring unknown aesthetics: fill
-Ignoring unknown aesthetics: fill
-```
-
-
-:::
-
 ::: {.cell-output-display}
-![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-34-1.png){width=672}
+![](who-is-healthy-anyways_files/figure-html/unnamed-chunk-33-1.png){width=672}
 :::
 :::
 

@@ -380,7 +380,6 @@ The flow of participants up to the baseline reference population is shown in @fi
 
 Characteristics of participants is summarized in @tbl-table1 .
 
-
 ```{r}
 
 race_estimate <- function(df, outcome, single_sex=FALSE, includedRace) {
@@ -475,51 +474,17 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     return(p)
   }
   
-  racial_gap_fev1_adult <- plot_racial_gap(race_coeffs_adult, "adults", measure="fev1")
+  racial_gap_fev1_adult <- plot_racial_gap(race_coeffs_adult, "adults", measure="fev1") + ggtitle('Adults')
   racial_gap_fvc_adult  <- plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
 
-  racial_gap_fev1_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1", suppress_legend=TRUE)
+  racial_gap_fev1_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1") +  ggtitle('Youth')
+  racial_gap_fvc_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc")
 
-    racial_gap_fvc_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc", suppress_legend=TRUE)
-
-  # Combine refs_df_adult and refs_df_youth
-  combine_refs_df <- function(refs_list) {
-    refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]] %>% mutate(ref = i)))
-    refs_df %>%
-      mutate(ref=factor(ref)) %>%
-      group_by(ref) %>%
-      count(race_text_nhanes, wt = MEC6YR) %>%
-      mutate(perc = n / sum(n)) %>%
-      ungroup()
-  }
-  
-  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
-  refs_df_percent_youth <- combine_refs_df(refs_youth_list)
-
-  plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
-    p <- ggplot(refs_df_percent) +
-      geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
-      scale_y_continuous(labels=scales::percent) +
-      ggtitle(title) +
-      labs(x = "", y = "Participants") +
-      guides(fill=guide_legend(title="Race")) +
-      theme_few() + theme(axis.text.x = element_blank())
+ 
     
-    if (suppress_legend) {
-      p <- p +  theme(legend.position="none", axis.text.x=element_blank())
-    }
-    return(p)
-  }
-
-  gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
-  gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Youth (<20 yrs)", suppress_legend=TRUE)
-
-    p <- (((gap_perc_black_youth/racial_gap_fev1_youth/racial_gap_fvc_youth) + 
-           plot_layout(axes = "collect")) | 
-          ((gap_perc_black_adult/racial_gap_fev1_adult/racial_gap_fvc_adult) + 
-             plot_layout(axes = "collect")) ) + 
-    plot_annotation(tag_levels = 'A') 
+     p <- racial_gap_fev1_youth + racial_gap_fev1_adult + racial_gap_fvc_youth + racial_gap_fvc_adult +  
+       plot_layout(ncol = 2) +
+       plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
   
   return(p)
 }
@@ -552,7 +517,6 @@ Among successive reference populations, the proportion of Mexican-Americans subs
 
 The appendix includes additional results for non-Mexican Hispanic population (@suppfig-hispanic) and those who identified as "Other-including multiracial" (@suppfig-Other).
 
-
 ### Secondary and Sensitivity Analyses
 
 #### Biological Sex
@@ -562,7 +526,6 @@ We also looked at the racial gap in lung function from the most permissive to th
 #### Home Ownership, BMI, and Occupation
 
 After excluding patients solely based on home ownership, BMI, and occupation, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 11% in adults, as shown in @fig-racialgap-home-bmi-job. Limiting reference populations to non-obese homeowners without occupational exposures to dusts and fumes reduced the racial gap in FEV~1~ and FVC by 21% and 19% in youth and 20% and 16% in adults.
-
 
 #### Country of Birth
 
@@ -598,21 +561,17 @@ Certain limitations must be acknowledged. Our reliance on NHANES data restricts 
 
 Our study underscores the significant influence of social determinants of health on lung function and shows that a larger proportion of racial gaps in lung function can be explained by social determinants of health than previously reported. However, we were unable to account for all racial differences in lung function based on measured social determinants of health in NHANES 2007-2012.
 
-
 ```{mermaid, include=T}
 %%| label: fig-flowchart
 %%| fig-cap: Flow of participants
 flowchart TD
-    B[n=30,442] -- excluded missing FEV1 or FVC --> C[n=20,050]
-    C -- excluded low quality spirometry --> D[n=17,032]
-    D -- included patients self-identified as Black or White --> E[n=10,457]
-    E -- excluded smokers, and those with respiratory diagnoses or symptoms --> F[n=4,843]
-    F -- Adults --> A0[n=2,785]
-    F -- Youth  --> Y0[n=2,058]
+    B[n=30,442] -- Excluded missing FEV1 or FVC --> C[n=20,050]
+    C -- Excluded low quality spirometry --> E[n=17,032]
+    E -- Excluded smokers and those with respiratory diagnoses or symptoms --> F[n=8,802]
+    F -- Adults --> A0[n=4,832]
+    F -- Youth  --> Y0[n=3,970]
 
 ```
-
-
 
 ```{r}
 #| label: tbl-table1
@@ -628,7 +587,7 @@ flowchart TD
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
     filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
-    filter(race %in% c(3,4)) %>%
+#    filter(race %in% c(3,4)) %>%
     filter ((is.na(current_smoke) | (current_smoke == "3")) &
          (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
          (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
@@ -821,7 +780,7 @@ flowchart TD
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-popchange
-#| fig-cap: Changes in population composition in successively more restrictive reference populations
+#| fig-cap: Changes in population composition in successively more restrictive reference populations. Each reference population adds additional exclusion criteria based on social determinants of health. Race and ethnicity groups that experience a decline in their percentage of the population compared to the reference baseline (moving from left to right) are disproportionately affected by the harmful social determinants of health that are being considered here. 
 
 
 refs_adult_all_races <- createCohort("adult", includedRace = c(1,2,3,4,5,6,7))
@@ -890,7 +849,7 @@ plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRac
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap
-#| fig-cap: Changes in lung function racial gaps in successively more restrictive reference populations
+#| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.  
  
 refs_adult <- createCohort("adult")
 message("Adult counts:")
@@ -900,15 +859,16 @@ refs_youth <- createCohort("youth")
 message("Youth counts:")
 message(map_df(refs_youth, count))
 
-plot_racial_gap_change(refs_adult, refs_youth)
+plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
+  title = "Non-Hispanic Black vs. Non-Hispanic White population"
+)
 
 ```
 
-
-
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap-home-bmi-job
-#| fig-cap: Changes in lung function racial gaps after exclusions based on home ownership, BMI, and occupation
+#| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. 
+ 
 createCohort3Factor <- function (ageGroup,sex='all') {
   if (!(ageGroup %in% c("adult", "youth"))) 
     stop("Invalid age group")
@@ -1007,7 +967,6 @@ return(refs)
 plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
 ```
 
-
 ## References
 
 ::: {#refs}
@@ -1022,24 +981,24 @@ Flow of participants across different reference populations
 
 ```{mermaid, include=T}
 flowchart TD
-    A1["Adults, n=2785"] -- Excluded those with occupational exposures --> A2[1566]
-    A2["1566"] -- Excluded those not physically active --> A3[1108]
-    A3[1108] -- Excluded those with maternal smoking exposure --> A4[1108]
-    A4[1108] -- Excluded those with second-hand smoking exposure --> A5[1055]
-    A5[1055] -- Excluded obese individuals --> A6[714]
-    A6[714] -- Excluded those who did not own thier home --> A7[502]
-    A7[502] -- Excluded those without health insurance --> A8[461]
-    A8[461] -- Excluded those who did not ever attend college --> A9[378]
-    A9[378] -- Excluded those with self-evaluated unhealthy diet --> A10[341]
-    Y1["Youth, n=2,058"] -- Excluded those with occupational exposures --> Y2[1951]
-    Y2[1951] -- Excluded those not physically active --> Y3[1795]
-    Y3[1795] -- Excluded with maternal smoking exposure --> Y4[1547]
-    Y4[1547] -- Excluded those with second-hand smoking exposure --> Y5[1357]
-    Y5[1357] -- Excluded obese individuals --> Y6[1278]
-    Y6[1278] -- Excluded those who did not own thier home --> Y7[825]
-    Y7[825] -- Excluded those without health insurance --> Y8[783]
-    Y8[783] -- Excluded those who do not attend school --> Y9[774]
-    Y9[774] -- Excluded those with self-evaluated unhealthy diet --> Y10[758]
+    A1["Adults, n=4,832"] -- Excluded those with occupational exposures --> A2[2798]
+    A2["2798"] -- Excluded those not physically active --> A3[1835]
+    A3[1835] -- Excluded those with maternal smoking exposure --> A4[1835]
+    A4[1835] -- Excluded those with second-hand smoking exposure --> A5[1761]
+    A5[1761] -- Excluded obese individuals --> A6[1258]
+    A6[1258] -- Excluded those who did not own thier home --> A7[816]
+    A7[816] -- Excluded those without health insurance --> A8[711]
+    A8[711] -- Excluded those who did not ever attend college --> A9[571]
+    A9[571] -- Excluded those with self-evaluated unhealthy diet --> A10[514]
+    Y1["Youth, n=3,970"] -- Excluded those with occupational exposures --> Y2[3767]
+    Y2[3767] -- Excluded those not physically active --> Y3[3432]
+    Y3[3432] -- Excluded with maternal smoking exposure --> Y4[3116]
+    Y4[3116] -- Excluded those with second-hand smoking exposure --> Y5[2866]
+    Y5[2866] -- Excluded obese individuals --> Y6[2687]
+    Y6[2687] -- Excluded those who did not own thier home --> Y7[1592]
+    Y7[1592] -- Excluded those without health insurance --> Y8[1455]
+    Y8[1455] -- Excluded those who do not attend school --> Y9[1441]
+    Y9[1441] -- Excluded those with self-evaluated unhealthy diet --> Y10[1407]
 
 ```
 :::
@@ -1074,7 +1033,7 @@ refs_youth_female <- createCohort("youth", sex="female")
 plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
 ```
 
-Changes in lung function racial gaps for female participants
+Changes in lung function racial gaps between female Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ::: {#suppfig-males}
@@ -1086,7 +1045,7 @@ refs_youth_male <- createCohort("youth", sex="male")
 plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
 ```
 
-Changes in lung function racial gaps for male participants
+Changes in lung function racial gaps between male Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ### Intersection of Race and Country of Birth
@@ -1111,8 +1070,8 @@ Racial gap in lung function among those born in the US
 
 ::: {#supptab-fig1byusborn}
 ```{r}
-table1_black <- table1 %>% 
-  filter(race_text_nhanes == "Non-Hispanic Black")
+table1_BW <- table1 %>% 
+  filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" )
 
 table1(~ age + race_text_nhanes + sex_text + 
           fev1 + fvc +
@@ -1121,7 +1080,7 @@ table1(~ age + race_text_nhanes + sex_text +
           income_poverty_ratio + home_owner + has_insurance +
           education_adults + now_attending_school + 
           healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | birth_country+race_text_nhanes, table1, digits=2)
+          | birth_country+race_text_nhanes, table1_BW, digits=2)
 ```
 
 Characteristics of Black Participants Included in the Baseline Reference Population by Country of Birth
@@ -1142,7 +1101,7 @@ message(map_df(refs_youth_asian, count))
 plot_racial_gap_change(refs_adult_asian, refs_youth_asian, includedRace=c(3,6))
 ```
 
-Asian vs. White Population
+Changes in lung function racial gaps between Asian and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ::: {#suppfig-Mexican}
@@ -1162,7 +1121,7 @@ plot_racial_gap_change(refs_adult_mex, refs_youth_mex, includedRace=c(3,1))
 
 ```
 
-Mexican-American vs. White population
+Changes in lung function racial gaps between Mexican-American and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. Negative values indicated higher lung function in the Mexican-American population.
 :::
 
 ::: {#suppfig-hispanic}
@@ -1179,7 +1138,7 @@ message(map_df(refs_youth_hisp, count))
 plot_racial_gap_change(refs_adult_hisp, refs_youth_hisp, includedRace=c(3,2))
 ```
 
-Other Hispanic vs. White population
+Changes in lung function racial gaps between Other Hispanic and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ::: {#suppfig-Other}
@@ -1197,22 +1156,7 @@ plot_racial_gap_change(refs_adult_oth, refs_youth_oth, includedRace=c(3,7))
 
 ```
 
-Other Race Including Multiracial vs. White
-:::
-
-::: {#suppfig-mexicanblack}
-```{r, message=F, warning=F}
-
-refs_adult_mex_bl <- createCohort("adult", includedRace=c(4,1))
-message("Adult counts:")
-message(map_df(refs_adult_mex_bl, count))
-
-refs_youth_mex_bl <- createCohort("youth", includedRace=c(4,1))
-message("Youth counts:")
-message(map_df(refs_youth_mex_bl, count))
-
-plot_racial_gap_change(refs_adult_mex_bl, refs_youth_mex_bl, includedRace=c(4,1))
-```
+Changes in lung function racial gaps between Other race including multi-racial and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ### Income to Poverty Ratio
@@ -1229,10 +1173,12 @@ refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnl
 plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
 ```
 
-Changes in lung function racial gaps based on income to poverty ratio
+Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ### Leave-one-out Analysis
+
+Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. In each of the figures below, one of the original SDoH-based exclusion criteria are left out. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 
 ::: {#suppfig-leavejob}
 ```{r, warning=FALSE, message=FALSE}
