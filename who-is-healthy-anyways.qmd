@@ -112,11 +112,11 @@ compute_gap_reduction <- function(df, measure, type) {
       round(2) } else if (type=="abs"){
         df %>% 
         filter(Measure == measure) %>%
-        summarise(Reduction = (last(estimate) - first(estimate)) %>% round(2)) 
+        summarise(Reduction = -1*(last(estimate) - first(estimate)) %>% round(2)) 
       } else if (type=="baseline") {
         df %>% 
         filter(Measure == measure) %>%
-        summarise(Reduction = (first(estimate)) %>% round(2)) 
+        summarise(Reduction = -1*(first(estimate)) %>% round(2)) 
       
     } else
     {stop("Invalid type for compute_gap_reduction")}
@@ -363,7 +363,7 @@ ref10 <- ref9 %>%
 }
 
 
-refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10, ref11)
+refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
 
 
 return(refs)
