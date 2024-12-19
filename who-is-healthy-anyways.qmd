@@ -335,8 +335,24 @@ ref10 <- ref9 %>%
   mutate(ref="healthy diet")
 
 
+  ref11 <- ref10 %>%
+     filter((is.na(lang_home_hispanic) | 
+               (lang_home_hispanic==4) | 
+               (lang_home_hispanic==5)))  %>%
+     filter((is.na(lang_home_asian) | 
+               (lang_home_asian==4) | 
+               (lang_home_asian==5)))  %>%
+     filter((is.na(lang_home_en_bw) | 
+               (lang_home_en_bw==1)))  %>%
+  mutate(ref="english at home")
+  
 
-refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+}
+
+
+
+
+refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10, ref11)
 
 }
 
