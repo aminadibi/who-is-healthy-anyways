@@ -35,7 +35,7 @@ author:
     affiliations:
       - name: Legacy for Airway Health, Vancouver Coastal Health Research Institute
       - name: Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
-  - name: Don Sin
+  - name: Don D. Sin
     affiliations:
       - name: Centre for Heart Lung Innovation (HLI)
       - name: Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
@@ -864,6 +864,58 @@ plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
 
 ```
 
+```{r, eval=F, include=FALSE}
+# Let's try bootstrapping
+resample_rows <- function(data) {
+  data[sample(nrow(data), replace = TRUE), , drop = FALSE]
+}
+
+# Function to generate bootstrap samples
+bootstrap_samples <- function(df, n=1000) {
+  df_list = lapply(1:n, function(i) {
+    df_bootstrap = resample_rows(df)
+    df_bootstrap$bootstrap_id = i
+    df_bootstrap
+  })
+  
+  bind_rows(df_list)
+}
+
+samples_last <- bootstrap_samples(refs_adult[[10]]) %>%
+  mutate(bootstrap_id=factor(bootstrap_id))
+
+samples_baseline <- bootstrap_samples(refs_adult[[1]]) %>%
+  mutate(bootstrap_id=factor(bootstrap_id))
+
+
+bootstrapped_gap <- tibble(bootstrap_id = 1:1000) %>%
+  mutate(
+    fev1_gap = map_dbl(bootstrap_id, function(id) {
+      sample_data_last <- samples_last %>% filter(bootstrap_id == id)
+      sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
+
+      -1*race_estimate(sample_data_last, outcome = 'fev1', includedRace = c(3, 4))$estimate-(-1*race_estimate(sample_data_base, outcome = 'fev1', includedRace = c(3, 4))$estimate
+)
+    }),
+
+    fvc_gap = map_dbl(bootstrap_id, function(id) {
+      sample_data_last <- samples_last %>% filter(bootstrap_id == id)
+      sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
+
+      -1*race_estimate(sample_data_last, outcome = 'fvc', includedRace = c(3, 4))$estimate-(-1*race_estimate(sample_data_base, outcome = 'fvc', includedRace = c(3, 4))$estimate
+)
+    }),
+
+  )
+
+
+
+bootstrapped_gap %>% filter(fev1_gap>0) %>% count()/1000*2
+bootstrapped_gap %>% filter(fvc_gap>0) %>% count()/1000*2
+
+
+```
+
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-racialgap-home-bmi-job
 #| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. 
@@ -964,6 +1016,7 @@ return(refs)
 }
 
 plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
+
 ```
 
 ## References
