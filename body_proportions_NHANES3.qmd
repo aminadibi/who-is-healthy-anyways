@@ -1,0 +1,35 @@
+---
+title: "body-proportions-NHANES3"
+format: html
+editor: visual
+---
+
+## Race and Body Proportions
+
+Is there a relationship between body proportions and race in NHANES III? Let's take a look.
+
+## Sitting Height
+
+```{r}
+rm(list = ls(all.names = TRUE))
+library(tidyverse)
+nhanes3 <- readRDS("nhanesIII.rds")
+summary(nhanes3$height, na.rm = TRUE)
+summary(nhanes3$sitting_height, na.rm = TRUE)
+
+```
+
+You can add options to executable code like this
+
+```{r}
+
+nhanes3 <- nhanes3 %>% mutate(cormic = sitting_height/height) 
+
+nhanes3 %>% 
+#  group_by(race_text_nhanes) %>%
+  summarise(cormic=mean(cormic, na.rm=TRUE))
+#  summarise(cormic=weighted.mean(sitting_height/height, w = WTPFEX6, na.rm=TRUE))
+  
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
