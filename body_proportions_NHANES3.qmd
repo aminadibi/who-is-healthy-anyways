@@ -27,10 +27,15 @@ You can add options to executable code like this
 nhanes3 <- nhanes3 %>% mutate(cormic = sitting_height/height) 
 
 nhanes3 %>% 
-#  group_by(race_text_nhanes) %>%
-  summarise(cormic=mean(cormic, na.rm=TRUE))
-#  summarise(cormic=weighted.mean(sitting_height/height, w = WTPFEX6, na.rm=TRUE))
+  group_by(race_text_nhanes) %>%
+  summarise(cormic=weighted.mean(sitting_height/height, w = WTPFEX6, na.rm=TRUE))
   
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+There seems to be some difference. Can we predict sitting height? With race, you likely can. Without race, it might not be useful. But worth trying.
+
+```{r}
+ lm_fit <- lm(formula_text, data=df, weights=MEC6YR)
+  res <- (tidy(lm_fit, conf.int=TRUE) %>% filter(str_detect(term, "race")))
+
+```
