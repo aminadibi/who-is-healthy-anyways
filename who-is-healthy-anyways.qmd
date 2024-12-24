@@ -123,7 +123,7 @@ compute_gap_reduction <- function(df, measure, type) {
   
 }
 
-createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4)) {
+createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4), AllostaticLoadOnly=FALSE) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
     stop("Invalid age group")
   if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
@@ -133,6 +133,51 @@ createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', Bir
   
 
   nhanes <- readRDS("nhanes_2007_2012.rds") 
+  
+  if (AllostaticLoadOnly) {
+    
+  #   wt_percent_rank <- function(x, 
+  #                             weights=rep(1, length(x)), 
+  #                             q = (0:1000) / 1000){
+  #   # fastest method to calculate breaks
+  #   breaks <- reldist::wtd.quantile(x, weight = weights, q = q, na.rm = TRUE)
+  #   # problem sometimes with ties in the breaks. This forces a way through:
+  #   breaks <- unique(breaks)
+  #   breaks[1] <- -Inf
+  #   # cut the data where the quantile breaks are:
+  #   y <- cut(x, breaks = breaks, labels = FALSE) # labels = FALSE for speed
+  #   
+  #   # convert this into a number from 0 to 1
+  #   y <- as.numeric(y) - 1
+  #   y <- y / max(y)
+  # return(y)
+  # }
+
+    
+nhanes <- nhanes %>%
+mutate(
+ mean_bp_sys=mean(c(bp_sys_1, bp_sys_2, bp_sys_3, bp_sys_4), na.rm = TRUE), 
+ mean_bp_dias=mean(c(bp_dias_1, bp_dias_2, bp_dias_3, bp_dias_4), na.rm = TRUE), 
+ als_crp                    = as.numeric((percent_rank(crp)                    >=0.75)),
+ als_wbc                    = as.numeric((percent_rank(wbc)                    >=0.75)),
+ als_glycohemoglobin        = as.numeric((percent_rank(glycohemoglobin)        >=0.75)),
+ als_albumin_ug_ml          = as.numeric((percent_rank(albumin_ug_ml)          <=0.25)),
+ als_creatinin_mg_dl        = as.numeric((percent_rank(creatinin_mg_dl)        >=0.75)),
+ als_total_cholesterol_mg_dl= as.numeric((percent_rank(total_cholesterol_mg_dl)>=0.75)),
+ als_hdl_mg_dl              = as.numeric((percent_rank(hdl_mg_dl)              <=0.25)),
+ als_trigly_mg_dl           = as.numeric((percent_rank(trigly_mg_dl)           >=0.75)),
+ als_bmi                    = as.numeric((percent_rank(bmi)                    >=0.75)),
+ als_mean_bp_sys            = as.numeric((percent_rank(mean_bp_sys)            >=0.75)),
+   als_mean_bp_dias         = as.numeric((percent_rank(mean_bp_dias)           >=0.75)),
+   als_pulse_60_sec         = as.numeric((percent_rank(pulse_60_sec)           >=0.75)),
+  ) %>%
+  mutate(als_score = rowSums(dplyr::select(., als_crp, als_wbc, als_glycohemoglobin, als_albumin_ug_ml,
+                                           als_creatinin_mg_dl, als_total_cholesterol_mg_dl, als_hdl_mg_dl, als_trigly_mg_dl,
+                                           als_bmi, als_mean_bp_sys, als_mean_bp_dias, als_pulse_60_sec
+                                           ), na.rm = TRUE))
+
+  }
+  
   
   stopifnot((nhanes %>% count()) == 30442) # Ensure we have the correct n
   stopifnot((nhanes %>% filter(race %in% c(3,4)) %>% count()) == 18359) 
@@ -282,6 +327,31 @@ if (incomePovertyRatioOnly) {
 
 }
 
+
+if (AllostaticLoadOnly) {
+  ref2 <- ref1 %>% filter(is.na(als_score) | (als_score<=8)) %>%
+  mutate(ref="als_score<=8")
+  ref3 <- ref2 %>% filter(is.na(als_score) | (als_score<=7)) %>%
+  mutate(ref="als_score<=7")
+  ref4 <- ref3 %>% filter(is.na(als_score) | (als_score<=6)) %>%
+  mutate(ref="als_score<=6")
+  ref5 <- ref4 %>% filter(is.na(als_score) | (als_score<=5))  %>%
+  mutate(ref="als_score<=5")
+  ref6 <- ref5 %>% filter(is.na(als_score) | (als_score<=4)) %>%
+  mutate(ref="als_score<=4")
+  ref7 <- ref6 %>% filter(is.na(als_score) | (als_score<=3))  %>%
+  mutate(ref="als_score<=3")
+  ref8 <- ref7 %>% filter(is.na(als_score) | (als_score<=2))  %>%
+  mutate(ref="als_score<=2")
+  ref9 <- ref8 %>% filter(is.na(als_score) | (als_score<=1))  %>%
+  mutate(ref="als_score<=1")
+  ref10<- ref9 %>% filter(is.na(als_score) | (als_score<=0))  %>%
+  mutate(ref="als_score<=0")
+  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+}
+
+
 if (homeOwnershipOnly) {
   ref2 <- ref1 %>% 
     filter(is.na(home_ownership) | (home_ownership==1)) %>%
@@ -291,7 +361,7 @@ if (homeOwnershipOnly) {
 }
 
 
-if (!incomePovertyRatioOnly & !homeOwnershipOnly) {
+if (!incomePovertyRatioOnly & !homeOwnershipOnly & !AllostaticLoadOnly) {
 ref2 <- ref1 %>%
     filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
          (is.na(organic_dusts)   | (organic_dusts!=1)) & 
@@ -1235,6 +1305,18 @@ plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePover
 
 Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
+
+### Allostatic Load
+
+```{r, warning=FALSE, message=FALSE}
+
+
+refs_adult_incomeAllostaticLoadOnly <- createCohort("adult", AllostaticLoadOnly=TRUE)
+refs_youth_incomeAllostaticLoadOnly <- createCohort("youth", AllostaticLoadOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_incomeAllostaticLoadOnly, refs_youth_incomeAllostaticLoadOnly)
+
+```
 
 ### Leave-one-out Analysis
 
