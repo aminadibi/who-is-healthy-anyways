@@ -60,7 +60,7 @@ execute:
 
 **RESULTS:** From the base reference population to the most restrictive, the number of included participants decreased from 8,802 to 1,921. The percentage of Black participants decreased from 13% to 7% in youth and 11% to 4% in adults. Mexican American participants decreased from 15% to 10% in youth and 10% to 3% in adults. Other-Hispanic participants decreased from 7% to 5% in youth and 6% to 3% in adults. The proportion of participants remained close to the reference population for Asian and other-multiracial participants. After excluding individuals with unfavorable SDoH, the gap between Black and White Americans in FEV~1~ and FVC reduced by 25% and 26% in children and youth, and by 26% and 19%, respectively in adults over 20. The racial gap between Asian and White Americans reduced by 7% and 13% in youth but increased by 14% and 11%, respectively in adults. Mexican Americans had slightly higher FEV~1~ and FVC than White Americans in the baseline population, and excluding those with unfavorable SDoH widened the gap by 0.09 L and 0.06 L in youth and 0.03 L and 0.03 L in adults.
 
-**CONCLUSIONS:** The SDoH investigated herein disporportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported.
+**CONCLUSIONS:** The SDoH investigated herein disproportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported.
 
 ------------------------------------------------------------------------
 
@@ -82,11 +82,11 @@ Our study aims to determine if a more comprehensive set of SDoH in newer NHANES 
 
 We used data from three cycles of NHANES (2007-2012) with appropriate sampling weights to account for complex survey design. We included individuals with baseline spirometry that either met or exceeded ATS collection standards. We defined 10 increasingly healthier reference populations. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmed occupational exposures, physical inactivity, maternal smoking, obesity (defined as body-mass-index≥30), no home ownership, no insurance, lower education, and self-declared unhealthy diet.
 
-Occupational exposure was defined as having ever been exposed to either mineral dusts, organic dusts, exhaust fumes, or other fumes at work. Individuals who did not have at least 10 minutes of vigorous or moderate activity in a typical week, either for work or recreationally, were considered physically inactive. Lower educated individuals were defined as adults 20 years of age and older with a high school or a GED degree or lower, and 6-19 years old who were neither in school nor on vacation from school. Individuals with self-declared their dietary health as either poor or fair were considered to have a unhealthy diet.
+Occupational exposure was defined as having ever been exposed to either mineral dusts, organic dusts, exhaust fumes, or other fumes at work. Individuals who did not have at least 10 minutes of vigorous or moderate activity in a typical week, either for work or recreationally, were considered physically inactive. Lower educated individuals were defined as adults 20 years of age and older with a high school or a GED degree or lower, and 6-19 years old who were neither in school nor on vacation from school. Individuals with self-declared their dietary health as either poor or fair were considered to have a unhealthy diet. We calculated allostatic load score based on twelve commonly used biomarkers, using the method proposed by Liu et al [@liu2021]. Biomarkers included were C-reactive protein, white blood cell count, glycohemoglobin, serum albumin, serum creatinine, total cholesterol, high density lipoprotein (HDL), serum triglycerides, BMI, resting systolic blood pressure, resting diastolic blood pressure measurements, and pulse rate. For each of the twelve biomarkers, the participant received a score of 1 if their value was deemed high-risk (i.e., below 25% percentile for HDL and serum albumin and above 75% percentile for other biomarkers) and 0 if low risk. The allostatic load score ranged from 0 to 12.
 
 For each reference population, the racial gap was calculated as the average difference in forced expiratory volume in one second (FEV~1~) and FVC between Black and White populations adjusted by age, height, and sex in a linear regression. We evaluated the reduction in the racial gap separately for youth (\<20 yrs) and adults (≥20 yrs). The distinction between adults and youth was dictated by how NHANES data is collected and structured; for example, the educational level variable is only available for those 20 years of age and older and school attendance is more applicable to children and youth. We conducted additional exploratory analysis to evaluate the contribution of different variables in explaining racial gaps in lung function. We repeated the main analysis separately for individuals who self-identified with different minority groups, including Non-Hispanic Asian (only available in NHANES 2011-2012), Mexican American, Other Hispanic, and Other, including multiracial.
 
-In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function that can be explained by poverty alone to see whether poverty can be a good proxy for SDoH. To examine the effects of our choice of SDoH to account for, we conducted a leave-one-out analysis, where we reproduced the results 9 times, each time leaving one of the SDoH out of the successively defined reference populations.
+In the sensitivity analyses, we evaluated the results separately for males and females and those born inside the US. We also evaluated the proportion of the racial gap in lung function between Black and White participants that can be explained by poverty or allostatic load. To examine the effects of our choice of SDoH to account for, we conducted a leave-one-out analysis, where we reproduced the results 9 times, each time leaving one of the SDoH out of the successively defined reference populations.
 
 All data preparation and analysis was performed in R v4.4.2 using reproducible Quarto documents. A fully reproducible analysis code is publicly available at <https://github.com/aminadibi/who-is-healthy-anyways/>.
 
@@ -1291,7 +1291,7 @@ Changes in lung function racial gaps between Other race including multi-racial a
 
 ### Income to Poverty Ratio
 
-When we excluded participants with income to poverty ratio under five, the proportion of Black participants decreased from 19% to 10% in youth and 14% to 8% in adults, as shown in @suppfig-incomepovertyratio. The proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth.
+When we excluded participants with income to poverty ratio under five, the proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 6% and 0% in adults, and 4% and 2% in youth, as shown in @suppfig-incomepovertyratio. .
 
 ::: {#suppfig-incomepovertyratio}
 ```{r, warning=FALSE, message=FALSE}
@@ -1308,6 +1308,9 @@ Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic
 
 ### Allostatic Load
 
+Excluding participants who had allostatic load score of 1 or higher reduced racial gap in FEV1 and FVC by 10.70% and 8.26% in youths and by 20.88% and 14.60% in adults.
+
+::: {#suppfig-allostaticload}
 ```{r, warning=FALSE, message=FALSE}
 
 
@@ -1317,6 +1320,9 @@ refs_youth_incomeAllostaticLoadOnly <- createCohort("youth", AllostaticLoadOnly=
 plot_racial_gap_change(refs_adult_incomeAllostaticLoadOnly, refs_youth_incomeAllostaticLoadOnly)
 
 ```
+
+Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on allostatic load score. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
+:::
 
 ### Leave-one-out Analysis
 
