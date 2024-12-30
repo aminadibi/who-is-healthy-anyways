@@ -1,5 +1,5 @@
 ---
-title: "Who is healthy anyways? Varying definitions of health in reference populations and the contribution of measurable social determinants to racial disparities in lung function"
+title: "Who is healthy anyway? Varying definitions of health in reference populations and the contribution of measurable social determinants to racial disparities in lung function"
 format: 
   html:
     toc: true
