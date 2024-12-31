@@ -56,11 +56,11 @@ execute:
 
 **RATIONALE:** Racialized populations disproportionately experience exposures that impair lung function. Race-neutral reference equations are intended to mitigate bias due to disproportionate exposures at the cost of reduced precision. We hypothesized that the disproportionate impact of social determinants of health (SDoH) captured in survey data could help explain a larger proportion of racial gaps in lung function than previously reported.
 
-**METHODS:** We defined a series of nested reference populations using data from NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV1 and FVC between minority race and ethnicity groups and White participants, separately for adults (≥20) and youths (\<20).
+**METHODS:** We defined a series of nested reference populations using data from NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV~1~ and FVC between minority race and ethnicity groups and White participants, separately for adults (≥20) and youths (\<20).
 
-**RESULTS:** In successively healthier populations, the proportion of participants declined for non-Hispanic Black, Mexican-American, and Other Hispanic populations but remained close to the reference population for Asian and other/multiracial participants. After excluding individuals with unfavorable SDoH, the gap between non-Hispanic Black and White Americans in FEV1 and FVC reduced by 25% and 26% in youths and 26% and 19% in adults. The gap between Asian and White Americans reduced by 7% and 13% among youths but increased by 14% and 11% among adults. At baseline, Mexican Americans had slightly higher adjusted FEV1 and FVC than non-Hispanic White Americans, and excluding those with unfavorable SDoH marginally increased this gap .
+**RESULTS:** In successively healthier populations, the proportion of participants declined for non-Hispanic Black, Mexican-American, and Other Hispanic populations but remained close to the reference population for Asian and other/multiracial participants. After excluding individuals with unfavorable SDoH, the gap between non-Hispanic Black and White Americans in FEV~1~ and FVC reduced by 25% and 26% in youths and 26% and 19% in adults. The gap between Asian and White Americans reduced by 7% and 13% among youths but increased by 14% and 11% among adults. At baseline, Mexican Americans had slightly higher adjusted FEV~1~ and FVC than non-Hispanic White Americans, and excluding those with unfavorable SDoH increased this gap.
 
-**CONCLUSIONS:** The SDoH investigated herein disproportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported .
+**CONCLUSIONS:** The SDoH investigated herein disproportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported.
 
 ------------------------------------------------------------------------
 
@@ -192,8 +192,8 @@ mutate(
   }
 
   nhanes <- nhanes %>%
-    mutate(fev1 = fev1_pre/1000,
-           fvc  = fvc_pre/1000) %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
@@ -500,10 +500,10 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     for (measure in measures) {
       message(paste0("For ", measure, " in ", age_group, 
                      ", the baseline gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " L"))
+                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " mL"))
       message(paste0("For ", measure, " in ", age_group, 
                      ", the absolute change in gap was ", 
-                     compute_gap_reduction(race_coeffs, measure, type="abs"), " L"))
+                     compute_gap_reduction(race_coeffs, measure, type="abs"), " mL"))
       message(paste0("For ", measure, " in ", age_group, 
                      ", the percentage change in gap was ", 
                      compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
@@ -530,7 +530,7 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
       geom_hline(yintercept = base_high, colour="salmon", linetype='dashed') +
       geom_hline(yintercept = base_ref, colour="salmon", linetype='dotted') +
       ylim(ylim_low-0.1, ylim_high+0.1) + 
-      ylab(paste0(str_to_upper(measure), " Gap (L)")) +
+      ylab(paste0(str_to_upper(measure), " Gap (mL)")) +
       xlab("") +
       theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
     
@@ -573,17 +573,23 @@ predPlot <- function(df) {
 
 ```
 
-### Disproportionate Impact
+#### Disproportionate Impact of Exposures
 
 From the base reference population to the most restrictive, the number of included participants decreased from 8,802 to 1,921. The proportion of participants decreased from 13% to 7% for Black youths, from 11% to 4% for Black adults, from 15% to 10% for Mexican American youths, from 10% to 3% for Mexican American adults, from 7% to 5% for Other Hispanic youths, and from 6% to 3% for Other Hispanic adults (@fig-racialgap). The reduction in the proportion of participants after multiple exclusions based on SDoH confirms the disproportionate impact of these factors on Black, Mexican American, and Other Hispanic populations in the US. The proportion of participants remained within 1% of the reference population for participants who identified as either Asian or Other/Multiracial.
 
-In the baseline reference population, average FEV~1~ and FVC were 0.35 L and 0.42 L higher in White youths compared with Black youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.50 L for FEV~1~ and 0.69 for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 25% and 26% in youths and by 26% and 19% in adults (@fig-racialgap).
+#### Non-Hispanic Black Americans
 
-Excluding individuals with various SDoH did not reduce the proportion of Asian individuals. In the baseline reference population, average FEV~1~ and FVC were 0.18 L and 0.31 L higher in White youths compared with Asian youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 0.37 L for FEV~1~ and 0.50 for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 7% and 13% in youths but, surprisingly, increased by 14% and 11% in adults (@suppfig-Asian).
+In the baseline reference population, average FEV~1~ and FVC were 350.5 mL and 418.4 mL higher in White youths compared with Black youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 502.6 mL for FEV~1~ and 686.5 mL for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 86.9 mL (25% decrease) and 109.6 mL (26% decrease) in youths and 132.2 mL (26% decrease) and 132.9 mL (19% decrease) in adults, respectively. (@fig-racialgap).
 
-Mexican American youths had slightly higher FEV~1~ and FVC at baseline compared to White youths. Average FEV~1~ and FVC were 0.06 L and 0.04 L higher in Mexican American youths compared to White youths, after adjusting for age, height, and biological sex at birth. Mexican American and White adults had similar adjusted FEV~1~ and FVC at baseline (@suppfig-Mexican). Excluding individuals with unfavorable SDoH resulted in higher FEV~1~ and FVC values for the Mexican American population compared to the White population. Adjusted average FEV~1~ and FVC values for Mexican American youth were 0.09 L and 0.06 L higher than White youth. For adults, average FEV~1~ and FVC were both higher by 0.03 L compared to White adults (@suppfig-Mexican).
+#### Asian Americans
 
-The appendix includes additional results for the non-Mexican Hispanic population (@suppfig-hispanic) and Other/Multiracial. (@suppfig-Other).
+Excluding individuals with various SDoH did not reduce the proportion of Asian individuals. In the baseline reference population, average FEV~1~ and FVC were 183.8 mL and 307.2 mL higher in White youths compared with Asian youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 367.5 mL for FEV~1~ and 500.1 mL for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 12.1 mL (7% decrease) and 38.5 mL (13% decrease) in youths but, surprisingly, increased by 51.8 mL (14% increase) and 55.6 mL (11% increase) in adults (@suppfig-Asian).
+
+#### Mexican Americans
+
+Mexican American youths had slightly higher FEV~1~ and FVC at baseline compared to White youths. Average FEV~1~ and FVC were 56.3 mL and 34.7 mL higher in Mexican American youths compared to White youths, after adjusting for age, height, and biological sex at birth. Mexican American and White adults had similar adjusted FEV~1~ and FVC at baseline, with differences smaller than 6 mL (@suppfig-Mexican). Excluding individuals with unfavorable SDoH resulted in higher FEV~1~ and FVC values for the Mexican American population compared to the White population. Adjusted average FEV~1~ and FVC values for Mexican American youth increased by 38.0 mL (68% increase) and 28.2 mL (81% increase) higher than White youth. For adults, average FEV~1~ and FVC increased by 33.8 mL (576% increase) and 35.6 mL (1,111% increase) compared to White adults (@suppfig-Mexican).
+
+The appendix includes additional results for the non-Mexican Hispanic (@suppfig-hispanic) and Other/Multiracial populations. (@suppfig-Other).
 
 ### Secondary and Sensitivity Analyses
 
@@ -597,7 +603,7 @@ In females, excluding those with unfavorable SDoH reduced the racial gap in FEV1
 
 After excluding those with unfavorable SDoH, the racial gap in FEV1 and FVC was reduced by 24% and 25% in US-born youth, and 35% and 23% in US-born adults (@suppfig-usborn). Black and White individuals born outside of the US had higher FEV1 and FVC were less exposed to second-hand and maternal smoking, reported healthier diets, but also had more occupational exposures (@supptab-fig1byusborn). Black individuals born out of the US had higher income and were more likely to be covered by health insurance than US-born Black individuals while among White participants, those who were born in the US had higher income and higher insurance coverage (@supptab-fig1byusborn).
 
-#### **Allostatic Load**
+#### Allostatic Load
 
 Among self-identified Black and White participants, the allostatic load score ranged from 0 to 8. Excluding participants who had an allostatic load score of 1 or higher reduced the racial gap in FEV~1~ and FVC by 11% and 8 % in youths and by 21% and 15% in adults.
 
@@ -607,7 +613,7 @@ In the leave-one-out analysis for the youths, the proportion of the racial gap e
 
 ## Discussion
 
-Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population[@holland2022], one focused on adults[@harik-khan2001] and one on children[@harik-khan2004]. The study on adults attributed 35-39% of the racial gap in lung function to sitting height, 2.5-7.5% to poverty, and 2.0-4.7% to education [@harik-khan2001]. In children, sitting height accounted for 42-53% of the racial gap, while diet and socio-economic status accounted for 7-10% of the racial differences [@harik-khan2004]. However, these studies were limited, as they only considered lung function disparities between Black and White individuals, evaluated a narrow set of SDoH (typically comprised of poverty index, BMI, education, employment, and household size), and used older US National Health and Nutrition Examination Survey (NHANES) III survey data (1988–1994).
+Our understanding of the contribution of environmental and social factors to racial differences in lung function remains limited. A 2022 systematic review found two representative studies in the US population[@holland2022], one focused on adults[@harik-khan2001] and one on children[@harik-khan2004]. The study on adults attributed 35-39% of the racial gap in lung function to sitting height and an additional 7-11% of the racial gap to poverty index, education, and BMI [@harik-khan2001]. In children 8 to 17 years of age, sitting height accounted for 42-53% of the racial gap, while family head education, poverty index, and serum levels of antioxidant vitamins accounted for an additional 7-10% of the racial differences [@harik-khan2004]. However, these studies were limited, as they only considered lung function disparities between Black and White individuals, evaluated a narrow set of SDoH, and used older NHANES III survey data collected in 1988–1994.
 
 Our results show that a higher than previously reported proportion of racial differences in lung function between Black and White Americans can be explained by differences in SDoH [@harik-khan2001; @harik-khan2004]. Within studied SDoH variables in NHANES 2007-2012, we were able to explain 26% of the racial gap in lung function in adults, and as much as 35% of the gap in males under 20 years of age. The true contribution of SDoH to racial gaps in lung function is likely higher, as only some aspects of SDoH are properly captured in NHANES.
 
@@ -615,11 +621,13 @@ Our results are consistent with a growing body of literature that implicates his
 
 Similar to the reference populations used to develop lung function reference equations, our baseline reference population only excluded individuals with a history of smoking, lung disease, or respiratory symptoms. In this population, age-, sex-, and height-adjusted FEV~1~ and FVC were highest for Mexican Americans, followed by Non-Hispanic White, Other Hispanic, Asian, and Non-Hispanic Black populations. Introducing nine additional exclusion criteria to reference populations reduced racial disparities in lung function between Black and White individuals, but not for Asian population. Of note, the proportion of Asian people in the successive reference populations remained within 1% of the baseline value, indicating that the investigated SDoH did not disproportionately affect this population.
 
-Developing fair, and practical lung function reference equations is challenging because of our limited understanding of complex exposures, lack of good representative data, and diverse applications of pulmonary function tests [@adibi; @diao2024]. Recognizing the good faith efforts of those working diligently to balance feasibility, practicality, and an ideal accounting for all potential biases, one possbile way forward, at least for some use cases of spirometry, involves explicitly accounting for the effect of complex exposures. This does not require asking patients for their exposure history or social determinants at the point of care and can be achieved by tightening the inclusion criteria in the reference populations at the reference algorithm development stage. Excluding individuals with unfavorable SDoH from reference populations results in a more uniformly healthy reference population across racial identities and makes the dataset less biased. However, this approach may reduce the racial representativeness of the data due to disproportionate exposures. Ensuring a sufficiently large and representative initial sample may allow oversampling to achieve representativeness across all groups.
+Developing fair, and practical lung function reference equations is challenging because of our limited understanding of complex exposures, lack of good representative data, and diverse applications of pulmonary function tests [@adibi; @diao2024]. Recognizing the good faith efforts of those working diligently to balance feasibility, practicality, and an ideal accounting for all potential biases, one possbile way forward, at least for some use cases of spirometry, involves explicitly accounting for the effect of complex exposures. This does not require asking patients for their exposure history or social determinants at the point of care and can be achieved by tightening the inclusion criteria in the reference populations at the reference algorithm development stage. Excluding individuals with unfavorable SDoH from reference populations results in a more uniformly healthy reference population across racial identities and makes the dataset less biased. Proposals for developing lung function standards using data from participants of "middle-class origin who live and work in clean environments" have appeared in the literature as early as 1984 [@Myers1984]. Another example is the World Health Organization’s (WHO) birth to 2-year growth standards, which recruited participants with favorable SDoH to establish ideal growth patterns[@mercedes2004]. However, this approach may reduce the racial representativeness of the data due to disproportionate exposures. Ensuring a sufficiently large and representative initial sample may allow oversampling to achieve representativeness across all groups.
 
-Proposals for developing lung function standards using data from participants of "middle-class origin who live and work in clean environments" have appeared in the literature as early as 1984 [@Myers1984]. Another example is the World Health Organization’s (WHO) birth to 2-year growth standards, which recruited participants with favorable SDoH to establish ideal growth patterns[@mercedes2004].
+To our knowledge, this is the first study to evaluate the contribution of a wide range of SDoH to racial gaps in lung function across multiple groups of race and ethnicity in the US. We used the latest available NHANES data that included spirometry makes these results representative of the US population. Our method of successive exclusions in reference populations accounts for potential interactions between different SDoH factors, and avoids the need for statistical assumptions required for simple multivariable linear regressions regressions with SDoH predictors.
 
-Our reliance on NHANES data restricts generalizability beyond the United States and hinders our ability to explore nuanced race and ethnicity groups. We could not assess the potential role of altitude and anthropometric differences due to the unavailability of the data in the studied NHANES cycles. Incomplete understanding and the limited nature of available data also limits our assessment of complex SDoH, such as the effects of racism, intergenerational effects, and life-course exposure to pollutants. Future studies should aim to incorporate a wider array of SDoH to overcome these limitations. There is a need for longitudinal studies that elucidate the emergence of lung function disparities (as has been done in childhood asthma [@Gaffney2024]) and associated causal pathways. Expanding research to include international cohorts with high-quality data collection could enhance the generalizability of findings and support the development of global and localized strategies to address lung health disparities.
+There are important limitations to our study. Our reliance on NHANES data restricts generalizability beyond the United States and limits us to coarse race and ethnicity categories, which could conceal meaningful differences within these categories [@movva23a]. Included NHANES cycles lack data on altitude, sitting height, life-course exposure to pollutants, and intergenerational effects of exposures that have been shown to affect lung function and asthma [@mahon2021; @svanes2023]. Another complicating factor is that racial gaps in lung function are typically adjusted for height, however, height itself is affected by SDoH [@kuh1989; @freedman2000].
+
+Future studies should aim to incorporate a wider array of SDoH to overcome these limitations. There is a need for longitudinal studies that elucidate the emergence of lung function disparities (as has been done in childhood asthma [@Gaffney2024]) and associated causal pathways. Expanding research to include international cohorts with high-quality data collection could enhance the generalizability of findings and support the development of global and localized strategies to address lung health disparities.
 
 ## Conclusions
 
@@ -645,8 +653,8 @@ flowchart TD
 
  
  table1 <- readRDS("nhanes_2007_2012.rds") %>%
-    mutate(fev1 = fev1_pre/1000,
-           fvc  = fvc_pre/1000) %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
@@ -808,8 +816,8 @@ flowchart TD
  
  label(table1$race_text_nhanes) <- "Race and Ethnicity"
  label(table1$age) <- "Age (years)"
- label(table1$fev1) <- "FEV1 (L)"
- label(table1$fvc) <- "FVC (L)"
+ label(table1$fev1) <- "FEV1 (mL)"
+ label(table1$fvc) <- "FVC (mL)"
  label(table1$sex_text) <- "Biological Sex at Birth"
  label(table1$birth_country) <- "Birth Country"
  label(table1$smoker_in_household) <- "Smoker in household"
@@ -982,7 +990,7 @@ bootstrapped_gap %>% filter(fvc_gap>0) %>% count()/1000*2
 
 ```
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, include=FALSE, eval=FALSE}
 #| label: fig-racialgap-home-bmi-job
 #| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. 
  
@@ -1159,7 +1167,7 @@ refs_youth_female <- createCohort("youth", sex="female")
 plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
 ```
 
-Changes in lung function racial gaps between female Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, and age. Positive values indicate higher lung function in the Non-Hispanic White population.
+Changes in lung function racial gaps between female Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, and age. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ::: {#suppfig-males}
@@ -1171,7 +1179,7 @@ refs_youth_male <- createCohort("youth", sex="male")
 plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
 ```
 
-Changes in lung function racial gaps between male Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on income to poverty ratio. Lung function differences are adjusted for height, and age. Positive values indicate higher lung function in the Non-Hispanic White population.
+Changes in lung function racial gaps between male Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, and age. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
 ### Intersection of Race and Country of Birth
@@ -1304,7 +1312,7 @@ Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic
 
 ### Allostatic Load
 
-Excluding participants who had allostatic load score of 1 or higher reduced racial gap in FEV1 and FVC by 10.70% and 8.26% in youths and by 20.88% and 14.60% in adults.
+Excluding participants who had allostatic load score of 1 or higher reduced racial gap in FEV~1~ and FVC by 10.70% and 8.26% in youths and by 20.88% and 14.60% in adults.
 
 ::: {#suppfig-allostaticload}
 ```{r, warning=FALSE, message=FALSE}
@@ -1395,8 +1403,6 @@ Leaving out education
 
 Leaving out diet health
 :::
-
-### 
 
 ````{=html}
 <!-- 
