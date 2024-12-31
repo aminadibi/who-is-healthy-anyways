@@ -585,9 +585,9 @@ In the baseline reference population, average FEV~1~ and FVC were 350.5 mL and 4
 
 Average FEV~1~ and FVC were 56.3 mL and 34.7 mL higher in Mexican American youths compared to White youths, after adjusting for age, height, and biological sex at birth. Mexican American and White adults had similar adjusted FEV~1~ and FVC at baseline, with differences smaller than 6 mL (@suppfig-Mexican). Excluding individuals with unfavorable SDoH resulted in higher FEV~1~ and FVC values for the Mexican American population compared to the White population. Adjusted average FEV~1~ and FVC values for Mexican American youths increased by 38.0 mL (67.5%) and 28.2 mL (81.3%) higher than White youths. For adults, average FEV~1~ and FVC increased by 33.8 mL and 35.6 mL compared to White adults (@suppfig-Mexican).
 
-#### Non-Mexican Hispanic Americans
+#### Other Hispanic Americans
 
-In the baseline reference population, average FEV~1~ and FVC were 65.9 mL and 99.1 mL higher in White youths compared with Non-Mexican Hispanic youths youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 67.8 mL for FEV~1~ and 117.3 mL for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 10.0 mL (15.2%) and 19.2 mL (19.3%) in youths and 58.2 mL (85.9%) and 14.5 mL (12.4%) in adults, respectively (@suppfig-hispanic) .
+In the baseline reference population, average FEV~1~ and FVC were 65.9 mL and 99.1 mL higher in White youths compared with Other Hispanic youths youths, after adjusting for age, height, and biological sex at birth. For adults, the adjusted racial gap was 67.8 mL for FEV~1~ and 117.3 mL for FVC. After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC was reduced by 10.0 mL (15.2%) and 19.2 mL (19.3%) in youths and 58.2 mL (85.9%) and 14.5 mL (12.4%) in adults, respectively (@suppfig-hispanic) .
 
 #### Asian Americans
 
@@ -946,7 +946,7 @@ message(map_df(refs_youth, count))
 
 plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
   title = "Non-Hispanic Black vs. Non-Hispanic White population"
-)
+  )
 
 ```
 
@@ -1242,10 +1242,7 @@ Characteristics of Black Participants Included in the Baseline Reference Populat
 
 ### Other Race Groups
 
-
 ::: {#suppfig-Mexican}
-Mexican American vs. White
-
 ```{r, message=F, warning=F}
 
 refs_adult_mex <- createCohort("adult", includedRace=c(3,1))
@@ -1256,7 +1253,8 @@ refs_youth_mex <- createCohort("youth", includedRace=c(3,1))
 message("Youth counts:")
 message(map_df(refs_youth_mex, count))
 
-plot_racial_gap_change(refs_adult_mex, refs_youth_mex, includedRace=c(3,1))
+plot_racial_gap_change(refs_adult_mex, refs_youth_mex, includedRace=c(3,1)) + plot_annotation(
+  title = "Mexican American vs. Non-Hispanic White population")
 
 ```
 
@@ -1274,7 +1272,8 @@ refs_youth_hisp <- createCohort("youth", includedRace=c(3,2))
 message("Youth counts:")
 message(map_df(refs_youth_hisp, count))
 
-plot_racial_gap_change(refs_adult_hisp, refs_youth_hisp, includedRace=c(3,2))
+plot_racial_gap_change(refs_adult_hisp, refs_youth_hisp, includedRace=c(3,2)) + plot_annotation(
+  title = "Other Hispanic vs. Non-Hispanic White population")
 ```
 
 Changes in lung function racial gaps between Other Hispanic and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
@@ -1290,7 +1289,8 @@ refs_youth_asian <- createCohort("youth", includedRace=c(3,6))
 message("Youth counts:")
 message(map_df(refs_youth_asian, count))
 
-plot_racial_gap_change(refs_adult_asian, refs_youth_asian, includedRace=c(3,6))
+plot_racial_gap_change(refs_adult_asian, refs_youth_asian, includedRace=c(3,6))  + plot_annotation(
+  title = "Asian vs. Non-Hispanic White population")
 ```
 
 Changes in lung function racial gaps between Asian and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
