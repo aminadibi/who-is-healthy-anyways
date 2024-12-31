@@ -58,7 +58,7 @@ execute:
 
 **METHODS:** We defined a series of nested reference populations using data from NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV~1~ and FVC between minority race and ethnicity groups and White participants, separately for adults (≥20) and youths (\<20).
 
-**RESULTS:** In successively healthier populations, the proportion of participants declined for non-Hispanic Black, Mexican-American, and Other Hispanic populations but remained close to the reference population for Asian and other/multiracial participants. After excluding individuals with unfavorable SDoH, the gap between non-Hispanic Black and White Americans in FEV~1~ and FVC reduced by 25% and 26% in youths and 26% and 19% in adults. The gap between Asian and White Americans reduced by 7% and 13% among youths but increased by 14% and 11% among adults. At baseline, Mexican Americans had slightly higher adjusted FEV~1~ and FVC than non-Hispanic White Americans, and excluding those with unfavorable SDoH increased this gap.
+**RESULTS:** In successively healthier populations, the proportion of participants declined for non-Hispanic Black, Mexican American, and Other Hispanic populations but remained close to the reference population for Asian and other/multiracial participants. After excluding individuals with unfavorable SDoH, the gap between non-Hispanic Black and White Americans in FEV~1~ and FVC reduced by 25% and 26% in youths and 26% and 19% in adults. The gap between Asian and White Americans reduced by 7% and 13% among youths but increased by 14% and 11% among adults. At baseline, Mexican Americans had slightly higher adjusted FEV~1~ and FVC than non-Hispanic White Americans, and excluding those with unfavorable SDoH increased this gap.
 
 **CONCLUSIONS:** The SDoH investigated herein disproportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported.
 
@@ -511,6 +511,21 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     }
   }
 
+  # youth_print <- race_coeffs_youth %>% 
+  #   filter(sequence=="reference" | sequence=="healthy diet") %>%
+  #   select(-statistic, -`std.error`) %>%
+  #   mutate(estimate=round(estimate, 2))
+  # 
+  # adult_print <- race_coeffs_adult %>% 
+  #   filter(sequence=="reference" | sequence=="healthy diet") %>%
+  #   select(-statistic, -`std.error`) %>%
+  #   mutate(estimate=round(estimate, 2))
+  # 
+  # message("Youth:")
+  # print(youth_print)
+  # message("Adults:")
+  # print(adult_print)
+  
   gap_reduction_messages(race_coeffs_adult, "adults")
   gap_reduction_messages(race_coeffs_youth, "youth")
   
@@ -1105,14 +1120,6 @@ plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"
 
 ```
 
-| Col1 | Col2 | Col3 |
-|------|------|------|
-|      |      |      |
-|      |      |      |
-|      |      |      |
-
-: Changes in Racial Gaps in Lung Function After Excluding Participants with Unfavorable Social Determinants of Health {#tbl-results}
-
 ## References
 
 ::: {#refs}
@@ -1354,7 +1361,7 @@ Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic
 Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. In each of the figures below, one of the original SDoH-based exclusion criteria are left out. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 
 ::: {#suppfig-leavejob}
-```{r, warning=FALSE, message=TRUE}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-2], refs_youth[-2])
 ```
 
@@ -1362,7 +1369,7 @@ Leaving out job exposure
 :::
 
 ::: {#suppfig-leavephysicalactivity}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-3], refs_youth[-3])
 ```
 
@@ -1370,7 +1377,7 @@ Leaving out physical activity
 :::
 
 ::: {#suppfig-leavematernalsmoke}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-4], refs_youth[-4])
 ```
 
@@ -1378,7 +1385,7 @@ Leaving out maternal smoke
 :::
 
 ::: {#suppfig-leavesecondhandsmoke}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-5], refs_youth[-5])
 ```
 
@@ -1386,7 +1393,7 @@ Leaving out second-hand smoke exposure
 :::
 
 ::: {#suppfig-leaveobesity}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-6], refs_youth[-6])
 ```
 
@@ -1394,7 +1401,7 @@ Leaving out obesity
 :::
 
 ::: {#suppfig-leavehomeowner}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-7], refs_youth[-7])
 ```
 
@@ -1402,7 +1409,7 @@ Leaving out home ownership
 :::
 
 ::: {#suppfig-leaveinsurance}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-8], refs_youth[-8])
 ```
 
@@ -1410,7 +1417,7 @@ Leaving out health insurance
 :::
 
 ::: {#suppfig-leaveeducation}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-9], refs_youth[-9])
 ```
 
@@ -1418,7 +1425,7 @@ Leaving out education
 :::
 
 ::: {#suppfig-leavediet}
-```{r, warning=FALSE, message=T}
+```{r, warning=FALSE, message=FALSE}
  plot_racial_gap_change(refs_adult[-10], refs_youth[-10])
 ```
 
