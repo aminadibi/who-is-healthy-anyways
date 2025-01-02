@@ -94,6 +94,7 @@ compareEffectSizes <- function(ageGroup, SelectedSex){
   
   if (ageGroup=="Adults") {
     disparity_rec <- recipe(fev1~age+height+
+                              #sex+
                               #    occupational_exposure+
                               #    no_2nd_hand_smoke+non_obese+physically_active+healthy_eater+
                               #    insured+educated+home_owner+
@@ -103,8 +104,9 @@ compareEffectSizes <- function(ageGroup, SelectedSex){
   if (ageGroup=="Youth") {
     #TODO had to remove occupational exposure and healthy diet for us to have any rows left for complete case analysis. Need to think about how to handle this. 
     disparity_rec <- recipe(fev1~age+height+
-                              no_2nd_hand_smoke+bmi+physically_active+
-                              has_insurance+maternal_smoke+now_attending_school+home_ownership+survey_weights, data=ref_eval) 
+                              #sex+
+                              race_text_nhanes+survey_weights, data=ref_eval) 
+    
   }
   
   summary(disparity_rec)
@@ -145,4 +147,4 @@ compareEffectSizes <- function(ageGroup, SelectedSex){
   return(res)
 }
 
-tmp <- compareEffectSizes("Adults", "Male")
+tmp <- compareEffectSizes("Adult", "Male")
