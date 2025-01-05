@@ -1791,6 +1791,8 @@ ref2 <- ref2 %>%
 
 }
 
+message("After exclusion for ", exclusions, " sample size is ", nrow(ref2))
+
 refs <- list(ref1, ref2)
 
 return(refs)
