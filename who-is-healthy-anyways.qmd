@@ -1607,7 +1607,7 @@ plot_racial_gap_change(refs_adult_1by1[c(1,10)], refs_youth_1by1[c(1,10)])
 
 ### Two and Three Criteria Analysis
 
-```{r}
+```{r, include=F, eval=F}
 
 createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusions=NULL) {
   if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
@@ -1806,7 +1806,7 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
                                               "insured",
                                               "educated", 
                                               "healthy diet"),
-                              n, outputType="perc") {
+                              n, outputType="perc", includedRace=c(3,4)) {
   
    if (!(n %in% c(1, 2,3,4))) 
     stop("Invalid n")
@@ -1845,21 +1845,23 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     #message(pair)
     # Create cohort references for adult and youth
     if (n==1){
-    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1))
-    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1))
+    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1), includedRace=includedRace)
+    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1), includedRace=includedRace)
     }
     if (n==2){
-    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2))
-    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2))
+    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
+    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
     } 
     if (n==3) {
-      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3))
-      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3))
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace)
+      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace)
     }
     
     if (n==4) {
-      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4))
-      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4))
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
+                                     includedRace)
+      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
+                                     includedRace)
     }
     
     # Plot the racial gap change
@@ -1889,13 +1891,17 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
 }
 
 
-ones <- exclude_all_combinations(n=1)
+ones <- exclude_all_combinations(n=1, includedRace=c(3,4))
 
-pairs <- exclude_all_combinations(n=2)
+pairs <- exclude_all_combinations(n=2, includedRace=c(3,4))
 
-triplets <- exclude_all_combinations(n=3)
+triplets <- exclude_all_combinations(n=3, includedRace=c(3,4))
 
-quartets <- exclude_all_combinations(n=4)
+quartets <- exclude_all_combinations(n=4, includedRace=c(3,4))
+
+
+
+pairs_mexican <- exclude_all_combinations(n=2, includedRace=c(3,1))
 ```
 
 ````{=html}
