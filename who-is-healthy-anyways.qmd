@@ -565,7 +565,7 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     
     base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
     base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
-    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$point_estimate
+    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
     ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
     ylim_high <- max(-1*(race_coeffs$conf.low))
 
@@ -1791,8 +1791,6 @@ ref2 <- ref2 %>%
 
 }
 
-message("After exclusion for ", exclusions, " sample size is ", nrow(ref2))
-
 refs <- list(ref1, ref2)
 
 return(refs)
@@ -1821,6 +1819,8 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
   message(paste0("Number of combination is ", length(exclusionPairs)))
   df_res <- tibble(id=1:length(exclusionPairs), 
                    pair="N", 
+                   n_youths=9999,
+                   n_adults=9999,
                    fev1_youths=9999,
                    fev1_youths_low=9999,
                    fev1_youths_high=9999,
@@ -1869,6 +1869,8 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     if (n==2) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2])}
     if (n==3) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3])}
     if (n==4) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3], ", ", pair[4])}
+    df_res[i, "n_youths"] <- nrow(refs_youth[[2]])
+    df_res[i, "n_adults"] <- nrow(refs_adult[[2]])
     df_res[i, "fev1_youths"] <- res$fev1_youths
     df_res[i, "fev1_youths_low"] <- res$fev1_youths_low
     df_res[i, "fev1_youths_high"] <- res$fev1_youths_high
