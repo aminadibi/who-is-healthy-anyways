@@ -1190,8 +1190,8 @@ createCohort3Factor <- function (ageGroup,sex='all') {
   }
 
   nhanes <- nhanes %>%
-    mutate(fev1 = fev1_pre/1000,
-           fvc  = fvc_pre/1000) %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
     drop_na(fev1, fvc) %>%
     filter(spiro_status_pre == 1) %>%
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
