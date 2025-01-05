@@ -515,7 +515,7 @@ race_estimate <- function(df, outcome, single_sex=FALSE) {
 }
 
 plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                   metric1="fev1", metric2="fvc", includedRace=c(3,4)){
+                                   metric1="fev1", metric2="fvc", includedRace=c(3,4), dfOutput=FALSE){
   
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
@@ -567,23 +567,13 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     }
   }
 
-  # youth_print <- race_coeffs_youth %>% 
-  #   filter(sequence=="reference" | sequence=="healthy diet") %>%
-  #   select(-statistic, -`std.error`) %>%
-  #   mutate(estimate=round(estimate, 2))
-  # 
-  # adult_print <- race_coeffs_adult %>% 
-  #   filter(sequence=="reference" | sequence=="healthy diet") %>%
-  #   select(-statistic, -`std.error`) %>%
-  #   mutate(estimate=round(estimate, 2))
-  # 
-  # message("Youth:")
-  # print(youth_print)
-  # message("Adults:")
-  # print(adult_print)
+  # gap_reduction_messages(race_coeffs_adult, "adults")
+  # gap_reduction_messages(race_coeffs_youth, "youth")
   
-  gap_reduction_messages(race_coeffs_adult, "adults")
-  gap_reduction_messages(race_coeffs_youth, "youth")
+  df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc"))
+  df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc"))
+  df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc"))
+  df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc"))
   
   # Plot Racial Gap
   plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
@@ -623,7 +613,14 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
        plot_layout(ncol = 2) +
        plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
   
-  return(p)
+  if (dfOutput) {
+    return(list(fev1_youths=df_youth_reduction_metric1,
+                fvc_youths=df_youth_reduction_metric2, 
+                fev1_adults=df_adult_reduction_metric1,
+                fvc_adults=df_adult_reduction_metric2
+                 ))
+  } else {
+  return(p)}
 }
 
 
@@ -1551,17 +1548,17 @@ createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusio
     filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
     filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
     # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
-  
-  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
-                 (nhanes %>% count())))
+  # 
+  # message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+  #                (nhanes %>% count())))
   
 
   nhanes_bw <- nhanes %>%
     filter(race %in% includedRace) %>%
     mutate(race=factor(race, levels=includedRace))
 
-  message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
-                 (nhanes_bw %>% count())))
+  # message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
+  #                (nhanes_bw %>% count())))
   
 if (ageGroup=="adult") {
 nhanes_bw <- nhanes_bw %>%
@@ -1708,49 +1705,84 @@ return(refs)
 }
 
 
-refs_adult_homeowner_job_unexposed <- createCohortFlex("adult", exclusions =c("homeowner", "job unexposed") )
-refs_youth_homeowner_job_unexposed <- createCohortFlex("youth", exclusions =c("homeowner", "job unexposed") )
-plot_racial_gap_change(refs_adult_homeowner_job_unexposed, refs_youth_homeowner_job_unexposed) 
-
-refs_adult_physically_active_job_unexposed <- createCohortFlex("adult", exclusions =c("homeowner", "job unexposed") )
-refs_youth_physically_active_job_unexposed <- createCohortFlex("youth", exclusions =c("physically active", "job unexposed") )
-plot_racial_gap_change(refs_adult_physically_active_job_unexposed, refs_youth_physically_active_job_unexposed) 
-
-
-exlcude_all_pairs <- function(exclusionList=c("homeowner", 
+exclude_all_combinations <- function(exclusionList=c("homeowner", 
                                               "job unexposed",
                                               "no maternal smoke", 
                                               "no 2ndhand smoke",
-                                              "homeowner", 
-                                              "job unexposed", 
+                                              "physically active", 
                                               "not obese", 
                                               "insured",
                                               "educated", 
-                                              "healthy diet"
-                                              )) {
+                                              "healthy diet"),
+                              n) {
+  
+   if (!(n %in% c(1, 2,3,4))) 
+    stop("Invalid n")
   # Ensure the list has unique items
   uniqueExclusionList <- unique(exclusionList)
   
   # Get all combinations of two elements from the list
-  exclusionPairs <- combn(uniqueExclusionList, 2, simplify = FALSE)
+  exclusionPairs <- combn(uniqueExclusionList, n, simplify = FALSE)
   
+  message(paste0("Number of combination is ", length(exclusionPairs)))
+  df_res <- tibble(id=1:length(exclusionPairs), 
+                   pair="N", 
+                   fev1_youths=9999, 
+                   fvc_youths=9999,
+                   fev1_adults=9999,
+                   fvc_adults=9999)
   # Iterate over each pair and perform operations
+  i<-1
   for (pair in exclusionPairs) {
     exclusion1 <- pair[1]
-    exclusion2 <- pair[2]
+    if(n>1) exclusion2 <- pair[2]
+    if(n>2) {exclusion3 <- pair[3]}
+    if(n>3) {exclusion4 <- pair[4]}
     
-    message(pair)
+    #message(pair)
     # Create cohort references for adult and youth
+    if (n==1){
+    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1))
+    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1))
+    }
+    if (n==2){
     refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2))
     refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2))
+    } 
+    if (n==3) {
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3))
+      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3))
+    }
+    
+    if (n==4) {
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4))
+      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4))
+    }
     
     # Plot the racial gap change
-    print(plot_racial_gap_change(refs_adult, refs_youth))
+    res <- plot_racial_gap_change(refs_adult, refs_youth, dfOutput=TRUE)
+    
+    if (n==1) {df_res[i, "pair"] <- paste0(pair[1])}
+    if (n==2) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2])}
+    if (n==3) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3])}
+    if (n==4) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3], ", ", pair[4])}
+    df_res[i, "fev1_youths"] <- res$fev1_youths
+    df_res[i, "fvc_youths"]  <- res$fvc_youths
+    df_res[i, "fev1_adults"] <- res$fev1_adults
+    df_res[i, "fvc_adults"]  <- res$fvc_adults
+    i <- i+1
   }
+  return(df_res)
 }
 
 
-exlcude_all_pairs()
+ones <- exclude_all_combinations(n=1)
+
+pairs <- exclude_all_combinations(n=2)
+
+triplets <- exclude_all_combinations(n=3)
+
+quartets <- exclude_all_combinations(n=4)
 ```
 
 ````{=html}
