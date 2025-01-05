@@ -104,19 +104,30 @@ library(rspiro)
 library(stringr)
 
 compute_gap_reduction <- function(df, measure, type) {
-  
+#   print(df)
     if (type=="perc") {
     df %>% 
       filter(Measure == measure) %>%
-      summarise(Reduction = 100*(last(estimate) - first(estimate)) / first(estimate)) %>% 
-      round(2) } else if (type=="abs"){
+      summarise(change = 100*(last(estimate) - first(estimate)) / first(estimate)) %>% 
+      round(2) 
+      } else if (type=="abs"){
         df %>% 
         filter(Measure == measure) %>%
-        summarise(Reduction = -1*(last(estimate) - first(estimate)) %>% round(3)) 
+        summarise(change = -1*(last(estimate)  - first(estimate)),
+                  low    = -1*(last(conf.low)  - first(conf.low)),
+                  high   = -1*(last(conf.high) - first(conf.high)) %>% round(3)) 
       } else if (type=="baseline") {
         df %>% 
         filter(Measure == measure) %>%
-        summarise(Reduction = -1*(first(estimate)) %>% round(3)) 
+        summarise(change = -1*(first(estimate)),
+                  low    = -1*(first(conf.low)),
+                  high   = -1*(first(conf.high)) %>% round(3)) 
+      } else if (type=="final") {
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(change = -1*(last(estimate)),
+                  low    = -1*(last(conf.low)),
+                  high   = -1*(last(conf.high)) %>% round(3)) 
       
     } else
     {stop("Invalid type for compute_gap_reduction")}
@@ -487,6 +498,7 @@ race_estimate <- function(df, outcome, single_sex=FALSE) {
 plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
                                    metric1="fev1", metric2="fvc", includedRace=c(3,4), 
                                    dfOutput=FALSE, outputType="perc"){
+  if (dfOutput & (!(outputType %in% c("perc", "abs", "baseline", "final")))) {stop("invalid dfOutput")}
   
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
@@ -586,22 +598,22 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   
   if (dfOutput) {
     if (outputType=="perc") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc"))
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc"))
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc"))
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc"))}
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$change)
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$change)
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$change)
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$change)}
     
     if (outputType=="abs") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs"))
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs"))
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs"))
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs"))}
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$change)
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$change)
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$change)
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$change)}
     
     if (outputType=="baseline") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs"))
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs"))
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs"))
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs"))}
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$change)
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$change)
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$change)
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$change)}
     
        return(list(fev1_youths = df_youth_reduction_metric1,
                     fvc_youths  = df_youth_reduction_metric2, 
