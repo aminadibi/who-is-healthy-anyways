@@ -2,12 +2,13 @@
 library(tidymodels)
 library(vip)
 library(rspiro)
-vb_df <- refs_adult[[1]]
+
+refs_xg <- createCohort("adult", includedRace = c(1,2,3,4,5,6,7,8))
+vb_df <- refs_xg[[8]] %>% select(age, sex, fev1, height, race_text_nhanes)
 set.seed(123)
-vb_split <- initial_split(vb_df)
+vb_split <- initial_split(vb_df, strata = race_text_nhanes)
 vb_train <- training(vb_split)
 vb_test <- testing(vb_split)
-
 
 
 xgb_spec <- boost_tree(
@@ -84,8 +85,6 @@ final_xgb <- finalize_workflow(
 
 final_xgb
 
-
-
 final_xgb %>%
   fit(data = vb_train) %>%
   pull_workflow_fit() %>%
@@ -143,4 +142,32 @@ final_res %>%
   theme_few()
 
 
+final_preds <- final_res %>%
+  collect_predictions() %>%
+  mutate(.pred_gl=gli_gl$.pred_gl,
+         race_text_nhanes = vb_test$race_text_nhanes) 
+
+
+final_preds %>%
+  group_by(race_text_nhanes) %>%
+  yardstick::rmse(fev1, .pred) 
+  
+final_preds %>%
+  group_by(race_text_nhanes) %>%
+  yardstick::rmse(fev1, .pred_gl) 
+
+
+nhanes3 <- readRDS("nhanesIII.rds") %>% drop_na(fev1, fvc) %>%
+  filter ((is.na(current_smoke) | (current_smoke == "3")) &
+            (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+            # (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+            # (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+            # (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+            (is.na(ever_asthma) | (ever_asthma !="1")) &
+            (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+            (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+            (is.na(cough_3_month) | (cough_3_month!=1)) & 
+            (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+            (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)))
+ #           (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) 
 

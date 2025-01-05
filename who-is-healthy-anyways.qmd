@@ -246,42 +246,10 @@ if (ageGroup=="all_ages") {
 
 ref0 <- nhanes_bw %>%
    mutate(
-        # race_spiro_gli2012            = case_match(race_text_nhanes,
-        #                              "Non-Hispanic White" ~ "1"  ,
-        #                              "Non-Hispanic Black" ~ "2" ,
-        #                              "Non-Hispanic Asian" ~ "4", 
-        #                              "Mexican American" ~ "1", 
-        #                              "Other Hispanic" ~ "1",
-        #                              "Other Race - Including Multi-Racial" ~ "5"
-        #                              ),
-        sex_text           = case_match(sex,
-                                     "1" ~ "Male"  ,
-                                     "2" ~ "Female" ),
-        # predicted_fev1_gli2012 = rspiro::pred_GLI(age=age, height=height/100, 
-        #                                           gender=sex, ethnicity=race_spiro_gli2012,
-        #                                           param="FEV1"),
-        # predicted_fev1_gli_global = rspiro::pred_GLIgl(age=age, height=height/100, 
-        #                                           gender=sex, 
-        #                                           param="FEV1"),
-        # perc_pred_fev1_gli2012 = rspiro::pctpred_GLI(age=age, height=height/100, 
-        #                                           gender=sex, ethnicity=race_spiro_gli2012,
-        #                                           FEV1=fev1),
-        # zscore_fev1_gli2012 = rspiro::zscore_GLI(age=age, height=height/100, 
-        #                                           gender=sex, ethnicity=race_spiro_gli2012,
-        #                                           FEV1=fev1),
-        # perc_pred_fev1_gli2012_whiteforall = rspiro::pctpred_GLI(age=age, height=height/100, 
-        #                                           gender=sex, ethnicity=1,
-        #                                           FEV1=fev1),
-        # perc_pred_fev1_gli2012_otherforall = rspiro::pctpred_GLI(age=age, height=height/100, 
-        #                                           gender=sex, ethnicity=5,
-        #                                           FEV1=fev1),
-        # perc_pred_fev1_gli_global = rspiro::pctpred_GLIgl(age=age, height=height/100, 
-        #                                           gender=sex,
-        #                                           FEV1=fev1),
-        # zscore_fev1_gli_global = rspiro::zscore_GLIgl(age=age, height=height/100, 
-        #                                           gender=sex,
-        #                                           FEV1=fev1)
-      
+        sex_text = case_match(sex,
+                              "1" ~ "Male",
+                              "2" ~ "Female" ),
+        ref="population"
         ) 
   
 
@@ -603,23 +571,27 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     return(p)
   }
   
-  racial_gap_fev1_adult <- plot_racial_gap(race_coeffs_adult, "adults", measure="fev1") + ggtitle('Adults')
-  racial_gap_fvc_adult  <- plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
+  racial_gap_fev1_adult <- 
+    plot_racial_gap(race_coeffs_adult, "adults", measure="fev1") + ggtitle('Adults')
+  racial_gap_fvc_adult  <- 
+    plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
+  racial_gap_fev1_youth <- 
+    plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1") +  ggtitle('Youth')
+  racial_gap_fvc_youth <- 
+    plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc")
 
-  racial_gap_fev1_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1") +  ggtitle('Youth')
-  racial_gap_fvc_youth <- plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc")
-
- 
-    
-     p <- racial_gap_fev1_youth + racial_gap_fev1_adult + racial_gap_fvc_youth + racial_gap_fvc_adult +  
+     p <- racial_gap_fev1_youth + 
+       racial_gap_fev1_adult +
+       racial_gap_fvc_youth + 
+       racial_gap_fvc_adult +  
        plot_layout(ncol = 2) +
        plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
   
   if (dfOutput) {
-    return(list(fev1_youths=df_youth_reduction_metric1,
-                fvc_youths=df_youth_reduction_metric2, 
-                fev1_adults=df_adult_reduction_metric1,
-                fvc_adults=df_adult_reduction_metric2
+    return(list(fev1_youths = df_youth_reduction_metric1,
+                fvc_youths  = df_youth_reduction_metric2, 
+                fev1_adults = df_adult_reduction_metric1,
+                fvc_adults  = df_adult_reduction_metric2
                  ))
   } else {
   return(p)}
