@@ -72,7 +72,7 @@ In the past two decades, race-based lung function reference values have been wid
 
 Spirometry reference equations are developed with data from "healthy" volunteers, who do not smoke, are asymptomatic, and have not been diagnosed with lung diseases [@quanjer2012; @bowerman2023]. This broad definition could introduce bias, as the reference populations may reflect systemic differences in lung function across racial groups not necessarily because of biological factors but rather due to unequal environmental or social conditions.
 
-The effects of social determinants of health (SDoH) on lung function have been recognized for decades [@lungfun1991; @hegewald2007; @Steinberg1986]. The statement also mentioned racial differences that persist after adjusting for age, height, smoking, air pollution, and altitude, and hypothesized that these differences may in part be due to body measurements, environmental differences, nutrition, physical activity, and socioeconomic factors [@lungfun1991]. A 1986 review of between-individual variation in forced vital capacity (FVC) attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors [@becklake1986]. Our study focuses on what proportion of variability that was historically attributed to race can be explained by SDoH.
+The effects of social determinants of health (SDoH) on lung function have been recognized for decades [@lungfun1991; @hegewald2007; @Steinberg1986]. A 1986 review of between-individual variation in forced vital capacity (FVC) attributed up to 30% of variation to biological sex, up to 30% to age, height, and weight, 10% to race, 3% to measurement error, and 27% to unexplained factors [@becklake1986]. Our study focuses on what proportion of variability that was historically attributed to race can be explained by SDoH.
 
 Our study aims to determine if a more comprehensive set of SDoH in more recent cycles of the US National Health and Nutrition Examination Survey (NHANES) can explain a larger proportion of lung function disparities. By considering varied definitions of "healthy" in reference populations, we assess the impact of SDoH on racial lung function disparities across different self-identified racial and ethnic groups. We have presented a preliminary version of these results at the 2024 European Respiratory Congress in Vienna [@adibi2024].
 
@@ -485,7 +485,8 @@ race_estimate <- function(df, outcome, single_sex=FALSE) {
 }
 
 plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                   metric1="fev1", metric2="fvc", includedRace=c(3,4), dfOutput=FALSE){
+                                   metric1="fev1", metric2="fvc", includedRace=c(3,4), 
+                                   dfOutput=FALSE, outputType="perc"){
   
   sequence_adult <- lapply(refs_adult_list, function(x) unique(x$ref))
   sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
@@ -540,10 +541,6 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   # gap_reduction_messages(race_coeffs_adult, "adults")
   # gap_reduction_messages(race_coeffs_youth, "youth")
   
-  df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc"))
-  df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc"))
-  df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc"))
-  df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc"))
   
   # Plot Racial Gap
   plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
@@ -588,11 +585,30 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
        plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
   
   if (dfOutput) {
-    return(list(fev1_youths = df_youth_reduction_metric1,
-                fvc_youths  = df_youth_reduction_metric2, 
-                fev1_adults = df_adult_reduction_metric1,
-                fvc_adults  = df_adult_reduction_metric2
-                 ))
+    if (outputType=="perc") {
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc"))
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc"))
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc"))
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc"))}
+    
+    if (outputType=="abs") {
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs"))
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs"))
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs"))
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs"))}
+    
+    if (outputType=="baseline") {
+        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs"))
+        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs"))
+        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs"))
+        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs"))}
+    
+       return(list(fev1_youths = df_youth_reduction_metric1,
+                    fvc_youths  = df_youth_reduction_metric2, 
+                    fev1_adults = df_adult_reduction_metric1,
+                    fvc_adults  = df_adult_reduction_metric2
+        ))
+
   } else {
   return(p)}
 }
@@ -966,7 +982,6 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
   
   p <- ((gap_perc_black_youth + gap_perc_black_adult +  
            plot_layout(axes="collect"))/guide_area()) + plot_annotation(tag_levels = 'A') + plot_layout(guides = "collect")
-  
   return(p)
 }
 
@@ -1688,7 +1703,7 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
                                               "insured",
                                               "educated", 
                                               "healthy diet"),
-                              n) {
+                              n, outputType="perc") {
   
    if (!(n %in% c(1, 2,3,4))) 
     stop("Invalid n")
@@ -1734,7 +1749,7 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     }
     
     # Plot the racial gap change
-    res <- plot_racial_gap_change(refs_adult, refs_youth, dfOutput=TRUE)
+    res <- plot_racial_gap_change(refs_adult, refs_youth, dfOutput=TRUE, outputType=outputType)
     
     if (n==1) {df_res[i, "pair"] <- paste0(pair[1])}
     if (n==2) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2])}
