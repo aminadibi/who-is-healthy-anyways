@@ -108,26 +108,32 @@ compute_gap_reduction <- function(df, measure, type) {
     if (type=="perc") {
     df %>% 
       filter(Measure == measure) %>%
-      summarise(change = 100*(last(estimate) - first(estimate)) / first(estimate)) %>% 
+      summarise(point_estimate = 100*(last(estimate) - first(estimate)) / first(estimate),
+                sd_diff  = sqrt((last(std.error))^2 + (first(std.error))^2),
+                low      = 100 * ((last(estimate) - first(estimate)) - 1.96 * (sd_diff)) / first(estimate) ,
+                high     = 100 * ((last(estimate) - first(estimate)) + 1.96 * (sd_diff)) / first(estimate)) %>% 
+      select(-sd_diff) %>%
       round(2) 
       } else if (type=="abs"){
         df %>% 
         filter(Measure == measure) %>%
-        summarise(change = -1*(last(estimate)  - first(estimate)),
-                  low    = -1*(last(conf.low)  - first(conf.low)),
-                  high   = -1*(last(conf.high) - first(conf.high)) %>% round(3)) 
+        summarise(point_estimate = -1*(last(estimate)  - first(estimate)),
+                  sd_diff  = sqrt((last(std.error))^2 + (first(std.error))^2),
+                  low      = point_estimate-1.96*sd_diff,
+                  high     = point_estimate+1.96*sd_diff) %>%
+          select(-sd_diff) %>% round(2)
       } else if (type=="baseline") {
         df %>% 
         filter(Measure == measure) %>%
-        summarise(change = -1*(first(estimate)),
-                  low    = -1*(first(conf.low)),
-                  high   = -1*(first(conf.high)) %>% round(3)) 
+        summarise(point_estimate = -1*(first(estimate)),
+                  low      = -1*(first(conf.high)),
+                  high     = -1*(first(conf.low)) %>% round(2)) 
       } else if (type=="final") {
         df %>% 
         filter(Measure == measure) %>%
-        summarise(change = -1*(last(estimate)),
-                  low    = -1*(last(conf.low)),
-                  high   = -1*(last(conf.high)) %>% round(3)) 
+        summarise(point_estimate = -1*(last(estimate)),
+                  low      = -1*(last(conf.high)),
+                  high     = -1*(last(conf.low)) %>% round(2)) 
       
     } else
     {stop("Invalid type for compute_gap_reduction")}
@@ -559,7 +565,7 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
     
     base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
     base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
-    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
+    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$point_estimate
     ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
     ylim_high <- max(-1*(race_coeffs$conf.low))
 
@@ -597,28 +603,98 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
        plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
   
   if (dfOutput) {
+   
+    df_adult_reduction_metric1_low  <- NA
+    df_adult_reduction_metric1_high <- NA
+    df_youth_reduction_metric1_low  <- NA
+    df_youth_reduction_metric1_high <- NA
+    df_adult_reduction_metric2_low  <- NA
+    df_adult_reduction_metric2_high <- NA
+    df_youth_reduction_metric2_low  <- NA
+    df_youth_reduction_metric2_high <- NA
+
+
+    
     if (outputType=="perc") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$change)
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$change)
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$change)
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$change)}
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$high)}
     
     if (outputType=="abs") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$change)
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$change)
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$change)
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$change)}
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$high)}
+    
     
     if (outputType=="baseline") {
-        df_adult_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$change)
-        df_youth_reduction_metric1 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$change)
-        df_adult_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$change)
-        df_youth_reduction_metric2 <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$change)}
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$high)}
     
-       return(list(fev1_youths = df_youth_reduction_metric1,
+     if (outputType=="final") {
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$high)}
+       return(list( fev1_youths = df_youth_reduction_metric1,
+                    fev1_youths_low = df_youth_reduction_metric1_low,
+                    fev1_youths_high = df_youth_reduction_metric1_high,
                     fvc_youths  = df_youth_reduction_metric2, 
+                    fvc_youths_low  = df_youth_reduction_metric2_low, 
+                    fvc_youths_high  = df_youth_reduction_metric2_high, 
                     fev1_adults = df_adult_reduction_metric1,
-                    fvc_adults  = df_adult_reduction_metric2
+                    fev1_adults_low = df_adult_reduction_metric1_low,
+                    fev1_adults_high = df_adult_reduction_metric1_high,
+                    fvc_adults  = df_adult_reduction_metric2,
+                    fvc_adults_low  = df_adult_reduction_metric2_low,
+                    fvc_adults_high  = df_adult_reduction_metric2_high
         ))
 
   } else {
@@ -1036,10 +1112,10 @@ bootstrap_samples <- function(df, n=1000) {
   bind_rows(df_list)
 }
 
-samples_last <- bootstrap_samples(refs_adult[[10]]) %>%
+samples_last <- bootstrap_samples(refs_youth[[10]]) %>%
   mutate(bootstrap_id=factor(bootstrap_id))
 
-samples_baseline <- bootstrap_samples(refs_adult[[1]]) %>%
+samples_baseline <- bootstrap_samples(refs_youth[[1]]) %>%
   mutate(bootstrap_id=factor(bootstrap_id))
 
 
@@ -1049,7 +1125,8 @@ bootstrapped_gap <- tibble(bootstrap_id = 1:1000) %>%
       sample_data_last <- samples_last %>% filter(bootstrap_id == id)
       sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
 
-      -1*race_estimate(sample_data_last, outcome = 'fev1', includedRace = c(3, 4))$estimate-(-1*race_estimate(sample_data_base, outcome = 'fev1', includedRace = c(3, 4))$estimate
+      -1*race_estimate(sample_data_last, outcome = 'fev1')$estimate-
+        (-1*race_estimate(sample_data_base, outcome = 'fev1')$estimate
 )
     }),
 
@@ -1057,15 +1134,29 @@ bootstrapped_gap <- tibble(bootstrap_id = 1:1000) %>%
       sample_data_last <- samples_last %>% filter(bootstrap_id == id)
       sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
 
-      -1*race_estimate(sample_data_last, outcome = 'fvc', includedRace = c(3, 4))$estimate-(-1*race_estimate(sample_data_base, outcome = 'fvc', includedRace = c(3, 4))$estimate
+      -1*race_estimate(sample_data_last, outcome = 'fvc')$estimate-
+        (-1*race_estimate(sample_data_base, outcome = 'fvc')$estimate
 )
     }),
 
   )
 
 
+message('fev1 CI:')
+
+quantile(bootstrapped_gap$fev1_gap, 0.025)
+quantile(bootstrapped_gap$fev1_gap, 0.975)
+
+message("fev1 p-value:")
 
 bootstrapped_gap %>% filter(fev1_gap>0) %>% count()/1000*2
+
+message('fvc CI:')
+
+quantile(bootstrapped_gap$fvc_gap, 0.025)
+quantile(bootstrapped_gap$fvc_gap, 0.975)
+
+message("fvc p-value:")
 bootstrapped_gap %>% filter(fvc_gap>0) %>% count()/1000*2
 
 
@@ -1728,10 +1819,19 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
   message(paste0("Number of combination is ", length(exclusionPairs)))
   df_res <- tibble(id=1:length(exclusionPairs), 
                    pair="N", 
-                   fev1_youths=9999, 
+                   fev1_youths=9999,
+                   fev1_youths_low=9999,
+                   fev1_youths_high=9999,
                    fvc_youths=9999,
+                   fvc_youths_low=9999,
+                   fvc_youths_high=9999,
                    fev1_adults=9999,
-                   fvc_adults=9999)
+                   fev1_adults_low=9999,
+                   fev1_adults_high=9999,
+                   fvc_adults=9999,
+                   fvc_adults_low=9999,
+                   fvc_adults_high=9999
+                   )
   # Iterate over each pair and perform operations
   i<-1
   for (pair in exclusionPairs) {
@@ -1768,9 +1868,17 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     if (n==3) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3])}
     if (n==4) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3], ", ", pair[4])}
     df_res[i, "fev1_youths"] <- res$fev1_youths
+    df_res[i, "fev1_youths_low"] <- res$fev1_youths_low
+    df_res[i, "fev1_youths_high"] <- res$fev1_youths_high
     df_res[i, "fvc_youths"]  <- res$fvc_youths
+    df_res[i, "fvc_youths_low"]  <- res$fvc_youths_low
+    df_res[i, "fvc_youths_high"]  <- res$fvc_youths_high
     df_res[i, "fev1_adults"] <- res$fev1_adults
+    df_res[i, "fev1_adults_low"] <- res$fev1_adults_low
+    df_res[i, "fev1_adults_high"] <- res$fev1_adults_high
     df_res[i, "fvc_adults"]  <- res$fvc_adults
+    df_res[i, "fvc_adults_low"]  <- res$fvc_adults_low
+    df_res[i, "fvc_adults_high"]  <- res$fvc_adults_high
     i <- i+1
   }
   return(df_res)
