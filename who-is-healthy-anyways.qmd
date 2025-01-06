@@ -78,7 +78,7 @@ Our study aims to determine if a more comprehensive set of SDoH in more recent c
 
 ## Methods
 
-We used data from three cycles of NHANES (2007-2008, 2009-2010, and 2011-2012), which was designed to be representative of the non-institutionalized civilian population of the US. Our study population included children aged 6-19 and adults aged 20-80. We included individuals with baseline spirometry that either met or exceeded ATS collection standards.
+We used data from three cycles of NHANES (2007-2008, 2009-2010, and 2011-2012), which was designed to be representative of the non-institutionalized civilian population of the US. The unweighted response rates in the three included cycles were 75.4%, 77.3% and 69.5% [@nhanes_response]. Our study population included children aged 6-19 and adults aged 20-80. We included individuals with baseline spirometry that either met or exceeded ATS collection standards.
 
 We carefully reviewed the NHANES variable list and selected SDoH-related variables that could affect lung function. We defined SDoH broadly to include employment and working conditions, income and social status, education, environmental exposures, healthy behaviors, stress, access to healthcare, diet, and housing. We defined 10 increasingly healthier reference populations. Starting from the base reference population of non-smokers with no diagnoses of lung diseases or respiratory symptoms, we sequentially excluded those with confirmed occupational exposures, physical inactivity, maternal smoking, obesity (defined as body-mass-index≥30), no home ownership, no insurance, lower education, and self-reported unhealthy diet.
 
@@ -1605,7 +1605,7 @@ plot_racial_gap_change(refs_adult_1by1[c(1,10)], refs_youth_1by1[c(1,10)])
 
 ```
 
-### Two and Three Criteria Analysis
+### Criteria Combination
 
 ```{r, include=F, eval=F}
 
