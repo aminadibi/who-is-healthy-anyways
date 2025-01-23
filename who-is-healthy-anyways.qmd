@@ -1091,7 +1091,7 @@ plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
 ```{r, eval=F, include=FALSE}
 # Let's try bootstrapping
 resample_rows <- function(data) {
-  data[sample(nrow(data), replace = TRUE), , drop = FALSE]
+  data[sample(nrow(data), replace = TRUE, prob = data$MEC6YR), drop = FALSE]
 }
 
 # Function to generate bootstrap samples
@@ -1105,7 +1105,7 @@ bootstrap_samples <- function(df, n=1000) {
   bind_rows(df_list)
 }
 
-samples_last <- bootstrap_samples(refs_youth[[10]]) %>%
+samples_last <- bootstrap_samples(refs_youth[[10]]$variables) %>%
   mutate(bootstrap_id=factor(bootstrap_id))
 
 samples_baseline <- bootstrap_samples(refs_youth[[1]]) %>%
@@ -1609,64 +1609,54 @@ createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusio
     stop("Invalid sex")
   
 
-  nhanes <- readRDS("nhanes_2007_2012.rds") 
+  nhanes <- readRDS("nhanes_2007_2012.rds") %>%
+      as_survey_design(
+      weights=MEC6YR,
+      ids=SDMVPSU,
+      strata=SDMVSTRA,
+      nest=TRUE
+    )
   
-  stopifnot((nhanes %>% count()) == 30442) # Ensure we have the correct n
-  stopifnot((nhanes %>% filter(race %in% c(3,4)) %>% count()) == 18359) 
-  stopifnot((nhanes %>% drop_na(fev1_pre, fvc_pre)  %>% count()) == 20050) 
+  stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
+  stopifnot(((nhanes %>% drop_na(fev1_pre, fvc_pre))$variables  %>% count()) == 20050) 
   
   if (sex=='female') {
     warning('only females are included.')
-    nhanes <- nhanes %>% filter(sex==2)
+    nhanes <- nhanes %>% srvyr::filter(sex==2)
   }
   
   if (sex=='male') {
     warning('only males are included.')
-    nhanes <- nhanes %>% filter(sex==1)
+    nhanes <- nhanes %>% srvyr::filter(sex==1)
   }
 
   nhanes <- nhanes %>%
     mutate(fev1 = fev1_pre,
            fvc  = fvc_pre) %>%
     drop_na(fev1, fvc) %>%
-    filter(spiro_status_pre == 1) %>%
-    filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
-    # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
-  # 
-  # message(paste0("NHANES N (excluding missing or low quality spiro: ", 
-  #                (nhanes %>% count())))
-  
+    srvyr::filter(spiro_status_pre == 1) %>%
+    srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
+
 
   nhanes_bw <- nhanes %>%
-    filter(race %in% includedRace) %>%
+    srvyr::filter(race %in% includedRace) %>%
     mutate(race=factor(race, levels=includedRace))
 
-  # message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
-  #                (nhanes_bw %>% count())))
   
-if (ageGroup=="adult") {
-nhanes_bw <- nhanes_bw %>%
-  filter(age>=20)
-
-  # message(paste0(ageGroup, "-NHANES : ", 
-  #                (nhanes_bw %>% count())))
-}
+  if (ageGroup=="adult") {
+  nhanes_bw <- nhanes_bw %>%
+    srvyr::filter(age>=20)
+  }
   
-if (ageGroup=="youth") {
-nhanes_bw <- nhanes_bw %>%
-  filter(age<20)
+  if (ageGroup=="youth") {
+  nhanes_bw <- nhanes_bw %>%
+    srvyr::filter(age<20)
 
-  # message(paste0(ageGroup, "-NHANES : ", 
-  #                (nhanes_bw %>% count())))
 }
-  
-if (ageGroup=="all_ages") {
 
-  # message(paste0(ageGroup, "-NHANES : ", 
-  #                (nhanes_bw %>% count())))
-}
- 
+
 
 ref0 <- nhanes_bw %>%
    mutate(
@@ -1676,12 +1666,12 @@ ref0 <- nhanes_bw %>%
         ) 
   
 
-ref0 %>%
+ref0$variables %>%
   group_by(race) %>%
   count()
 
 ref1 <- ref0 %>%
-  filter ((is.na(current_smoke) | (current_smoke == "3")) &
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
          (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
          (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
          (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
@@ -1700,7 +1690,7 @@ ref2 <- ref1
 if ('job unexposed' %in% exclusions) {
 
   ref2 <- ref2 %>%
-      filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+      srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
            (is.na(organic_dusts)   | (organic_dusts!=1)) & 
            (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
            (is.na(other_fumes)     | (other_fumes!=1))) %>%
@@ -1711,7 +1701,7 @@ if ('job unexposed' %in% exclusions) {
 if ('physically active' %in% exclusions) {
 
   ref2 <- ref2 %>%
-        filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+        srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
            (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
            (is.na(moderate_work)   | (moderate_work==1)) | 
            (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
@@ -1722,7 +1712,7 @@ if ('physically active' %in% exclusions) {
 if ('no maternal smoke' %in% exclusions) {
 
   ref2 <- ref2 %>%
-        filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+        srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
     mutate(ref="no maternal smoke")
   
 }
@@ -1730,14 +1720,14 @@ if ('no maternal smoke' %in% exclusions) {
 if ("no 2ndhand smoke" %in% exclusions) {
 
   ref2 <- ref2 %>%  
-        filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+        srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
         mutate(ref="no 2ndhand smoke")
 }
 
 if ("not obese" %in% exclusions) {
   
   ref2 <- ref2 %>%
-        filter((is.na(bmi) | (bmi<=30))) %>%
+        srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
     mutate(ref="not obese")
 
 }
@@ -1745,14 +1735,14 @@ if ("not obese" %in% exclusions) {
 if ("homeowner" %in% exclusions) {
 
   ref2 <- ref2 %>%
-    filter(is.na(home_ownership) | (home_ownership==1))  %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
   mutate(ref="homeowner")
 }
 
 if ("insured" %in% exclusions) {
   
   ref2 <- ref2 %>%
-       filter((is.na(has_insurance) | 
+       srvyr::filter((is.na(has_insurance) | 
                  (has_insurance==1)))  %>%
     mutate(ref="insured")
 }
@@ -1761,13 +1751,13 @@ if ("educated" %in% exclusions) {
   
   if (ageGroup=="adult") {
     ref2 <- ref2 %>%
-      filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+      srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
     mutate(ref="educated")
   }
 
   if (ageGroup=="youth") {
     ref2 <- ref2 %>%
-      filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+      srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
     mutate(ref="educated")
   }
   
@@ -1776,7 +1766,7 @@ if ("educated" %in% exclusions) {
 if ("healthy diet" %in% exclusions) {
   
 ref2 <- ref2 %>%
-     filter((is.na(healthy_diet) | 
+     srvyr::filter((is.na(healthy_diet) | 
                (healthy_diet==1) | 
                (healthy_diet==2) | 
                (healthy_diet==3)))  %>%
@@ -1846,15 +1836,15 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
     } 
     if (n==3) {
-      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace)
-      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace)
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
+      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
     }
     
     if (n==4) {
       refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
-                                     includedRace)
+                                     includedRace=includedRace)
       refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
-                                     includedRace)
+                                     includedRace=includedRace)
     }
     
     # Plot the racial gap change
