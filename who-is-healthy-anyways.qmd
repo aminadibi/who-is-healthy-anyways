@@ -1020,8 +1020,18 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
   combine_refs_df <- function(refs_list) {
     refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]]$variables))
     refs_df %>%
-      mutate(ref=factor(ref, levels=c("reference", "job unexposed", "physically active", 
-                                      "no maternal smoke", "no 2ndhand smoke", "not obese", "homeowner", "insured","educated", "healthy diet"))) %>%
+      mutate(
+        ref=ifelse(ref!="reference", str_c("+ ", ref), ref), 
+        ref=factor(ref, levels=c("reference",
+                                 "+ job unexposed", 
+                                 "+ physically active", 
+                                 "+ no maternal smoke", 
+                                 "+ no 2ndhand smoke", 
+                                 "+ not obese", 
+                                 "+ homeowner", 
+                                 "+ insured",
+                                 "+ educated", 
+                                 "+ healthy diet"))) %>%
       group_by(ref) %>%
       count(race_text_nhanes, wt = MEC6YR) %>%
       mutate(perc = n / sum(n)) %>%
