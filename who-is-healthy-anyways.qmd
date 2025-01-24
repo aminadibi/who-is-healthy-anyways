@@ -398,7 +398,7 @@ ref2 <- ref1 %>%
          (is.na(organic_dusts)   | (organic_dusts!=1)) & 
          (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
          (is.na(other_fumes)     | (other_fumes!=1))) %>%
-  mutate(ref="job unexposed")
+  mutate(ref="+ job unexposed")
   
   
 ref3 <- ref2 %>%
@@ -406,39 +406,39 @@ ref3 <- ref2 %>%
          (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
          (is.na(moderate_work)   | (moderate_work==1)) | 
          (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
-  mutate(ref="physically active")
+  mutate(ref="+ physically active")
 
 ref4 <- ref3 %>%
       srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
-  mutate(ref="no maternal smoke")
+  mutate(ref="+ no maternal smoke")
   
 ref5 <- ref4 %>%  
       srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
-      mutate(ref="no 2ndhand smoke")
+      mutate(ref="+ no 2ndhand smoke")
 
 ref6 <- ref5 %>%
       srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
-  mutate(ref="not obese")
+  mutate(ref="+ not obese")
 
 ref7 <- ref6 %>%
     srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
-  mutate(ref="homeowner")
+  mutate(ref="+ homeowner")
 
 ref8 <- ref7 %>%
      srvyr::filter((is.na(has_insurance) | 
                (has_insurance==1)))  %>%
-  mutate(ref="insured")
+  mutate(ref="+ insured")
 
 if (ageGroup=="adult") {
   ref9 <- ref8 %>%
   srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
-  mutate(ref="educated")
+  mutate(ref="+ educated")
 }
 
 if (ageGroup=="youth") {
   ref9 <- ref8 %>%
     filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
-  mutate(ref="educated")
+  mutate(ref="+ educated")
 }
 
 ref10 <- ref9 %>%
@@ -446,7 +446,7 @@ ref10 <- ref9 %>%
                (healthy_diet==1) | 
                (healthy_diet==2) | 
                (healthy_diet==3)))  %>%
-  mutate(ref="healthy diet")
+  mutate(ref="+ healthy diet")
 
 
   ref11 <- ref10 %>%
@@ -458,7 +458,7 @@ ref10 <- ref9 %>%
                (lang_home_asian==5)))  %>%
      srvyr::filter((is.na(lang_home_en_bw) | 
                (lang_home_en_bw==1)))  %>%
-  mutate(ref="English at home")
+  mutate(ref="+ English at home")
   
 
 }
@@ -1021,7 +1021,7 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
     refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]]$variables))
     refs_df %>%
       mutate(
-        ref=ifelse(ref!="reference", str_c("+ ", ref), ref), 
+        # ref=ifelse(ref!="reference", str_c("+ ", ref), ref), 
         ref=factor(ref, levels=c("reference",
                                  "+ job unexposed", 
                                  "+ physically active", 
