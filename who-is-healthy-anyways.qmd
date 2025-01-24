@@ -749,7 +749,7 @@ After excluding those with unfavorable SDoH, the racial gap in FEV~1~ and FVC wa
 
 The allostatic load score ranged from 0 to 8 among self-identified Non-Hispanic Black and White participants. Excluding participants who had an allostatic load score of 1 or higher reduced the racial gap in FEV~1~ and FVC by 37.5 mL (10.7%) and 34.6 mL (8.3%) in children and by 105.0 mL (20.9%) and 100.2 mL (14.6%) in adults.
 
-#### Poverty
+#### Income-to-Poverty Ratio
 
 Among self-identified Black and White participants, excluding those with income to poverty ratio under five reduced the racial gap in FEV~1~ and FVC by 13.0 mL (3.7%) and 10.4 mL (2.5%) in children, and 28.2 mL (5.6%) and 2 mL (0.3%) in adults (@suppfig-incomepovertyratio).
 
@@ -1488,7 +1488,7 @@ plot_racial_gap_change(refs_adult_incomeAllostaticLoadOnly, refs_youth_incomeAll
 Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations solely based on allostatic load score. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.
 :::
 
-### Income to Poverty Ratio
+### Income-to-Poverty Ratio
 
 When we excluded participants with income to poverty ratio under five, the proportion of racial gap in FEV~1~ and FVC that was explained by poverty was 13.0 mL (3.7%) and 10.4 mL (2.5%) in children, and 28.2 mL (5.6%) and 2 mL (0.3%) in adults, and as shown in @suppfig-incomepovertyratio.
 
