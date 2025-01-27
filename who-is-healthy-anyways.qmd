@@ -104,6 +104,7 @@ library(rspiro)
 library(stringr)
 library(srvyr)
 library(survey)
+library(gtsummary)
 
 compute_gap_reduction <- function(df, measure, type) {
 #   print(df)
@@ -798,205 +799,232 @@ flowchart TD
 ```{r}
 #| label: tbl-table1
 #| tbl-cap: Characteristics of Participants Included in the Baseline Reference Population
-#TODO this is great, but does not consider survey weights
-#TODO this does not show missingness and value judgments around how we handled it properly.
 
- 
- table1 <- readRDS("nhanes_2007_2012.rds") %>%
-    mutate(fev1 = fev1_pre,
-           fvc  = fvc_pre) %>%
-    drop_na(fev1, fvc) %>%
-    filter(spiro_status_pre == 1) %>%
-    filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
-#    filter(race %in% c(3,4)) %>%
-    filter ((is.na(current_smoke) | (current_smoke == "3")) &
-         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
-         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
-         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
-         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
-         (is.na(ever_asthma) | (ever_asthma !="1")) &
-         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
-         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
-         (is.na(cough_3_month) | (cough_3_month!=1)) & 
-         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
-         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
-         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
-    mutate(age_group = ifelse(age>=20, "Adults", "Youth"),
-          sex_text   = case_match(sex,
-                                     "1" ~ "Male"  ,
-                                     "2" ~ "Female" ),
-          time_in_us = case_match(time_in_us, 
-                                  1 ~ "Less than 1 year",
-                                  2 ~ "1 yr., less than 5 yrs.",
-                                  3 ~ "5 yrs., less than 10 yrs.",
-                                  4 ~ "10 yrs., less than 15 yrs.", 
-                                  5 ~ "15 yrs., less than 20 yrs.",
-                                  6 ~ "20 yrs., less than 30 yrs.", 
-                                  7 ~ "30 yrs., less than 40 yrs.", 
-                                  8 ~ "40 yrs., less than 50 yrs.", 
-                                  9 ~ "50 years or more", 
-                                  77 ~ NA,
-                                  99 ~ NA, 
-                                  ),
-          has_insurance = case_match(has_insurance, 
+table1 <- readRDS("nhanes_2007_2012.rds") %>%
+  as_survey_design(
+    weights=MEC6YR,
+    ids=SDMVPSU,
+    strata=SDMVSTRA,
+    nest=TRUE
+  ) %>%
+  mutate(fev1 = fev1_pre,
+         fvc  = fvc_pre) %>%
+  drop_na(fev1, fvc) %>%
+  srvyr::filter(spiro_status_pre == 1) %>%
+  srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+  srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+  #    filter(race %in% c(3,4)) %>%
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
+            (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+            (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+            (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+            (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+            (is.na(ever_asthma) | (ever_asthma !="1")) &
+            (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+            (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+            (is.na(cough_3_month) | (cough_3_month!=1)) & 
+            (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+            (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+            (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(age_group = ifelse(age>=20, "Adults", "Youth"),
+         sex_text   = case_match(sex,
+                                 "1" ~ "Male"  ,
+                                 "2" ~ "Female" ),
+         time_in_us = case_match(time_in_us, 
+                                 1 ~ "Less than 1 year",
+                                 2 ~ "1 yr., less than 5 yrs.",
+                                 3 ~ "5 yrs., less than 10 yrs.",
+                                 4 ~ "10 yrs., less than 15 yrs.", 
+                                 5 ~ "15 yrs., less than 20 yrs.",
+                                 6 ~ "20 yrs., less than 30 yrs.", 
+                                 7 ~ "30 yrs., less than 40 yrs.", 
+                                 8 ~ "40 yrs., less than 50 yrs.", 
+                                 9 ~ "50 years or more", 
+                                 77 ~ NA,
+                                 99 ~ NA, 
+         ),
+         has_insurance = case_match(has_insurance, 
+                                    1 ~ "Yes",
+                                    2 ~ "No",
+                                    7 ~ "Refused",
+                                    9 ~ "Don't Know", 
+         ),
+         cough_3_month = case_match(cough_3_month,
+                                    1 ~ "Yes"  ,
+                                    2 ~ "No"),
+         phlegm_3_month = case_match(phlegm_3_month,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+         wheezing_past_yr = case_match(wheezing_past_yr,
+                                       1 ~ "Yes"  ,
+                                       2 ~ "No"),
+         dry_cough_night_past_yr = case_match(dry_cough_night_past_yr,
+                                              1 ~ "Yes"  ,
+                                              2 ~ "No"),
+         ever_asthma = case_match(ever_asthma,
+                                  "1" ~ "Yes"  ,
+                                  "2" ~ "No"),
+         ever_bronchitis = case_match(ever_bronchitis,
+                                      "1" ~ "Yes"  ,
+                                      "2" ~ "No"),
+         ever_emphysema = case_match(ever_emphysema,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+         ever_100_smoke = case_match(ever_100_smoke,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+         current_smoke = case_match(current_smoke,
+                                    "1" ~ "Everyday"  ,
+                                    "2" ~ "Some days",
+                                    "3" ~ "Not at all"),
+         education_adults = case_match(education_adults,
+                                       "1" ~ "Less than 9th grade"  ,
+                                       "2" ~ "9-11th grade",
+                                       "3" ~ "High school graduate",
+                                       "4" ~ "Some college or AA degree",
+                                       "5" ~ "College graduate or above"),
+         education_adults = factor(education_adults, 
+                                   levels = c("College graduate or above",
+                                              "Some college or AA degree",
+                                              "High school graduate",
+                                              "9-11th grade",
+                                              "Less than 9th grade"
+                                   )),
+         now_attending_school = case_match(now_attending_school,
+                                           1 ~ "In school",
+                                           2 ~ "Between grades",
+                                           2 ~ "Not in school"),
+         smoker_in_household = case_match(smoker_in_household,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+         maternal_smoke = case_match(maternal_smoke,
+                                     1 ~ "Yes",
+                                     2 ~ "No"),
+         home_ownership = case_match(home_ownership,
+                                     1 ~ "Owned or being bought",
+                                     2 ~ "Rented",
+                                     3 ~ "Other arrangements"),
+         mineral_dusts = case_match(mineral_dusts,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         organic_dusts = case_match(organic_dusts,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         exhaust_fumes = case_match(exhaust_fumes,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         other_fumes = case_match(other_fumes,
                                   1 ~ "Yes",
-                                  2 ~ "No",
-                                  7 ~ "Refused",
-                                  9 ~ "Don't Know", 
-                                  ),
-          cough_3_month = case_match(cough_3_month,
-                                     1 ~ "Yes"  ,
-                                     2 ~ "No"),
-          phlegm_3_month = case_match(phlegm_3_month,
-                                     1 ~ "Yes"  ,
-                                     2 ~ "No"),
-          wheezing_past_yr = case_match(wheezing_past_yr,
-                                     1 ~ "Yes"  ,
-                                     2 ~ "No"),
-          dry_cough_night_past_yr = case_match(dry_cough_night_past_yr,
-                                     1 ~ "Yes"  ,
-                                     2 ~ "No"),
-          ever_asthma = case_match(ever_asthma,
-                                     "1" ~ "Yes"  ,
-                                     "2" ~ "No"),
-          ever_bronchitis = case_match(ever_bronchitis,
-                                     "1" ~ "Yes"  ,
-                                     "2" ~ "No"),
-          ever_emphysema = case_match(ever_emphysema,
-                                     "1" ~ "Yes"  ,
-                                     "2" ~ "No"),
-          ever_100_smoke = case_match(ever_100_smoke,
-                                     "1" ~ "Yes"  ,
-                                     "2" ~ "No"),
-          current_smoke = case_match(current_smoke,
-                                     "1" ~ "Everyday"  ,
-                                     "2" ~ "Some days",
-                                     "3" ~ "Not at all"),
-          education_adults = case_match(education_adults,
-                                     "1" ~ "Less than 9th grade"  ,
-                                     "2" ~ "9-11th grade",
-                                     "3" ~ "High school graduate",
-                                     "4" ~ "Some college or AA degree",
-                                     "5" ~ "College graduate or above"),
-          education_adults = factor(education_adults, 
-                                    levels = c("College graduate or above",
-                                               "Some college or AA degree",
-                                               "High school graduate",
-                                               "9-11th grade",
-                                               "Less than 9th grade"
-                                                                 )),
-          now_attending_school = case_match(now_attending_school,
-                                          1 ~ "In school",
-                                          2 ~ "Between grades",
-                                          2 ~ "Not in school"),
-          smoker_in_household = case_match(smoker_in_household,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          maternal_smoke = case_match(maternal_smoke,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          home_ownership = case_match(home_ownership,
-                                          1 ~ "Owned or being bought",
-                                          2 ~ "Rented",
-                                          3 ~ "Other arrangements"),
-          mineral_dusts = case_match(mineral_dusts,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          organic_dusts = case_match(organic_dusts,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          exhaust_fumes = case_match(exhaust_fumes,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          other_fumes = case_match(other_fumes,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          healthy_diet = case_match(healthy_diet,
-                                          1 ~ "Excellent",
-                                          2 ~ "Very good",
-                                          3 ~ "Good",
-                                          4 ~ "Fair",
-                                          5 ~ "Poor"),
-          healthy_diet = factor(healthy_diet, levels = c("Excellent",
-                                                         "Very good",
-                                                         "Good",
-                                                         "Fair",
-                                                         "Poor")),
-          vigorous_work = case_match(vigorous_work,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          moderate_work = case_match(moderate_work,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          vigorous_recreational = case_match(vigorous_recreational,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-          moderate_recreational = case_match(moderate_recreational,
-                                          1 ~ "Yes",
-                                          2 ~ "No"),
-  
-          smoker=
-       !((is.na(current_smoke) | (current_smoke == "3")) &
-         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
-         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
-         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
-         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1"))),
+                                  2 ~ "No"),
+         healthy_diet = case_match(healthy_diet,
+                                   1 ~ "Excellent",
+                                   2 ~ "Very good",
+                                   3 ~ "Good",
+                                   4 ~ "Fair",
+                                   5 ~ "Poor"),
+         healthy_diet = factor(healthy_diet, levels = c("Excellent",
+                                                        "Very good",
+                                                        "Good",
+                                                        "Fair",
+                                                        "Poor")),
+         vigorous_work = case_match(vigorous_work,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         moderate_work = case_match(moderate_work,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         vigorous_recreational = case_match(vigorous_recreational,
+                                            1 ~ "Yes",
+                                            2 ~ "No"),
+         moderate_recreational = case_match(moderate_recreational,
+                                            1 ~ "Yes",
+                                            2 ~ "No"),
+         
+         smoker=
+           !((is.na(current_smoke) | (current_smoke == "3")) &
+               (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+               (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+               (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+               (is.na(last_5_days_cigars) | (last_5_days_cigars != "1"))),
          resp_symptoms = !((is.na(cough_3_month) | (cough_3_month!=1)) & 
-         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
-         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
-         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))),
+                             (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+                             (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+                             (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))),
          resp_dx = !((is.na(ever_asthma) | (ever_asthma !="1")) &
-         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
-         (is.na(ever_emphysema) | (ever_emphysema != "1"))),
+                       (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+                       (is.na(ever_emphysema) | (ever_emphysema != "1"))),
          physically_active = ((is.na(vigorous_work) | (vigorous_work==1)) | 
-         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
-         (is.na(moderate_work)   | (moderate_work==1)) | 
-         (is.na(moderate_recreational)   | (moderate_recreational==1))),
+                                (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+                                (is.na(moderate_work)   | (moderate_work==1)) | 
+                                (is.na(moderate_recreational)   | (moderate_recreational==1))),
          occupational_exposure = !((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
-         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
-         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
-         (is.na(other_fumes)     | (other_fumes!=1))),
+                                     (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+                                     (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+                                     (is.na(other_fumes)     | (other_fumes!=1))),
          home_owner = (is.na(home_ownership) | (home_ownership==1)), 
          healthy_eater = ((is.na(healthy_diet) | 
-               (healthy_diet==1) | 
-               (healthy_diet==2) | 
-               (healthy_diet==3)))
-         ) 
- 
- label(table1$race_text_nhanes) <- "Race and Ethnicity"
- label(table1$age) <- "Age (years)"
- label(table1$fev1) <- "FEV1 (mL)"
- label(table1$fvc) <- "FVC (mL)"
- label(table1$sex_text) <- "Biological Sex at Birth"
- label(table1$birth_country) <- "Birth Country"
- label(table1$smoker_in_household) <- "Smoker in household"
- label(table1$maternal_smoke) <- "Maternal smoke during pregnancy (For youth)"
- label(table1$mineral_dusts) <- "Occupational Exposure to Mineral Dusts"
- label(table1$organic_dusts) <- "Occupational Exposure to Organic Dusts"
- label(table1$exhaust_fumes) <- "Occupational Exposure to Exhaust Fumes"
- label(table1$other_fumes) <- "Occupational Exposure to Other Fumes"
- label(table1$education_adults) <- "Education Level for Adults"
- label(table1$now_attending_school) <- "Currently Attending School (for youth)"
- label(table1$healthy_diet) <- "self-reported Diet Health"
- label(table1$vigorous_work) <- "Vigorous Activity at Work (10 min/week)"
- label(table1$vigorous_recreational) <- "Recreational Vigorous Activity (10 min/week)"
- label(table1$moderate_work) <- "Moderate Activity at Work (10 min/week)"
- label(table1$moderate_recreational) <- "Recreational Moderate Activity (10 min/week)"
- label(table1$bmi) <- "Body Mass Index"
- label(table1$income_poverty_ratio) <- "Income to Poverty Ratio"
- label(table1$home_owner) <- "Home Owner"
- label(table1$has_insurance) <- "Health Insurance"
- 
- 
- table1(~ age + race_text_nhanes + sex_text + 
-          fev1 + fvc +
-          smoker_in_household + maternal_smoke +
-          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
-          income_poverty_ratio + home_owner + has_insurance +
-          education_adults + now_attending_school + 
-          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | age_group, table1, digits=2)
+                             (healthy_diet==1) | 
+                             (healthy_diet==2) | 
+                             (healthy_diet==3)))
+  ) 
+
+label(table1$variables$race_text_nhanes) <- "Race and Ethnicity"
+label(table1$variables$age) <- "Age (years), mean (SD)"
+label(table1$variables$fev1) <- "FEV1 (mL), mean (SD)"
+label(table1$variables$fvc) <- "FVC (mL), mean (SD)"
+label(table1$variables$sex_text) <- "Biological Sex at Birth"
+label(table1$variables$birth_country) <- "Birth Country"
+label(table1$variables$smoker_in_household) <- "Smoker in Household"
+label(table1$variables$maternal_smoke) <- "Maternal smoke during pregnancy (For Children)"
+label(table1$variables$mineral_dusts) <- "Occupational Exposure to Mineral Dusts"
+label(table1$variables$organic_dusts) <- "Occupational Exposure to Organic Dusts"
+label(table1$variables$exhaust_fumes) <- "Occupational Exposure to Exhaust Fumes"
+label(table1$variables$other_fumes) <- "Occupational Exposure to Other Fumes"
+label(table1$variables$education_adults) <- "Education Level for Adults"
+label(table1$variables$now_attending_school) <- "Currently Attending School (for Children)"
+label(table1$variables$healthy_diet) <- "Self-reported Diet Health"
+label(table1$variables$vigorous_work) <- "Vigorous Activity at Work (10 min/week)"
+label(table1$variables$vigorous_recreational) <- "Recreational Vigorous Activity (10 min/week)"
+label(table1$variables$moderate_work) <- "Moderate Activity at Work (10 min/week)"
+label(table1$variables$moderate_recreational) <- "Recreational Moderate Activity (10 min/week)"
+label(table1$variables$bmi) <- "Body Mass Index (kg/m2), mean (SD)"
+label(table1$variables$income_poverty_ratio) <- "Income-to-Poverty Ratio"
+label(table1$variables$home_owner) <- "Homeowner"
+label(table1$variables$has_insurance) <- "Health Insurance"
+
+
+
+tbl_svysummary(table1, by = "age_group", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi)) %>%
+  as_flex_table()
+                         
  
 ```
 
@@ -1316,16 +1344,39 @@ flowchart TD
 
 ::: {#supptab-missing-ness-by-race}
 ```{r}
- 
- table1(~ age + race_text_nhanes + sex_text + 
-          fev1 + fvc +
-          birth_country + 
-          smoker_in_household + maternal_smoke +
-          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
-          income_poverty_ratio + home_owner + has_insurance +
-          education_adults + now_attending_school + 
-          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | race_text_nhanes, table1, digits=2)
+
+tbl_svysummary(table1, by = "race_text_nhanes", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi))  %>%
+  as_flex_table()
+                         
+
 ```
 
 Characteristics of Participants Included in the Baseline Reference Population by Self-identified Race
@@ -1380,16 +1431,40 @@ Racial gap in lung function among those born in the US
 ::: {#supptab-fig1byusborn}
 ```{r}
 table1_BW <- table1 %>% 
-  filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" )
+  srvyr::filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" )
 
-table1(~ age + race_text_nhanes + sex_text + 
-          fev1 + fvc +
-          smoker_in_household + maternal_smoke +
-          mineral_dusts + organic_dusts + exhaust_fumes + other_fumes +
-          income_poverty_ratio + home_owner + has_insurance +
-          education_adults + now_attending_school + 
-          healthy_diet + vigorous_work + moderate_work + vigorous_recreational + moderate_recreational + bmi 
-          | birth_country+race_text_nhanes, table1_BW, digits=2)
+
+tbl_svysummary(table1_BW, by = "race_text_nhanes", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi))  %>%
+  as_flex_table()
+        
 ```
 
 Characteristics of Black Participants Included in the Baseline Reference Population by Country of Birth
