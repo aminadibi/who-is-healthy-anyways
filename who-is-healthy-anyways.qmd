@@ -144,7 +144,7 @@ compute_gap_reduction <- function(df, measure, type) {
 }
 
 createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4), AllostaticLoadOnly=FALSE, leaveOneIn=FALSE) {
-  if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
+  if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
     stop("Invalid age group")
   if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
     stop("Invalid BirthCountry")
@@ -236,7 +236,7 @@ nhanes_bw <- nhanes_bw %>%
                  (nhanes_bw$variables %>% count())))
 }
   
-if (ageGroup=="youth") {
+if (ageGroup=="children") {
 nhanes_bw <- nhanes_bw %>%
   srvyr::filter(age<20)
 
@@ -379,7 +379,7 @@ if (ageGroup=="adult") {
   mutate(ref="educated")
 }
 
-if (ageGroup=="youth") {
+if (ageGroup=="children") {
   ref9 <- ref1 %>%
     srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
   mutate(ref="educated")
@@ -436,7 +436,7 @@ if (ageGroup=="adult") {
   mutate(ref="+ educated")
 }
 
-if (ageGroup=="youth") {
+if (ageGroup=="children") {
   ref9 <- ref8 %>%
     filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
   mutate(ref="+ educated")
@@ -550,7 +550,7 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   }
 
   # gap_reduction_messages(race_coeffs_adult, "adults")
-  # gap_reduction_messages(race_coeffs_youth, "youth")
+  # gap_reduction_messages(race_coeffs_youth, "children")
   
   
   # Plot Racial Gap
@@ -584,9 +584,9 @@ plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex 
   racial_gap_fvc_adult  <- 
     plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
   racial_gap_fev1_youth <- 
-    plot_racial_gap(race_coeffs_youth, "youth",  measure="fev1") +  ggtitle('Youth')
+    plot_racial_gap(race_coeffs_youth, "childten",  measure="fev1") +  ggtitle('Children')
   racial_gap_fvc_youth <- 
-    plot_racial_gap(race_coeffs_youth, "youth",  measure="fvc")
+    plot_racial_gap(race_coeffs_youth, "children",  measure="fvc")
 
      p <- racial_gap_fev1_youth + 
        racial_gap_fev1_adult +
@@ -826,7 +826,7 @@ table1 <- readRDS("nhanes_2007_2012.rds") %>%
             (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
             (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
             (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
-  mutate(age_group = ifelse(age>=20, "Adults", "Youth"),
+  mutate(age_group = ifelse(age>=20, "Adults", "Children"),
          sex_text   = case_match(sex,
                                  "1" ~ "Male"  ,
                                  "2" ~ "Female" ),
@@ -1037,7 +1037,7 @@ refs_adult_all_races <- createCohort("adult", includedRace = c(1,2,3,4,5,6,7))
 message("Adult counts:")
 message(map_df(refs_adult_all_races,~ count(.x$variables)))
 
-refs_youth_all_races <- createCohort("youth", includedRace = c(1,2,3,4,5,6,7))
+refs_youth_all_races <- createCohort("children", includedRace = c(1,2,3,4,5,6,7))
 message("Youth counts:")
 message(map_df(refs_youth_all_races, ~ count(.x$variables)))
 
@@ -1116,7 +1116,7 @@ refs_adult <- createCohort("adult")
 message("Adult counts:")
 message(map_df(refs_adult, ~ count(.x$variables)))
 
-refs_youth <- createCohort("youth")
+refs_youth <- createCohort("children")
 message("Youth counts:")
 message(map_df(refs_youth, ~ count(.x$variables)))
 
@@ -1198,7 +1198,7 @@ bootstrapped_gap %>% filter(fvc_gap>0) %>% count()/1000*2
 #| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. 
  
 createCohort3Factor <- function (ageGroup,sex='all') {
-  if (!(ageGroup %in% c("adult", "youth"))) 
+  if (!(ageGroup %in% c("adult", "children"))) 
     stop("Invalid age group")
   if (!(sex %in% c("all", "male", "female"))) 
     stop("Invalid sex")
@@ -1246,7 +1246,7 @@ nhanes_bw <- nhanes_bw %>%
                  (nhanes_bw %>% count())))
 }
   
-if (ageGroup=="youth") {
+if (ageGroup=="children") {
 nhanes_bw <- nhanes_bw %>%
   filter(age<20)
 
@@ -1292,7 +1292,7 @@ refs <- list(ref1, ref2)
 return(refs)
 }
 
-plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("youth"))
+plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("children"))
 
 ```
 
@@ -1387,7 +1387,7 @@ Characteristics of Participants Included in the Baseline Reference Population by
 ::: {#suppfig-females}
 ```{r,  warning=FALSE, message=FALSE}
 refs_adult_female <- createCohort("adult", sex="female")
-refs_youth_female <- createCohort("youth", sex="female")
+refs_youth_female <- createCohort("children", sex="female")
 
 
 plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
@@ -1399,7 +1399,7 @@ Changes in lung function racial gaps between female Non-Hispanic Black and Non-H
 ::: {#suppfig-males}
 ```{r, warning=FALSE, message=FALSE}
 refs_adult_male <- createCohort("adult", sex="male")
-refs_youth_male <- createCohort("youth", sex="male")
+refs_youth_male <- createCohort("children", sex="male")
 
 
 plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
@@ -1418,7 +1418,7 @@ refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
 # message("Adult counts:")
 # message(map_df(refs_adult, count))
 
-refs_youth_US_Black <- createCohort("youth", BirthCountry="US")
+refs_youth_US_Black <- createCohort("children", BirthCountry="US")
 # message("Youth counts:")
 # message(map_df(refs_youth, count))
 
@@ -1479,7 +1479,7 @@ refs_adult_mex <- createCohort("adult", includedRace=c(3,1))
 message("Adult counts:")
 message(map_df(refs_adult_mex, ~ count(.x$variables)))
 
-refs_youth_mex <- createCohort("youth", includedRace=c(3,1))
+refs_youth_mex <- createCohort("children", includedRace=c(3,1))
 message("Youth counts:")
 message(map_df(refs_youth_mex, ~ count(.x$variables)))
 
@@ -1498,7 +1498,7 @@ refs_adult_hisp <- createCohort("adult", includedRace=c(3,2))
 message("Adult counts:")
 message(map_df(refs_adult_hisp, ~ count(.x$variables)))
 
-refs_youth_hisp <- createCohort("youth", includedRace=c(3,2))
+refs_youth_hisp <- createCohort("children", includedRace=c(3,2))
 message("Youth counts:")
 message(map_df(refs_youth_hisp, ~ count(.x$variables)))
 
@@ -1515,7 +1515,7 @@ refs_adult_asian <- createCohort("adult", includedRace=c(3,6))
 message("Adult counts:")
 message(map_df(refs_adult_asian, ~ count(.x$variables)))
 
-refs_youth_asian <- createCohort("youth", includedRace=c(3,6))
+refs_youth_asian <- createCohort("children", includedRace=c(3,6))
 message("Youth counts:")
 message(map_df(refs_youth_asian, ~ count(.x$variables)))
 
@@ -1533,7 +1533,7 @@ refs_adult_oth <- createCohort("adult", includedRace=c(3,7))
 message("Adult counts:")
 message(map_df(refs_adult_oth, ~ count(.x$variables)))
 
-refs_youth_oth <- createCohort("youth", includedRace=c(3,7))
+refs_youth_oth <- createCohort("children", includedRace=c(3,7))
 message("Youth counts:")
 message(map_df(refs_youth_oth, ~ count(.x$variables)))
 
@@ -1554,7 +1554,7 @@ Biomarkers included were C-reactive protein, white blood cell count, glycohemogl
 
 
 refs_adult_incomeAllostaticLoadOnly <- createCohort("adult", AllostaticLoadOnly=TRUE)
-refs_youth_incomeAllostaticLoadOnly <- createCohort("youth", AllostaticLoadOnly=TRUE)
+refs_youth_incomeAllostaticLoadOnly <- createCohort("children", AllostaticLoadOnly=TRUE)
 
 plot_racial_gap_change(refs_adult_incomeAllostaticLoadOnly, refs_youth_incomeAllostaticLoadOnly)
 
@@ -1572,7 +1572,7 @@ When we excluded participants with income to poverty ratio under five, the propo
 
 
 refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
-refs_youth_incomePovertyRatioOnly <- createCohort("youth", incomePovertyRatioOnly=TRUE)
+refs_youth_incomePovertyRatioOnly <- createCohort("children", incomePovertyRatioOnly=TRUE)
 
 plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
 ```
@@ -1665,7 +1665,7 @@ refs_adult_1by1 <- createCohort("adult", leaveOneIn = TRUE)
 message("Adult counts:")
 message(map_df(refs_adult_1by1, ~ count(.x$variables)))
 
-refs_youth_1by1 <- createCohort("youth", leaveOneIn = TRUE)
+refs_youth_1by1 <- createCohort("children", leaveOneIn = TRUE)
 message("Youth counts:")
 message(map_df(refs_youth_1by1, ~ count(.x$variables)))
 
@@ -1688,7 +1688,7 @@ plot_racial_gap_change(refs_adult_1by1[c(1,10)], refs_youth_1by1[c(1,10)])
 ```{r, include=F, eval=F}
 
 createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusions=NULL) {
-  if (!(ageGroup %in% c("adult", "youth", "all_ages"))) 
+  if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
     stop("Invalid age group")
   if (!(sex %in% c("all", "male", "female"))) 
     stop("Invalid sex")
@@ -1735,7 +1735,7 @@ createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusio
     srvyr::filter(age>=20)
   }
   
-  if (ageGroup=="youth") {
+  if (ageGroup=="children") {
   nhanes_bw <- nhanes_bw %>%
     srvyr::filter(age<20)
 
@@ -1840,7 +1840,7 @@ if ("educated" %in% exclusions) {
     mutate(ref="educated")
   }
 
-  if (ageGroup=="youth") {
+  if (ageGroup=="children") {
     ref2 <- ref2 %>%
       srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
     mutate(ref="educated")
@@ -1914,21 +1914,21 @@ exclude_all_combinations <- function(exclusionList=c("homeowner",
     # Create cohort references for adult and youth
     if (n==1){
     refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1), includedRace=includedRace)
-    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1), includedRace=includedRace)
+    refs_youth <- createCohortFlex("children", exclusions = c(exclusion1), includedRace=includedRace)
     }
     if (n==2){
     refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
-    refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
+    refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
     } 
     if (n==3) {
       refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
-      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
+      refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
     }
     
     if (n==4) {
       refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
                                      includedRace=includedRace)
-      refs_youth <- createCohortFlex("youth", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
+      refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
                                      includedRace=includedRace)
     }
     
