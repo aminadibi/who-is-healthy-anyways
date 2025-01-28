@@ -1431,10 +1431,10 @@ Racial gap in lung function among those born in the US
 ::: {#supptab-fig1byusborn}
 ```{r}
 table1_BW <- table1 %>% 
-  srvyr::filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" )
+  srvyr::filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" ) 
 
-
-tbl_svysummary(table1_BW, by = "race_text_nhanes", 
+table1_BW %>%
+  tbl_svysummary(by = "birth_country", 
                missing = "ifany", 
                statistic = list(
                  all_continuous()  ~ "{mean} ({sd})", 
@@ -1462,8 +1462,8 @@ tbl_svysummary(table1_BW, by = "race_text_nhanes",
                          moderate_work, 
                          vigorous_recreational,
                          moderate_recreational,
-                        bmi))  %>%
-  as_flex_table()
+                        bmi)) %>%
+   as_flex_table()
         
 ```
 
