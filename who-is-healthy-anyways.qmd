@@ -1,5 +1,5 @@
 ---
-title: "Social determinants and racial disparities in lung function: Findings from NHANES 2007-2012"
+title: "Social determinants of health and racial disparities in lung function: Findings from NHANES 2007-2012"
 format: 
   html:
     toc: true
@@ -23,9 +23,7 @@ author:
       - name: Respiratory Evaluation Sciences Program, Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
   - name: Christopher Carlsten 
     affiliations:
-      - name: Legacy for Airway Health, Vancouver Coastal Health Research Institute
       - name: Division of Respiratory Medicine, Faculty of Medicine, University of British Columbia
-      - name: Air Pollution Exposure Lab, Vancouver Coastal Health Research Institute
   - name: Emily Brigham
     affiliations:
       - name: Legacy for Airway Health, Vancouver Coastal Health Research Institute
