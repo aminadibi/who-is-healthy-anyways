@@ -1,4 +1,4 @@
-# Who is healthy anyways?
+# Who is healthy anyway?
 
 This repository includes code and data for the paper:
 
