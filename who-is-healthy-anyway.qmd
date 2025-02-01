@@ -45,17 +45,6 @@ execute:
   echo: false
 ---
 
-## Abstract
-
-**RATIONALE:** Racialized populations disproportionately experience exposures that impair lung function. Race-averaged reference equations are intended to mitigate bias due to disproportionate exposures at the cost of reduced precision. We hypothesized that the disproportionate impact of social determinants of health (SDoH) captured in survey data could help explain a larger proportion of racial gaps in lung function than previously reported.
-
-**METHODS:** We defined a series of nested reference populations using data from NHANES 2007-2012 participants. Starting with non-smokers without respiratory symptoms or diagnoses, we sequentially excluded those with confirmed occupational exposure to dust/fumes, physical inactivity, maternal tobacco use, obesity, no home ownership, no insurance, lower education, and self-reported unhealthy diet. Across successive populations, we compared average age-, sex-, and height-adjusted differences in FEV~1~ and FVC between minority race and ethnicity groups and White participants, separately for adults (≥20) and children (6-19).
-
-**RESULTS:** In successively healthier populations, the proportion of participants declined for non-Hispanic Black, Mexican American, and Other Hispanic populations but remained close to the reference population for Asian and Other/Multiracial participants. After excluding individuals with unfavorable SDoH, the gap between non-Hispanic Black and White Americans in FEV~1~ and FVC reduced by 25% and 26% in children and 26% and 19% in adults. The gap between Asian and White Americans reduced by 7% and 13% among children but increased by 14% and 11% among adults. At baseline, Mexican Americans had slightly higher adjusted FEV~1~ and FVC than non-Hispanic White Americans, and excluding those with unfavorable SDoH increased this gap.
-
-**CONCLUSIONS:** The SDoH investigated herein disproportionately affected Black, Mexican American, and Other Hispanic populations, and explained a higher proportion of racial disparities in lung function than previously reported.
-
-------------------------------------------------------------------------
 
 ```{r, warning=FALSE, message=FALSE}
 rm(list = ls(all.names = TRUE))
