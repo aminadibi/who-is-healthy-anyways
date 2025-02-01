@@ -39,8 +39,6 @@ author:
     affiliations:
       - name: Respiratory Evaluation Sciences Program, Collaboration for Outcomes Research and Evaluation, Faculty of Pharmaceutical Sciences, University of British Columbia
 date: "`r Sys.Date()`"
-bibliography: references.bib
-csl: european-respiratory-journal.csl
 execute:
   echo: false
 ---
