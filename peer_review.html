@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Peer Review Response</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="peer_review_files/libs/clipboard/clipboard.min.js"></script>
+<script src="peer_review_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="peer_review_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="peer_review_files/libs/quarto-html/popper.min.js"></script>
+<script src="peer_review_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="peer_review_files/libs/quarto-html/anchor.min.js"></script>
+<link href="peer_review_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="peer_review_files/libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="peer_review_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="peer_review_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="peer_review_files/libs/bootstrap/bootstrap-c0367b04c37547644fece4185067e4a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="peer_review_files/libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="peer_review_files/libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Peer Review Response</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>Differential Spirometry Quality per Race and SDOH</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──
+✔ broom        1.0.7     ✔ rsample      1.2.1
+✔ dials        1.4.0     ✔ tune         1.3.0
+✔ infer        1.0.7     ✔ workflows    1.2.0
+✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
+✔ parsnip      1.3.1     ✔ yardstick    1.3.2
+✔ recipes      1.2.0     
+── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ scales::discard() masks purrr::discard()
+✖ dplyr::filter()   masks stats::filter()
+✖ recipes::fixed()  masks stringr::fixed()
+✖ dplyr::lag()      masks stats::lag()
+✖ yardstick::spec() masks readr::spec()
+✖ recipes::step()   masks stats::step()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'table1'
+
+The following objects are masked from 'package:base':
+
+    units, units&lt;-</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rspiro)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'srvyr'
+
+The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: grid
+Loading required package: Matrix
+
+Attaching package: 'Matrix'
+
+The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack
+
+Loading required package: survival
+
+Attaching package: 'survey'
+
+The following object is masked from 'package:graphics':
+
+    dotchart</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"nhanes_2007_2012.rds"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weights=</span>MEC6YR,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ids=</span>SDMVPSU,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata=</span>SDMVSTRA,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nest=</span><span class="cn">TRUE</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  )  <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fev1 =</span> fev1_pre,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">fvc  =</span> fvc_pre) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(fev1, fvc) <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  srvyr<span class="sc">::</span><span class="fu">filter</span> ((<span class="fu">is.na</span>(current_smoke) <span class="sc">|</span> (current_smoke <span class="sc">==</span> <span class="st">"3"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(ever_100_smoke) <span class="sc">|</span> (ever_100_smoke <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(last_5_days_cigarettes) <span class="sc">|</span>  (last_5_days_cigarettes <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(last_5_days_pipes) <span class="sc">|</span> (last_5_days_pipes <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(last_5_days_cigars) <span class="sc">|</span> (last_5_days_cigars <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(ever_asthma) <span class="sc">|</span> (ever_asthma <span class="sc">!=</span><span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(ever_bronchitis) <span class="sc">|</span> (ever_bronchitis <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(ever_emphysema) <span class="sc">|</span> (ever_emphysema <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(cough_3_month) <span class="sc">|</span> (cough_3_month<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(phlegm_3_month) <span class="sc">|</span> (phlegm_3_month<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(wheezing_past_yr) <span class="sc">|</span> (wheezing_past_yr<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">is.na</span>(dry_cough_night_past_yr) <span class="sc">|</span> (dry_cough_night_past_yr<span class="sc">!=</span><span class="dv">1</span>))) </span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>nhanes_included <span class="ot">&lt;-</span> nhanes  <span class="sc">%&gt;%</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  srvyr<span class="sc">::</span><span class="fu">filter</span>(spiro_status_pre <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  srvyr<span class="sc">::</span><span class="fu">filter</span>(fev1_quality_pre <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">|</span> fev1_quality_pre <span class="sc">==</span> <span class="st">"B"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  srvyr<span class="sc">::</span><span class="fu">filter</span>(fvc_quality_pre  <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">|</span> fvc_quality_pre  <span class="sc">==</span> <span class="st">"B"</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>nhanes_excluded <span class="ot">&lt;-</span> nhanes  <span class="sc">%&gt;%</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  srvyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>((spiro_status_pre <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">&amp;</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>                (fev1_quality_pre <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">|</span> fev1_quality_pre <span class="sc">==</span> <span class="st">"B"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                (fvc_quality_pre  <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">|</span> fvc_quality_pre  <span class="sc">==</span> <span class="st">"B"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">ifelse</span>(age<span class="sc">&gt;=</span><span class="dv">20</span>, <span class="st">"Adults"</span>, <span class="st">"Children"</span>),</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">sex_text   =</span> <span class="fu">case_match</span>(sex,</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Male"</span>  ,</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"Female"</span> ),</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">time_in_us =</span> <span class="fu">case_match</span>(time_in_us, </span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Less than 1 year"</span>,</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">2</span> <span class="sc">~</span> <span class="st">"1 yr., less than 5 yrs."</span>,</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">3</span> <span class="sc">~</span> <span class="st">"5 yrs., less than 10 yrs."</span>,</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">4</span> <span class="sc">~</span> <span class="st">"10 yrs., less than 15 yrs."</span>, </span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">5</span> <span class="sc">~</span> <span class="st">"15 yrs., less than 20 yrs."</span>,</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">6</span> <span class="sc">~</span> <span class="st">"20 yrs., less than 30 yrs."</span>, </span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">7</span> <span class="sc">~</span> <span class="st">"30 yrs., less than 40 yrs."</span>, </span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">8</span> <span class="sc">~</span> <span class="st">"40 yrs., less than 50 yrs."</span>, </span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">9</span> <span class="sc">~</span> <span class="st">"50 years or more"</span>, </span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">77</span> <span class="sc">~</span> <span class="cn">NA</span>,</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>                                 <span class="dv">99</span> <span class="sc">~</span> <span class="cn">NA</span>, </span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">has_insurance =</span> <span class="fu">case_match</span>(has_insurance, </span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Refused"</span>,</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Don't Know"</span>, </span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">cough_3_month =</span> <span class="fu">case_match</span>(cough_3_month,</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">phlegm_3_month =</span> <span class="fu">case_match</span>(phlegm_3_month,</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>         <span class="at">wheezing_past_yr =</span> <span class="fu">case_match</span>(wheezing_past_yr,</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>                                       <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>                                       <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>         <span class="at">dry_cough_night_past_yr =</span> <span class="fu">case_match</span>(dry_cough_night_past_yr,</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>                                              <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>                                              <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>         <span class="at">ever_asthma =</span> <span class="fu">case_match</span>(ever_asthma,</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">ever_bronchitis =</span> <span class="fu">case_match</span>(ever_bronchitis,</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>         <span class="at">ever_emphysema =</span> <span class="fu">case_match</span>(ever_emphysema,</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>         <span class="at">ever_100_smoke =</span> <span class="fu">case_match</span>(ever_100_smoke,</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Yes"</span>  ,</span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>         <span class="at">current_smoke =</span> <span class="fu">case_match</span>(current_smoke,</span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Everyday"</span>  ,</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"Some days"</span>,</span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"Not at all"</span>),</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>         <span class="at">education_adults =</span> <span class="fu">case_match</span>(education_adults,</span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Less than 9th grade"</span>  ,</span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"9-11th grade"</span>,</span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"High school graduate"</span>,</span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"4"</span> <span class="sc">~</span> <span class="st">"Some college or AA degree"</span>,</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"5"</span> <span class="sc">~</span> <span class="st">"College graduate or above"</span>),</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">education_adults =</span> <span class="fu">factor</span>(education_adults, </span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"College graduate or above"</span>,</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"Some college or AA degree"</span>,</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"High school graduate"</span>,</span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"9-11th grade"</span>,</span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"Less than 9th grade"</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>                                   )),</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>         <span class="at">now_attending_school =</span> <span class="fu">case_match</span>(now_attending_school,</span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span> <span class="sc">~</span> <span class="st">"In school"</span>,</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Between grades"</span>,</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Not in school"</span>),</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoker_in_household =</span> <span class="fu">case_match</span>(smoker_in_household,</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>                                          <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>                                          <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>         <span class="at">maternal_smoke =</span> <span class="fu">case_match</span>(maternal_smoke,</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>         <span class="at">home_ownership =</span> <span class="fu">case_match</span>(home_ownership,</span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Owned or being bought"</span>,</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Rented"</span>,</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Other arrangements"</span>),</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>         <span class="at">mineral_dusts =</span> <span class="fu">case_match</span>(mineral_dusts,</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>         <span class="at">organic_dusts =</span> <span class="fu">case_match</span>(organic_dusts,</span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>         <span class="at">exhaust_fumes =</span> <span class="fu">case_match</span>(exhaust_fumes,</span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>         <span class="at">other_fumes =</span> <span class="fu">case_match</span>(other_fumes,</span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>                                  <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>                                  <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>         <span class="at">healthy_diet =</span> <span class="fu">case_match</span>(healthy_diet,</span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>                                   <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Excellent"</span>,</span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>                                   <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Very good"</span>,</span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>                                   <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Good"</span>,</span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>                                   <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Fair"</span>,</span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>                                   <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Poor"</span>),</span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>         <span class="at">healthy_diet =</span> <span class="fu">factor</span>(healthy_diet, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>,</span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"Very good"</span>,</span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"Good"</span>,</span>
+<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"Fair"</span>,</span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"Poor"</span>)),</span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>         <span class="at">vigorous_work =</span> <span class="fu">case_match</span>(vigorous_work,</span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>         <span class="at">moderate_work =</span> <span class="fu">case_match</span>(moderate_work,</span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>         <span class="at">vigorous_recreational =</span> <span class="fu">case_match</span>(vigorous_recreational,</span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>                                            <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>                                            <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>         <span class="at">moderate_recreational =</span> <span class="fu">case_match</span>(moderate_recreational,</span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>                                            <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>                                            <span class="dv">2</span> <span class="sc">~</span> <span class="st">"No"</span>),</span>
+<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoker=</span></span>
+<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>((<span class="fu">is.na</span>(current_smoke) <span class="sc">|</span> (current_smoke <span class="sc">==</span> <span class="st">"3"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>               (<span class="fu">is.na</span>(ever_100_smoke) <span class="sc">|</span> (ever_100_smoke <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a>               (<span class="fu">is.na</span>(last_5_days_cigarettes) <span class="sc">|</span>  (last_5_days_cigarettes <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>               (<span class="fu">is.na</span>(last_5_days_pipes) <span class="sc">|</span> (last_5_days_pipes <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a>               (<span class="fu">is.na</span>(last_5_days_cigars) <span class="sc">|</span> (last_5_days_cigars <span class="sc">!=</span> <span class="st">"1"</span>))),</span>
+<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>         <span class="at">resp_symptoms =</span> <span class="sc">!</span>((<span class="fu">is.na</span>(cough_3_month) <span class="sc">|</span> (cough_3_month<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>                             (<span class="fu">is.na</span>(phlegm_3_month) <span class="sc">|</span> (phlegm_3_month<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a>                             (<span class="fu">is.na</span>(wheezing_past_yr) <span class="sc">|</span> (wheezing_past_yr<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a>                             (<span class="fu">is.na</span>(dry_cough_night_past_yr) <span class="sc">|</span> (dry_cough_night_past_yr<span class="sc">!=</span><span class="dv">1</span>))),</span>
+<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>         <span class="at">resp_dx =</span> <span class="sc">!</span>((<span class="fu">is.na</span>(ever_asthma) <span class="sc">|</span> (ever_asthma <span class="sc">!=</span><span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a>                       (<span class="fu">is.na</span>(ever_bronchitis) <span class="sc">|</span> (ever_bronchitis <span class="sc">!=</span> <span class="st">"1"</span>)) <span class="sc">&amp;</span></span>
+<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a>                       (<span class="fu">is.na</span>(ever_emphysema) <span class="sc">|</span> (ever_emphysema <span class="sc">!=</span> <span class="st">"1"</span>))),</span>
+<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>         <span class="at">physically_active =</span> ((<span class="fu">is.na</span>(vigorous_work) <span class="sc">|</span> (vigorous_work<span class="sc">==</span><span class="dv">1</span>)) <span class="sc">|</span> </span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>                                (<span class="fu">is.na</span>(vigorous_recreational)   <span class="sc">|</span> (vigorous_recreational<span class="sc">==</span><span class="dv">1</span>)) <span class="sc">|</span> </span>
+<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>                                (<span class="fu">is.na</span>(moderate_work)   <span class="sc">|</span> (moderate_work<span class="sc">==</span><span class="dv">1</span>)) <span class="sc">|</span> </span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>                                (<span class="fu">is.na</span>(moderate_recreational)   <span class="sc">|</span> (moderate_recreational<span class="sc">==</span><span class="dv">1</span>))),</span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>         <span class="at">occupational_exposure =</span> <span class="sc">!</span>((<span class="fu">is.na</span>(mineral_dusts) <span class="sc">|</span> (mineral_dusts<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>                                     (<span class="fu">is.na</span>(organic_dusts)   <span class="sc">|</span> (organic_dusts<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>                                     (<span class="fu">is.na</span>(exhaust_fumes)   <span class="sc">|</span> (exhaust_fumes<span class="sc">!=</span><span class="dv">1</span>)) <span class="sc">&amp;</span> </span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>                                     (<span class="fu">is.na</span>(other_fumes)     <span class="sc">|</span> (other_fumes<span class="sc">!=</span><span class="dv">1</span>))),</span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>         <span class="at">home_owner =</span> (<span class="fu">is.na</span>(home_ownership) <span class="sc">|</span> (home_ownership<span class="sc">==</span><span class="dv">1</span>)), </span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>         <span class="at">healthy_eater =</span> ((<span class="fu">is.na</span>(healthy_diet) <span class="sc">|</span> </span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>                             (healthy_diet<span class="sc">==</span><span class="dv">1</span>) <span class="sc">|</span> </span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>                             (healthy_diet<span class="sc">==</span><span class="dv">2</span>) <span class="sc">|</span> </span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>                             (healthy_diet<span class="sc">==</span><span class="dv">3</span>)))</span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>race_text_nhanes) <span class="ot">&lt;-</span> <span class="st">"Race and Ethnicity"</span></span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>age) <span class="ot">&lt;-</span> <span class="st">"Age (years), mean (SD)"</span></span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>fev1) <span class="ot">&lt;-</span> <span class="st">"FEV1 (mL), mean (SD)"</span></span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>fvc) <span class="ot">&lt;-</span> <span class="st">"FVC (mL), mean (SD)"</span></span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>sex_text) <span class="ot">&lt;-</span> <span class="st">"Biological Sex at Birth"</span></span>
+<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>birth_country) <span class="ot">&lt;-</span> <span class="st">"Birth Country"</span></span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>smoker_in_household) <span class="ot">&lt;-</span> <span class="st">"Smoker in Household"</span></span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>maternal_smoke) <span class="ot">&lt;-</span> <span class="st">"Maternal smoke during pregnancy (For Children)"</span></span>
+<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>mineral_dusts) <span class="ot">&lt;-</span> <span class="st">"Occupational Exposure to Mineral Dusts"</span></span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>organic_dusts) <span class="ot">&lt;-</span> <span class="st">"Occupational Exposure to Organic Dusts"</span></span>
+<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>exhaust_fumes) <span class="ot">&lt;-</span> <span class="st">"Occupational Exposure to Exhaust Fumes"</span></span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>other_fumes) <span class="ot">&lt;-</span> <span class="st">"Occupational Exposure to Other Fumes"</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>education_adults) <span class="ot">&lt;-</span> <span class="st">"Education Level for Adults"</span></span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>now_attending_school) <span class="ot">&lt;-</span> <span class="st">"Currently Attending School (for Children)"</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>healthy_diet) <span class="ot">&lt;-</span> <span class="st">"Self-reported Diet Health"</span></span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>vigorous_work) <span class="ot">&lt;-</span> <span class="st">"Vigorous Activity at Work (10 min/week)"</span></span>
+<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>vigorous_recreational) <span class="ot">&lt;-</span> <span class="st">"Recreational Vigorous Activity (10 min/week)"</span></span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>moderate_work) <span class="ot">&lt;-</span> <span class="st">"Moderate Activity at Work (10 min/week)"</span></span>
+<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>moderate_recreational) <span class="ot">&lt;-</span> <span class="st">"Recreational Moderate Activity (10 min/week)"</span></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>bmi) <span class="ot">&lt;-</span> <span class="st">"Body Mass Index (kg/m2), mean (SD)"</span></span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>income_poverty_ratio) <span class="ot">&lt;-</span> <span class="st">"Income-to-Poverty Ratio"</span></span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>home_owner) <span class="ot">&lt;-</span> <span class="st">"Homeowner"</span></span>
+<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(nhanes_excluded<span class="sc">$</span>variables<span class="sc">$</span>has_insurance) <span class="ot">&lt;-</span> <span class="st">"Health Insurance"</span></span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_svysummary</span>(nhanes_excluded,</span>
+<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>               <span class="at">missing =</span> <span class="st">"ifany"</span>, </span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>               <span class="at">by=</span><span class="st">"age_group"</span>,</span>
+<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a>               <span class="at">statistic =</span> <span class="fu">list</span>(</span>
+<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">all_continuous</span>()  <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>, </span>
+<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n_unweighted} ({p}%)"</span>),</span>
+<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a>               <span class="at">missing_text =</span> <span class="st">"Missing"</span>,</span>
+<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a>               <span class="at">missing_stat =</span> <span class="st">"{N_miss_unweighted} ({p_miss_unweighted}%)"</span>,</span>
+<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a>               <span class="at">digits =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a>               <span class="at">include=</span><span class="fu">c</span>(age,</span>
+<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>                         race_text_nhanes, </span>
+<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>                         sex_text,fev1, </span>
+<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a>                         fvc,</span>
+<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a>                         smoker_in_household, </span>
+<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a>                         maternal_smoke,</span>
+<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a>                         mineral_dusts,</span>
+<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a>                         organic_dusts, </span>
+<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>                         exhaust_fumes, </span>
+<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>                         other_fumes,</span>
+<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>                         income_poverty_ratio,</span>
+<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>                         home_owner, </span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>                         has_insurance,</span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>                         education_adults, </span>
+<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>                         now_attending_school,</span>
+<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a>                         healthy_diet,</span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a>                         vigorous_work,</span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a>                         moderate_work, </span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a>                         vigorous_recreational,</span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a>                         moderate_recreational,</span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>                         bmi))  <span class="sc">%&gt;%</span></span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-a2ec3506{}.cl-a2e79460{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a2e7946a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a2e7946b{font-family:'Helvetica';font-size:6.6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3.3pt;}.cl-a2e977e4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e977ee{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e977f8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e977f9{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e97802{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:15pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e97803{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a2e98f0e{width:3.58in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f18{width:1.449in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f22{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f23{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f2c{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f2d{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f2e{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f36{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f37{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f40{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f41{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f4a{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f4b{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f54{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f55{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f56{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f5e{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f5f{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f60{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f68{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f69{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f72{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f73{width:3.58in;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f74{width:1.449in;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f7c{width:3.58in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a2e98f7d{width:1.449in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-a2ec3506"><thead><tr style="overflow-wrap:break-word;"><th class="cl-a2e98f0e"><p class="cl-a2e977e4"><span class="cl-a2e79460">Characteristic</span></p></th><th class="cl-a2e98f18"><p class="cl-a2e977ee"><span class="cl-a2e79460">Adults</span><span class="cl-a2e7946a">  </span><br><span class="cl-a2e7946a">N = 8,139,280</span><span class="cl-a2e7946b">1</span></p></th><th class="cl-a2e98f18"><p class="cl-a2e977ee"><span class="cl-a2e79460">Children</span><span class="cl-a2e7946a">  </span><br><span class="cl-a2e7946a">N = 6,761,486</span><span class="cl-a2e7946b">1</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Age (years), mean (SD)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">44.3 (16.9)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">11.5 (4.1)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2c"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Race and Ethnicity</span></p></td><td class="cl-a2e98f2d"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f2d"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Mexican American</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">139 (11.6%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">250 (16.6%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Non-Hispanic Asian</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">68 (4.4%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">40 (1.6%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Non-Hispanic Black</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">230 (19.1%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">270 (17.2%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Non-Hispanic White</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">203 (49.9%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">232 (51.0%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f37"><p class="cl-a2e97802"><span class="cl-a2e7946a">Other Hispanic</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">100 (8.1%)</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">104 (7.2%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e97802"><span class="cl-a2e7946a">Other Race - Including Multi-Racial</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">34 (6.8%)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">53 (6.3%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Biological Sex at Birth</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Female</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">422 (50.0%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">485 (51.4%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Male</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">352 (50.0%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">464 (48.6%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e977f8"><span class="cl-a2e7946a">FEV1 (mL), mean (SD)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">3,132.8 (999.5)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2,495.7 (1,082.3)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e977f8"><span class="cl-a2e7946a">FVC (mL), mean (SD)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">3,838.9 (1,227.0)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2,852.5 (1,250.4)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Smoker in Household</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">48 (5.6%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">129 (13.4%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">4 (0.5%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">5 (0.5%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Maternal smoke during pregnancy (For Children)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">89 (12.7%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">774 (100%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">192 (20%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f37"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Occupational Exposure to Mineral Dusts</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">158 (22.9%)</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">17 (23.3%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">53 (6.8%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">856 (90%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Occupational Exposure to Organic Dusts</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">121 (19.7%)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">17 (25.1%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">53 (6.8%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">856 (90%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f37"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Occupational Exposure to Exhaust Fumes</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">122 (19.6%)</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">4 (2.5%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">54 (7.0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">856 (90%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f37"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Occupational Exposure to Other Fumes</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">169 (24.2%)</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a">20 (25.9%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">53 (6.8%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">856 (90%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Income-to-Poverty Ratio</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2.7 (1.6)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2.4 (1.7)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">90 (12%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">78 (8.2%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Homeowner</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">6 (0.8%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">5 (1.1%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f55"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Health Insurance</span></p></td><td class="cl-a2e98f56"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f56"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Don't Know</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2 (0.4%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">4 (0.3%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">No</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">212 (23.0%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">127 (11.5%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Refused</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">1 (0.1%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">2 (0.1%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Yes</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">559 (76.5%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">816 (88.1%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f5e"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Education Level for Adults</span></p></td><td class="cl-a2e98f5f"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f5f"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e97802"><span class="cl-a2e7946a">College graduate or above</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">158 (28.2%)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e97802"><span class="cl-a2e7946a">Some college or AA degree</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">206 (28.6%)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e97802"><span class="cl-a2e7946a">High school graduate</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">168 (22.7%)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e97802"><span class="cl-a2e7946a">9-11th grade</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">132 (12.2%)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e97802"><span class="cl-a2e7946a">Less than 9th grade</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">109 (8.3%)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">1 (0.1%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">949 (100%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Currently Attending School (for Children)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e97802"><span class="cl-a2e7946a">Between grades</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">111 (28.5%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">In school</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (NA%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">346 (71.5%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">774 (100%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">492 (52%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f37"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Self-reported Diet Health</span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td><td class="cl-a2e98f40"><p class="cl-a2e977f9"><span class="cl-a2e7946a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Excellent</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">83 (11.0%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">11 (5.7%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f41"><p class="cl-a2e97802"><span class="cl-a2e7946a">Very good</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">170 (20.8%)</span></p></td><td class="cl-a2e98f4a"><p class="cl-a2e977f9"><span class="cl-a2e7946a">37 (23.4%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Good</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">337 (43.4%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">85 (46.9%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Fair</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">152 (21.0%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">36 (18.2%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f2e"><p class="cl-a2e97802"><span class="cl-a2e7946a">Poor</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">32 (3.8%)</span></p></td><td class="cl-a2e98f36"><p class="cl-a2e977f9"><span class="cl-a2e7946a">11 (5.9%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">769 (81%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f60"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Vigorous Activity at Work (10 min/week)</span></p></td><td class="cl-a2e98f68"><p class="cl-a2e977f9"><span class="cl-a2e7946a">109 (17.4%)</span></p></td><td class="cl-a2e98f68"><p class="cl-a2e977f9"><span class="cl-a2e7946a">32 (7.7%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">548 (58%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f69"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Moderate Activity at Work (10 min/week)</span></p></td><td class="cl-a2e98f72"><p class="cl-a2e977f9"><span class="cl-a2e7946a">230 (33.5%)</span></p></td><td class="cl-a2e98f72"><p class="cl-a2e977f9"><span class="cl-a2e7946a">117 (32.1%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">548 (58%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f60"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Recreational Vigorous Activity (10 min/week)</span></p></td><td class="cl-a2e98f68"><p class="cl-a2e977f9"><span class="cl-a2e7946a">152 (24.9%)</span></p></td><td class="cl-a2e98f68"><p class="cl-a2e977f9"><span class="cl-a2e7946a">229 (60.0%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">548 (58%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f69"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Recreational Moderate Activity (10 min/week)</span></p></td><td class="cl-a2e98f72"><p class="cl-a2e977f9"><span class="cl-a2e7946a">292 (41.4%)</span></p></td><td class="cl-a2e98f72"><p class="cl-a2e977f9"><span class="cl-a2e7946a">198 (52.6%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f4b"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">0 (0%)</span></p></td><td class="cl-a2e98f54"><p class="cl-a2e977f9"><span class="cl-a2e7946a">548 (58%)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f22"><p class="cl-a2e977f8"><span class="cl-a2e7946a">Body Mass Index (kg/m2), mean (SD)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">28.7 (7.2)</span></p></td><td class="cl-a2e98f23"><p class="cl-a2e977f9"><span class="cl-a2e7946a">20.2 (5.2)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a2e98f73"><p class="cl-a2e97802"><span class="cl-a2e7946a">Missing</span></p></td><td class="cl-a2e98f74"><p class="cl-a2e977f9"><span class="cl-a2e7946a">3 (0.4%)</span></p></td><td class="cl-a2e98f74"><p class="cl-a2e977f9"><span class="cl-a2e7946a">1 (0.1%)</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-a2e98f7c"><p class="cl-a2e97803"><span class="cl-a2e7946b">1</span><span class="cl-a2e7946a">Mean (SD); n (unweighted) (%)</span></p></td></tr></tfoot></table></div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
