@@ -283,22 +283,22 @@ LLN_fev1_adults_GLIgl <- map_dfr(c(1,10), function(i) {
 })
 
 # Plot
-ggplot(LLN_fev1_adults_GLIgl, aes(x = index, 
+lln_fev1_adults <- ggplot(LLN_fev1_adults_GLIgl, aes(x = index, 
                           y = below_llm, 
                           color = race_text_nhanes,
                           group = race_text_nhanes)) +
   geom_line() +
   geom_point() +
   labs(
-    title = "Proportion of FEV1 Below GLI Global Lower Limit of Normal in Adults",
+    title = "Adults",
     x = "",
     y = "FEV1 Below LLN",
     color = ""
   ) +
+  scale_colour_brewer(palette = "Set2") +
   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
   theme_few() +
-  theme(legend.position = c(0.98, 0.98),
-    legend.justification = c("right", "top"))# + 
+  theme(legend.position = "bottom")
 
 
 # Summarize proportion for each index
@@ -314,22 +314,22 @@ LLN_fvc_adults_GLIgl <- map_dfr(c(1,10), function(i) {
 })
 
 # Plot
-ggplot(LLN_fvc_adults_GLIgl, aes(x = index, 
+lln_fvc_adults <-ggplot(LLN_fvc_adults_GLIgl, aes(x = index, 
                           y = below_llm, 
                           color = race_text_nhanes,
                           group = race_text_nhanes)) +
   geom_line() +
   geom_point() +
   labs(
-    title = "Proportion of FVC Below GLI Global Lower Limit of Normal in Adults",
+    title = "",
     x = "",
     y = "FVC Below LLN",
     color = ""
   ) +
+  scale_colour_brewer(palette = "Set2") +
   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
   theme_few() +
-  theme(legend.position = c(0.98, 0.98),
-    legend.justification = c("right", "top"))
+  theme(legend.position = "bottom")
 
 
 
@@ -384,22 +384,22 @@ LLN_fev1_youth_GLIgl <- map_dfr(c(1,10), function(i) {
 })
 
 # Plot
-ggplot(LLN_fev1_youth_GLIgl, aes(x = index, 
+lln_fev1_youth <- ggplot(LLN_fev1_youth_GLIgl, aes(x = index, 
                           y = below_llm, 
                           color = race_text_nhanes,
                           group = race_text_nhanes)) +
   geom_line() +
   geom_point() +
   labs(
-    title = "Proportion of FEV1 Below GLI Global Lower Limit of Normal in Children",
+    title = "Children",
     x = "",
     y = "FEV1 Below LLN",
     color = ""
   ) +
+  scale_colour_brewer(palette = "Set2") +
   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
   theme_few() +
-  theme(legend.position = c(0.98, 0.98),
-    legend.justification = c("right", "top"))# + 
+  theme(legend.position = "bottom")
 
 
 # Summarize proportion for each index
@@ -415,21 +415,40 @@ LLN_fvc_youth_GLIgl <- map_dfr(c(1,10), function(i) {
 })
 
 # Plot
-ggplot(LLN_fvc_youth_GLIgl, aes(x = index, 
+lln_fvc_youth <- ggplot(LLN_fvc_youth_GLIgl, aes(x = index, 
                           y = below_llm, 
                           color = race_text_nhanes,
                           group = race_text_nhanes)) +
   geom_line() +
   geom_point() +
   labs(
-    title = "Proportion of FVC Below GLI Global Lower Limit of Normal in Children",
+    title = "",
     x = "",
     y = "FVC Below LLN",
     color = ""
   ) +
+  scale_colour_brewer(palette = "Set2") +
   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
   theme_few() +
-  theme(legend.position = c(0.98, 0.98),
-    legend.justification = c("right", "top"))
+  theme(legend.position = "bottom")
+
+```
+
+putting it together:
+
+```{r}
+
+figure4 <- 
+  ((lln_fev1_youth + 
+  lln_fev1_adults +
+  lln_fvc_youth + 
+  lln_fvc_adults +
+  plot_layout(ncol = 2) +
+  plot_layout(axes="collect") )/guide_area())  + 
+  plot_annotation(tag_levels = 'A') + 
+  plot_layout(guides = "collect")
+  
+
+figure4
 
 ```
