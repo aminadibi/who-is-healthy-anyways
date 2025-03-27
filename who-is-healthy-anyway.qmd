@@ -43,7 +43,6 @@ execute:
   echo: false
 ---
 
-
 ```{r, warning=FALSE, message=FALSE}
 rm(list = ls(all.names = TRUE))
 library(tidyverse)
@@ -920,7 +919,7 @@ message("Youth counts:")
 message(map_df(refs_youth_all_races, ~ count(.x$variables)))
 
 plot_participants_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                     metric1="fev1", metric2="fvc", includedRace=c(1,2,3,4,5,6,7)){
+                                     metric1="fev1", metric2="fvc", includedRace=c(1,2,3,4,5,6,7)) {
   
   # Combine refs_df_adult and refs_df_youth
   combine_refs_df <- function(refs_list) {
@@ -949,15 +948,15 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
   
   plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
     p <- ggplot(refs_df_percent) +
-      geom_bar(aes(x=ref, y=perc, fill=race_text_nhanes), stat="identity", position = "fill") +
-      geom_text(aes(x=ref, y=perc, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), position = position_stack(vjust = 0.5), color = "white", size = 2) +
-      scale_y_continuous(labels=scales::percent) +
+      geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "stack") +
+      geom_text(aes(x=ref, y=n, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), 
+                position = position_stack(vjust = 0.5), color = "white", size = 2) +
+      labs(x = "", y = "Representative Population Size") +
       scale_fill_brewer(palette = "Set2") +
+      scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6))  +
       ggtitle(title) +
-      labs(x = "", y = "Participants") +
       guides(fill=guide_legend(title="Race")) +
       theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-    
     
     if (suppress_legend) {
       p <- p +  theme(legend.position="none")
@@ -983,6 +982,9 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
 
 plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
 
+fig2_plot <- plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
+
+ggsave("figure2.pdf", fig2_plot, width=10, height=8, units="in", dpi=300)
 ```
 
 ```{r, warning=FALSE, message=FALSE}
