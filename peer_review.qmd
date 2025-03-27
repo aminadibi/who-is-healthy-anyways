@@ -260,3 +260,176 @@ tbl_svysummary(nhanes_excluded,
 
 
 ```
+
+## LLN Impact
+
+```{r}
+
+
+library(dplyr)
+library(ggplot2)
+library(purrr)
+
+# Summarize proportion for each index
+LLN_fev1_adults_GLIgl <- map_dfr(c(1,10), function(i) {
+  refs_adult_all_races[[i]]$variables %>%
+    group_by(race_text_nhanes, ref) %>%
+    summarise(below_llm = mean(fev1_below_lln_GLIgl, na.rm = TRUE), .groups = "drop") %>%
+    mutate(index = case_match(ref,
+                              "reference" ~ "before exclusions",
+                              "+ healthy diet" ~ "after exclusions")) %>%
+    mutate(index = factor(index, levels=c("before exclusions",
+                                 "after exclusions")))
+})
+
+# Plot
+ggplot(LLN_fev1_adults_GLIgl, aes(x = index, 
+                          y = below_llm, 
+                          color = race_text_nhanes,
+                          group = race_text_nhanes)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Proportion of FEV1 Below GLI Global Lower Limit of Normal in Adults",
+    x = "",
+    y = "FEV1 Below LLN",
+    color = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
+  theme_few() +
+  theme(legend.position = c(0.98, 0.98),
+    legend.justification = c("right", "top"))# + 
+
+
+# Summarize proportion for each index
+LLN_fvc_adults_GLIgl <- map_dfr(c(1,10), function(i) {
+  refs_adult_all_races[[i]]$variables %>%
+    group_by(race_text_nhanes, ref) %>%
+    summarise(below_llm = mean(fvc_below_lln_GLIgl, na.rm = TRUE), .groups = "drop") %>%
+    mutate(index = case_match(ref,
+                              "reference" ~ "before exclusions",
+                              "+ healthy diet" ~ "after exclusions")) %>%
+    mutate(index = factor(index, levels=c("before exclusions",
+                                 "after exclusions")))
+})
+
+# Plot
+ggplot(LLN_fvc_adults_GLIgl, aes(x = index, 
+                          y = below_llm, 
+                          color = race_text_nhanes,
+                          group = race_text_nhanes)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Proportion of FVC Below GLI Global Lower Limit of Normal in Adults",
+    x = "",
+    y = "FVC Below LLN",
+    color = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
+  theme_few() +
+  theme(legend.position = c(0.98, 0.98),
+    legend.justification = c("right", "top"))
+
+
+
+
+
+
+
+
+# # Summarize proportion for each index
+# LLN_fev1_adults_GLI2012 <- map_dfr(c(1,10), function(i) {
+#   refs_adult_all_races[[i]]$variables %>%
+#     group_by(race_text_nhanes, ref) %>%
+#     summarise(below_llm = mean(fev1_below_lln_GLI, na.rm = TRUE), .groups = "drop") %>%
+#     mutate(index = case_match(ref,
+#                               "reference" ~ "before exclusions",
+#                               "+ healthy diet" ~ "after exclusions")) %>%
+#     mutate(index = factor(index, levels=c("before exclusions",
+#                                  "after exclusions")))
+# })
+# 
+# # Plot
+# ggplot(LLN_fev1_adults_GLI2012, aes(x = index, 
+#                             y = below_llm, 
+#                             color = race_text_nhanes,
+#                             group = race_text_nhanes)) +
+#   geom_line() +
+#   geom_point() +
+#   labs(
+#     title = "Proportion of FEV1 Below LLN - GLI 2012",
+#     x = "",
+#     y = "Proportion Below LLN",
+#     color = "Race"
+#   ) +
+#   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
+#   theme_few()
+
+```
+
+And now for kids:
+
+```{r}
+# Summarize proportion for each index
+LLN_fev1_youth_GLIgl <- map_dfr(c(1,10), function(i) {
+  refs_youth_all_races[[i]]$variables %>%
+    group_by(race_text_nhanes, ref) %>%
+    summarise(below_llm = mean(fev1_below_lln_GLIgl, na.rm = TRUE), .groups = "drop") %>%
+    mutate(index = case_match(ref,
+                              "reference" ~ "before exclusions",
+                              "+ healthy diet" ~ "after exclusions")) %>%
+    mutate(index = factor(index, levels=c("before exclusions",
+                                 "after exclusions")))
+})
+
+# Plot
+ggplot(LLN_fev1_youth_GLIgl, aes(x = index, 
+                          y = below_llm, 
+                          color = race_text_nhanes,
+                          group = race_text_nhanes)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Proportion of FEV1 Below GLI Global Lower Limit of Normal in Children",
+    x = "",
+    y = "FEV1 Below LLN",
+    color = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
+  theme_few() +
+  theme(legend.position = c(0.98, 0.98),
+    legend.justification = c("right", "top"))# + 
+
+
+# Summarize proportion for each index
+LLN_fvc_youth_GLIgl <- map_dfr(c(1,10), function(i) {
+  refs_youth_all_races[[i]]$variables %>%
+    group_by(race_text_nhanes, ref) %>%
+    summarise(below_llm = mean(fvc_below_lln_GLIgl, na.rm = TRUE), .groups = "drop") %>%
+    mutate(index = case_match(ref,
+                              "reference" ~ "before exclusions",
+                              "+ healthy diet" ~ "after exclusions")) %>%
+    mutate(index = factor(index, levels=c("before exclusions",
+                                 "after exclusions")))
+})
+
+# Plot
+ggplot(LLN_fvc_youth_GLIgl, aes(x = index, 
+                          y = below_llm, 
+                          color = race_text_nhanes,
+                          group = race_text_nhanes)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Proportion of FVC Below GLI Global Lower Limit of Normal in Children",
+    x = "",
+    y = "FVC Below LLN",
+    color = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.15))  +
+  theme_few() +
+  theme(legend.position = c(0.98, 0.98),
+    legend.justification = c("right", "top"))
+
+```

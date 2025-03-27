@@ -160,7 +160,43 @@ createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', Bir
     drop_na(fev1, fvc) %>%
     srvyr::filter(spiro_status_pre == 1) %>%
     srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
+    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(
+      race_spiro = case_match(
+        race_text_nhanes,
+        "Non-Hispanic White" ~ 1, 
+        "Mexican American"   ~ 1,
+        "Non-Hispanic Black" ~ 2,
+        "Non-Hispanic Asian" ~ 4, 
+        "Other Race - Including Multi-Racial" ~ 5,
+        "Other Hispanic" ~ 1,
+      ),
+      fev1_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FEV1"),
+      fev1_below_lln_GLIgl = fev1/1000 < fev1_lln_GLIgl,
+      fev1_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FEV1"),
+      fev1_below_lln_GLI = fev1/1000 < fev1_lln_GLI,
+      fvc_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FVC"),
+      fvc_below_lln_GLIgl = fvc/1000 < fvc_lln_GLIgl,
+      fvc_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FVC"),
+      fvc_below_lln_GLI = fvc/1000 < fvc_lln_GLI,
+      
+      )
+  
+    
     # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
   
   message(paste0("NHANES N (excluding missing or low quality spiro: ", 
@@ -956,7 +992,8 @@ plot_participants_change <- function(refs_adult_list, refs_youth_list, single_se
       scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6))  +
       ggtitle(title) +
       guides(fill=guide_legend(title="Race")) +
-      theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+      theme_few() +
+      theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
     
     if (suppress_legend) {
       p <- p +  theme(legend.position="none")
