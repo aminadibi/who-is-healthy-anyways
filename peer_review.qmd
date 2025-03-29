@@ -457,7 +457,7 @@ figure4
 
 ```{r}
 
-createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', includedRace=c(3,4), leaveOneIn=FALSE) {
+createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', includedRace=c(1,2), leaveOneIn=FALSE) {
   if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
     stop("Invalid age group")
   if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
@@ -465,18 +465,21 @@ createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='
   if (!(sex %in% c("all", "male", "female"))) 
     stop("Invalid sex")
   
+  message("NHANES III")
+  
 
   nhanes <- readRDS("nhanesIII.rds") %>%
+    drop_na(WTPFEX6) %>%
   as_survey_design(
-    weights=MEC6YR,
-    ids=SDMVPSU,
-    strata=SDMVSTRA,
+    weights=WTPFEX6,
+    ids=SDPPSU6,
+    strata=SDPSTRA6,
     nest=TRUE
   )
   
-  stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
-  stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
-  stopifnot(((nhanes %>% drop_na(fev1_pre, fvc_pre))$variables  %>% count()) == 20050) 
+  stopifnot((nhanes$variables %>% count()) == 31311) # Ensure we have the correct 
+  stopifnot(((nhanes %>% srvyr::filter(race %in% c(1,2)))$variables %>% count()) == 20726) 
+  stopifnot(((nhanes %>% drop_na(fev1, fvc))$variables  %>% count()) == 15893) 
   
   if (sex=='female') {
     warning('only females are included.')
@@ -489,51 +492,40 @@ createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='
   }
 
   nhanes <- nhanes %>%
-    mutate(fev1 = fev1_pre,
-           fvc  = fvc_pre) %>%
     drop_na(fev1, fvc) %>%
-    srvyr::filter(spiro_status_pre == 1) %>%
-    srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
-    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    # srvyr::filter(spiro_status_pre == 1) %>%
+    # srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    # srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
     mutate(
-      race_spiro = case_match(
-        race_text_nhanes,
-        "Non-Hispanic White" ~ 1, 
-        "Mexican American"   ~ 1,
-        "Non-Hispanic Black" ~ 2,
-        "Non-Hispanic Asian" ~ 4, 
-        "Other Race - Including Multi-Racial" ~ 5,
-        "Other Hispanic" ~ 1,
-      ),
       fev1_lln_GLIgl = LLN_GLIgl(age=age, 
                                  height=height/100, 
                                  gender=sex,
                                  param="FEV1"),
-      fev1_below_lln_GLIgl = fev1/1000 < fev1_lln_GLIgl,
+      fev1_below_lln_GLIgl = fev1 < fev1_lln_GLIgl,
       fev1_lln_GLI = LLN_GLI(age=age, 
                              height=height/100, 
                              gender=sex,
-                             ethnicity=race_spiro,
+                             ethnicity=race_spiro_gli2012,
                              param="FEV1"),
-      fev1_below_lln_GLI = fev1/1000 < fev1_lln_GLI,
+      fev1_below_lln_GLI = fev1 < fev1_lln_GLI,
       fvc_lln_GLIgl = LLN_GLIgl(age=age, 
                                  height=height/100, 
                                  gender=sex,
                                  param="FVC"),
-      fvc_below_lln_GLIgl = fvc/1000 < fvc_lln_GLIgl,
+      fvc_below_lln_GLIgl = fvc < fvc_lln_GLIgl,
       fvc_lln_GLI = LLN_GLI(age=age, 
                              height=height/100, 
                              gender=sex,
-                             ethnicity=race_spiro,
+                             ethnicity=race_spiro_gli2012,
                              param="FVC"),
-      fvc_below_lln_GLI = fvc/1000 < fvc_lln_GLI,
+      fvc_below_lln_GLI = fvc < fvc_lln_GLI,
       
       )
   
     
     # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
   
-  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+  message(paste0("NHANES III N (excluding missing or low quality spiro: ", 
                  (nhanes$variables %>% count())))
   
   if (BirthCountry=='all'){
@@ -561,7 +553,7 @@ nhanes_bw <- nhanes_bw %>%
   
 if (ageGroup=="children") {
 nhanes_bw <- nhanes_bw %>%
-  srvyr::filter(age<20)
+  srvyr::filter(age<20 & age>5)
 
   message(paste0(ageGroup, "-NHANES : ", 
                  (nhanes_bw$variables %>% count())))
@@ -591,16 +583,14 @@ ref0$variables %>%
 ref1 <- ref0 %>%
   srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
          (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
-         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
-         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
-         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_smoked_20_cigars) |  (ever_smoked_20_cigars != "1")) &
+         (is.na(ever_smoked_20_pipes) | (ever_smoked_20_pipes != "1")) &
          (is.na(ever_asthma) | (ever_asthma !="1")) &
          (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
          (is.na(ever_emphysema) | (ever_emphysema != "1")) &
          (is.na(cough_3_month) | (cough_3_month!=1)) & 
          (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
-         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
-         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1))) %>%
   mutate(ref="reference")
 
 if (incomePovertyRatioOnly) {
@@ -648,7 +638,7 @@ ref4 <- ref1 %>%
   mutate(ref="no maternal smoke")
   
 ref5 <- ref1 %>%  
-      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      srvyr::filter((is.na(household_smoker) | (household_smoker != "1"))) %>%
       mutate(ref="no 2ndhand smoke")
 
 ref6 <- ref1 %>%
@@ -666,7 +656,8 @@ ref8 <- ref1 %>%
 
 if (ageGroup=="adult") {
   ref9 <- ref1 %>%
-    srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+    srvyr::filter(is.na(highest_yr_school_completed) | 
+                    (highest_yr_school_completed >= 17))  %>%
   mutate(ref="educated")
 }
 
@@ -684,46 +675,45 @@ ref10 <- ref1 %>%
   mutate(ref="healthy diet")
 }
 
-if (!incomePovertyRatioOnly & !AllostaticLoadOnly &!leaveOneIn) {
+if (!incomePovertyRatioOnly &!leaveOneIn) {
 ref2 <- ref1 %>%
-    srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
-         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
-         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
-         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+    srvyr::filter((is.na(wear_dust_mask) | (wear_dust_mask!=1)) & 
+                 (is.na(wear_respirator) | (wear_respirator!=1))) %>%
   mutate(ref="+ job unexposed")
   
   
-ref3 <- ref2 %>%
-      srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
-         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
-         (is.na(moderate_work)   | (moderate_work==1)) | 
-         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
-  mutate(ref="+ physically active")
+#ref3 <- ref2 %>%
+#      srvyr::filter(
+#         (is.na(vigorous_work) | (vigorous_work==1)) | 
+#         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+#         (is.na(moderate_work)   | (moderate_work==1)) | 
+#         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+#  mutate(ref="+ physically active")
 
-ref4 <- ref3 %>%
+ref4 <- ref2 %>%
       srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
   mutate(ref="+ no maternal smoke")
   
 ref5 <- ref4 %>%  
-      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      srvyr::filter((is.na(household_smoker) | (household_smoker != "1"))) %>%
       mutate(ref="+ no 2ndhand smoke")
 
 ref6 <- ref5 %>%
       srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
   mutate(ref="+ not obese")
 
-ref7 <- ref6 %>%
-    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
-  mutate(ref="+ homeowner")
+# ref7 <- ref6 %>%
+#     srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+#   mutate(ref="+ homeowner")
 
-ref8 <- ref7 %>%
+ref8 <- ref6 %>%
      srvyr::filter((is.na(has_insurance) | 
                (has_insurance==1)))  %>%
   mutate(ref="+ insured")
 
 if (ageGroup=="adult") {
   ref9 <- ref8 %>%
-  srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+  srvyr::filter(is.na(highest_yr_school_completed) | (highest_yr_school_completed>=17))  %>%
   mutate(ref="+ educated")
 }
 
@@ -733,34 +723,54 @@ if (ageGroup=="children") {
   mutate(ref="+ educated")
 }
 
-ref10 <- ref9 %>%
-     srvyr::filter((is.na(healthy_diet) | 
-               (healthy_diet==1) | 
-               (healthy_diet==2) | 
-               (healthy_diet==3)))  %>%
-  mutate(ref="+ healthy diet")
+# ref10 <- ref9 %>%
+#      srvyr::filter((is.na(healthy_diet) | 
+#                (healthy_diet==1) | 
+#                (healthy_diet==2) | 
+#                (healthy_diet==3)))  %>%
+#   mutate(ref="+ healthy diet")
 
-
-  ref11 <- ref10 %>%
-     srvyr::filter((is.na(lang_home_hispanic) | 
-               (lang_home_hispanic==4) | 
-               (lang_home_hispanic==5)))  %>%
-     srvyr::filter((is.na(lang_home_asian) | 
-               (lang_home_asian==4) | 
-               (lang_home_asian==5)))  %>%
-     srvyr::filter((is.na(lang_home_en_bw) | 
-               (lang_home_en_bw==1)))  %>%
-  mutate(ref="+ English at home")
+# 
+#   ref11 <- ref9 %>%
+#      srvyr::filter((is.na(lang_home_hispanic) | 
+#                (lang_home_hispanic==4) | 
+#                (lang_home_hispanic==5)))  %>%
+#      srvyr::filter((is.na(lang_home_asian) | 
+#                (lang_home_asian==4) | 
+#                (lang_home_asian==5)))  %>%
+#      srvyr::filter((is.na(lang_home_en_bw) | 
+#                (lang_home_en_bw==1)))  %>%
+#   mutate(ref="+ English at home")
   
 
 }
 
 
-refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+refs <- list(ref1, ref2, ref4, ref5, ref6, ref8, ref9)
 
 
 return(refs)
 }
+
+
+```
+
+Now let's
+
+```{r}
+
+refs_adult <- createCohort("adult")
+message("Adult counts:")
+message(map_df(refs_adult, ~ count(.x$variables)))
+
+refs_youth <- createCohort("children")
+message("Youth counts:")
+message(map_df(refs_youth, ~ count(.x$variables)))
+
+
+
+refs_adult_nhanesIII <- createCohortNHANESIII('adult')
+refs_youth_nhanesIII <- createCohortNHANESIII('youth')
 
 
 ```
