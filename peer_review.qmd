@@ -452,3 +452,374 @@ figure4 <-
 figure4
 
 ```
+
+## Repeat with NHANES III
+
+```{r}
+
+createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4), leaveOneIn=FALSE) {
+  if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
+    stop("Invalid age group")
+  if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
+    stop("Invalid BirthCountry")
+  if (!(sex %in% c("all", "male", "female"))) 
+    stop("Invalid sex")
+  
+
+  nhanes <- readRDS("nhanes_2007_2012.rds") %>%
+  as_survey_design(
+    weights=MEC6YR,
+    ids=SDMVPSU,
+    strata=SDMVSTRA,
+    nest=TRUE
+  )
+  
+  if (AllostaticLoadOnly) {
+    
+    nhanes <- nhanes %>%
+    mutate(
+     mean_bp_sys=mean(c(bp_sys_1, bp_sys_2, bp_sys_3, bp_sys_4), na.rm = TRUE), 
+     mean_bp_dias=mean(c(bp_dias_1, bp_dias_2, bp_dias_3, bp_dias_4), na.rm = TRUE), 
+     als_crp                    = as.numeric((percent_rank(crp)                    >=0.75)),
+     als_wbc                    = as.numeric((percent_rank(wbc)                    >=0.75)),
+     als_glycohemoglobin        = as.numeric((percent_rank(glycohemoglobin)        >=0.75)),
+     als_albumin_ug_ml          = as.numeric((percent_rank(albumin_ug_ml)          <=0.25)),
+     als_creatinin_mg_dl        = as.numeric((percent_rank(creatinin_mg_dl)        >=0.75)),
+     als_total_cholesterol_mg_dl= as.numeric((percent_rank(total_cholesterol_mg_dl)>=0.75)),
+     als_hdl_mg_dl              = as.numeric((percent_rank(hdl_mg_dl)              <=0.25)),
+     als_trigly_mg_dl           = as.numeric((percent_rank(trigly_mg_dl)           >=0.75)),
+     als_bmi                    = as.numeric((percent_rank(bmi)                    >=0.75)),
+     als_mean_bp_sys            = as.numeric((percent_rank(mean_bp_sys)            >=0.75)),
+       als_mean_bp_dias         = as.numeric((percent_rank(mean_bp_dias)           >=0.75)),
+       als_pulse_60_sec         = as.numeric((percent_rank(pulse_60_sec)           >=0.75)),
+      ) %>%
+      mutate(als_score = rowSums(srvyr::select(., als_crp, als_wbc, als_glycohemoglobin, als_albumin_ug_ml,
+                                               als_creatinin_mg_dl, als_total_cholesterol_mg_dl, als_hdl_mg_dl, als_trigly_mg_dl,
+                                               als_bmi, als_mean_bp_sys, als_mean_bp_dias, als_pulse_60_sec
+                                               )$variables, na.rm = TRUE))
+
+  }
+  
+  
+  stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
+  stopifnot(((nhanes %>% drop_na(fev1_pre, fvc_pre))$variables  %>% count()) == 20050) 
+  
+  if (sex=='female') {
+    warning('only females are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==2)
+  }
+  
+  if (sex=='male') {
+    warning('only males are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==1)
+  }
+
+  nhanes <- nhanes %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
+    drop_na(fev1, fvc) %>%
+    srvyr::filter(spiro_status_pre == 1) %>%
+    srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(
+      race_spiro = case_match(
+        race_text_nhanes,
+        "Non-Hispanic White" ~ 1, 
+        "Mexican American"   ~ 1,
+        "Non-Hispanic Black" ~ 2,
+        "Non-Hispanic Asian" ~ 4, 
+        "Other Race - Including Multi-Racial" ~ 5,
+        "Other Hispanic" ~ 1,
+      ),
+      fev1_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FEV1"),
+      fev1_below_lln_GLIgl = fev1/1000 < fev1_lln_GLIgl,
+      fev1_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FEV1"),
+      fev1_below_lln_GLI = fev1/1000 < fev1_lln_GLI,
+      fvc_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FVC"),
+      fvc_below_lln_GLIgl = fvc/1000 < fvc_lln_GLIgl,
+      fvc_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FVC"),
+      fvc_below_lln_GLI = fvc/1000 < fvc_lln_GLI,
+      
+      )
+  
+    
+    # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
+  
+  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+                 (nhanes$variables %>% count())))
+  
+  if (BirthCountry=='all'){
+      nhanes_bw <- nhanes %>%
+        srvyr::filter(race %in% includedRace) %>%
+        mutate(race=factor(race, levels=includedRace))
+  } else  {
+          nhanes_bw <- nhanes %>%
+            srvyr::filter(race %in% includedRace) %>%
+            srvyr::filter(birth_country==BirthCountry) %>%
+            mutate(race=factor(race, levels=includedRace))
+
+  } 
+
+  message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
+                 (nhanes_bw$variables %>% count())))
+  
+if (ageGroup=="adult") {
+nhanes_bw <- nhanes_bw %>%
+  srvyr::filter(age>=20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+  
+if (ageGroup=="children") {
+nhanes_bw <- nhanes_bw %>%
+  srvyr::filter(age<20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+  
+if (ageGroup=="all_ages") {
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+ 
+#vis_miss(nhanes_bw, warn_large_data = F)
+
+ref0 <- nhanes_bw %>%
+   mutate(
+        sex_text = case_match(sex,
+                              "1" ~ "Male",
+                              "2" ~ "Female" ),
+        ref="population"
+        ) 
+  
+
+ref0$variables %>%
+  group_by(race) %>%
+  count()
+
+ref1 <- ref0 %>%
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(ref="reference")
+
+if (incomePovertyRatioOnly) {
+  ref2 <- ref1 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=1)) %>%
+  mutate(ref="income_poverty_ratio>=1")
+  ref3 <- ref2 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=1.5)) %>%
+  mutate(ref="income_poverty_ratio>=1.5")
+  ref4 <- ref3 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=2)) %>%
+  mutate(ref="income_poverty_ratio>=2")
+  ref5 <- ref4 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=2.5))  %>%
+  mutate(ref="income_poverty_ratio>=2.5")
+  ref6 <- ref5 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=3)) %>%
+  mutate(ref="income_poverty_ratio>=3")
+  ref7 <- ref6 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=3.5))  %>%
+  mutate(ref="income_poverty_ratio>=3.5")
+  ref8 <- ref7 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=4))  %>%
+  mutate(ref="income_poverty_ratio>=4")
+  ref9 <- ref8 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=4.5))  %>%
+  mutate(ref="income_poverty_ratio>=4.5")
+  ref10<- ref9 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=5))  %>%
+  mutate(ref="income_poverty_ratio>=5")
+  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+}
+
+
+if (AllostaticLoadOnly) {
+  ref2 <- ref1 %>% srvyr::filter(is.na(als_score) | (als_score<=8)) %>%
+  mutate(ref="als_score<=8")
+  ref3 <- ref2 %>% srvyr::filter(is.na(als_score) | (als_score<=7)) %>%
+  mutate(ref="als_score<=7")
+  ref4 <- ref3 %>% srvyr::filter(is.na(als_score) | (als_score<=6)) %>%
+  mutate(ref="als_score<=6")
+  ref5 <- ref4 %>% srvyr::filter(is.na(als_score) | (als_score<=5))  %>%
+  mutate(ref="als_score<=5")
+  ref6 <- ref5 %>% srvyr::filter(is.na(als_score) | (als_score<=4)) %>%
+  mutate(ref="als_score<=4")
+  ref7 <- ref6 %>% srvyr::filter(is.na(als_score) | (als_score<=3))  %>%
+  mutate(ref="als_score<=3")
+  ref8 <- ref7 %>% srvyr::filter(is.na(als_score) | (als_score<=2))  %>%
+  mutate(ref="als_score<=2")
+  ref9 <- ref8 %>% srvyr::filter(is.na(als_score) | (als_score<=1))  %>%
+  mutate(ref="als_score<=1")
+  ref10<- ref9 %>% srvyr::filter(is.na(als_score) | (als_score<=0))  %>%
+  mutate(ref="als_score<=0")
+  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+}
+
+
+if (homeOwnershipOnly) {
+  ref2 <- ref1 %>% 
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1)) %>%
+  mutate(ref="home owner")
+  refs <- list(ref1, ref2)
+
+}
+
+if (leaveOneIn) {
+  ref2 <- ref1 %>%
+    srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+  mutate(ref="job unexposed")
+  
+  
+ref3 <- ref1 %>%
+      srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+         (is.na(moderate_work)   | (moderate_work==1)) | 
+         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+  mutate(ref="physically active")
+
+ref4 <- ref1 %>%
+      srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+  mutate(ref="no maternal smoke")
+  
+ref5 <- ref1 %>%  
+      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      mutate(ref="no 2ndhand smoke")
+
+ref6 <- ref1 %>%
+      srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="not obese")
+
+ref7 <- ref1 %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+  mutate(ref="homeowner")
+
+ref8 <- ref1 %>%
+     srvyr::filter((is.na(has_insurance) | 
+               (has_insurance==1)))  %>%
+  mutate(ref="insured")
+
+if (ageGroup=="adult") {
+  ref9 <- ref1 %>%
+    srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+  mutate(ref="educated")
+}
+
+if (ageGroup=="children") {
+  ref9 <- ref1 %>%
+    srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+  mutate(ref="educated")
+}
+
+ref10 <- ref1 %>%
+    srvyr::filter((is.na(healthy_diet) | 
+               (healthy_diet==1) | 
+               (healthy_diet==2) | 
+               (healthy_diet==3)))  %>%
+  mutate(ref="healthy diet")
+}
+
+if (!incomePovertyRatioOnly & !homeOwnershipOnly & !AllostaticLoadOnly &!leaveOneIn) {
+ref2 <- ref1 %>%
+    srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+  mutate(ref="+ job unexposed")
+  
+  
+ref3 <- ref2 %>%
+      srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+         (is.na(moderate_work)   | (moderate_work==1)) | 
+         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+  mutate(ref="+ physically active")
+
+ref4 <- ref3 %>%
+      srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+  mutate(ref="+ no maternal smoke")
+  
+ref5 <- ref4 %>%  
+      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      mutate(ref="+ no 2ndhand smoke")
+
+ref6 <- ref5 %>%
+      srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="+ not obese")
+
+ref7 <- ref6 %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+  mutate(ref="+ homeowner")
+
+ref8 <- ref7 %>%
+     srvyr::filter((is.na(has_insurance) | 
+               (has_insurance==1)))  %>%
+  mutate(ref="+ insured")
+
+if (ageGroup=="adult") {
+  ref9 <- ref8 %>%
+  srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+  mutate(ref="+ educated")
+}
+
+if (ageGroup=="children") {
+  ref9 <- ref8 %>%
+    filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+  mutate(ref="+ educated")
+}
+
+ref10 <- ref9 %>%
+     srvyr::filter((is.na(healthy_diet) | 
+               (healthy_diet==1) | 
+               (healthy_diet==2) | 
+               (healthy_diet==3)))  %>%
+  mutate(ref="+ healthy diet")
+
+
+  ref11 <- ref10 %>%
+     srvyr::filter((is.na(lang_home_hispanic) | 
+               (lang_home_hispanic==4) | 
+               (lang_home_hispanic==5)))  %>%
+     srvyr::filter((is.na(lang_home_asian) | 
+               (lang_home_asian==4) | 
+               (lang_home_asian==5)))  %>%
+     srvyr::filter((is.na(lang_home_en_bw) | 
+               (lang_home_en_bw==1)))  %>%
+  mutate(ref="+ English at home")
+  
+
+}
+
+
+refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+
+return(refs)
+}
+
+
+```
