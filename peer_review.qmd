@@ -121,10 +121,10 @@ nhanes_excluded <- nhanes  %>%
                                               "9-11th grade",
                                               "Less than 9th grade"
                                    )),
-         now_attending_school = case_match(now_attending_school,
+         now_attending_school = case_match(school_now,
                                            1 ~ "In school",
                                            2 ~ "Between grades",
-                                           2 ~ "Not in school"),
+                                           3 ~ "Not in school"),
          smoker_in_household = case_match(smoker_in_household,
                                           1 ~ "Yes",
                                           2 ~ "No"),
@@ -663,7 +663,7 @@ if (ageGroup=="adult") {
 
 if (ageGroup=="children") {
   ref9 <- ref1 %>%
-    srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+    srvyr::filter(is.na(school_now) | (school_now != 3)| (age<6))  %>%
   mutate(ref="educated")
 }
 
@@ -719,7 +719,7 @@ if (ageGroup=="adult") {
 
 if (ageGroup=="children") {
   ref9 <- ref8 %>%
-    filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+    filter(is.na(school_now) | (school_now != 3)| (age<6))  %>%
   mutate(ref="+ educated")
 }
 
@@ -759,18 +759,11 @@ Now let's
 
 ```{r}
 
-refs_adult <- createCohort("adult")
-message("Adult counts:")
-message(map_df(refs_adult, ~ count(.x$variables)))
-
-refs_youth <- createCohort("children")
-message("Youth counts:")
-message(map_df(refs_youth, ~ count(.x$variables)))
-
-
-
 refs_adult_nhanesIII <- createCohortNHANESIII('adult')
-refs_youth_nhanesIII <- createCohortNHANESIII('youth')
+refs_youth_nhanesIII <- createCohortNHANESIII('children')
 
+plot_racial_gap_change(refs_nhanesIII, refs_nhanesIII) + plot_annotation(
+  caption = "Non-Hispanic Black vs. Non-Hispanic White population in NHANES III"
+  )
 
 ```
