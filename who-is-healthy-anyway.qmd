@@ -806,7 +806,7 @@ table1 <- readRDS("nhanes_2007_2012.rds") %>%
          now_attending_school = case_match(now_attending_school,
                                            1 ~ "In school",
                                            2 ~ "Between grades",
-                                           2 ~ "Not in school"),
+                                           3 ~ "Not in school"),
          smoker_in_household = case_match(smoker_in_household,
                                           1 ~ "Yes",
                                           2 ~ "No"),
@@ -853,32 +853,25 @@ table1 <- readRDS("nhanes_2007_2012.rds") %>%
                                             1 ~ "Yes",
                                             2 ~ "No"),
          
-         smoker=
-           !((is.na(current_smoke) | (current_smoke == "3")) &
-               (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
-               (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
-               (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
-               (is.na(last_5_days_cigars) | (last_5_days_cigars != "1"))),
-         resp_symptoms = !((is.na(cough_3_month) | (cough_3_month!=1)) & 
-                             (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
-                             (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
-                             (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))),
-         resp_dx = !((is.na(ever_asthma) | (ever_asthma !="1")) &
-                       (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
-                       (is.na(ever_emphysema) | (ever_emphysema != "1"))),
-         physically_active = ((is.na(vigorous_work) | (vigorous_work==1)) | 
-                                (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
-                                (is.na(moderate_work)   | (moderate_work==1)) | 
-                                (is.na(moderate_recreational)   | (moderate_recreational==1))),
-         occupational_exposure = !((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
-                                     (is.na(organic_dusts)   | (organic_dusts!=1)) & 
-                                     (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
-                                     (is.na(other_fumes)     | (other_fumes!=1))),
-         home_owner = (is.na(home_ownership) | (home_ownership==1)), 
-         healthy_eater = ((is.na(healthy_diet) | 
-                             (healthy_diet==1) | 
-                             (healthy_diet==2) | 
-                             (healthy_diet==3)))
+         # smoker=
+         #   !((is.na(current_smoke) | (current_smoke == "3")) &
+         #       (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         #       (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         #       (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         #       (is.na(last_5_days_cigars) | (last_5_days_cigars != "1"))),
+         # resp_symptoms = !((is.na(cough_3_month) | (cough_3_month!=1)) & 
+         #                     (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         #                     (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         #                     (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))),
+         # resp_dx = !((is.na(ever_asthma) | (ever_asthma !="1")) &
+         #               (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         #               (is.na(ever_emphysema) | (ever_emphysema != "1"))),
+         physically_active = 
+           ((is.na(vigorous_work) | (vigorous_work=="Yes")) | 
+           (is.na(vigorous_recreational)   | (vigorous_recreational=="Yes")) | 
+           (is.na(moderate_work)   | (moderate_work=="Yes")) | 
+            (is.na(moderate_recreational)   | (moderate_recreational=="Yes"))),
+         home_owner = (is.na(home_ownership) | (home_ownership=="Owned or being bought")),
   ) 
 
 label(table1$variables$race_text_nhanes) <- "Race and Ethnicity"
