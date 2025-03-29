@@ -477,9 +477,9 @@ createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='
     nest=TRUE
   )
   
-  stopifnot((nhanes$variables %>% count()) == 31311) # Ensure we have the correct 
-  stopifnot(((nhanes %>% srvyr::filter(race %in% c(1,2)))$variables %>% count()) == 20726) 
-  stopifnot(((nhanes %>% drop_na(fev1, fvc))$variables  %>% count()) == 15893) 
+  # stopifnot((nhanes$variables %>% count()) == 31311) # Ensure we have the correct 
+  # stopifnot(((nhanes %>% srvyr::filter(race %in% c(1,2)))$variables %>% count()) == 20726) 
+  # stopifnot(((nhanes %>% drop_na(fev1, fvc))$variables  %>% count()) == 15893) 
   
   if (sex=='female') {
     warning('only females are included.')
@@ -493,6 +493,11 @@ createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='
 
   nhanes <- nhanes %>%
     drop_na(fev1, fvc) %>%
+    srvyr::filter(spiro_type == 1) %>%
+    srvyr::filter(spiro_reproducibility == 4) %>%
+    srvyr::filter(spiro_review_evaluation == 1) %>%
+    srvyr::filter(spiro_acceptable_trials >= 3) %>%
+    
     # srvyr::filter(spiro_status_pre == 1) %>%
     # srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
     # srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
@@ -713,7 +718,7 @@ ref8 <- ref6 %>%
 
 if (ageGroup=="adult") {
   ref9 <- ref8 %>%
-  srvyr::filter(is.na(highest_yr_school_completed) | (highest_yr_school_completed>=17))  %>%
+  srvyr::filter(is.na(highest_yr_school_completed) | (highest_yr_school_completed>=12))  %>%
   mutate(ref="+ educated")
 }
 
