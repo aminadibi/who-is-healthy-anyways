@@ -760,9 +760,14 @@ Now let's
 ```{r}
 
 refs_adult_nhanesIII <- createCohortNHANESIII('adult')
-refs_youth_nhanesIII <- createCohortNHANESIII('children')
+message("Adult NHANES III counts:")
+message(map_df(refs_adult_nhanesIII,~ count(.x$variables)))
 
-plot_racial_gap_change(refs_nhanesIII, refs_nhanesIII) + plot_annotation(
+refs_youth_nhanesIII <- createCohortNHANESIII('children')
+message("Children NHANES III counts:")
+message(map_df(refs_youth_nhanesIII,~ count(.x$variables)))
+
+plot_racial_gap_change(refs_adult_nhanesIII, refs_youth_nhanesIII, includedRace=c(1,2)) + plot_annotation(
   caption = "Non-Hispanic Black vs. Non-Hispanic White population in NHANES III"
   )
 
