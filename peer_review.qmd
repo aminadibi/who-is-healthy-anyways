@@ -457,7 +457,7 @@ figure4
 
 ```{r}
 
-createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4), leaveOneIn=FALSE) {
+createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', includedRace=c(3,4), leaveOneIn=FALSE) {
   if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
     stop("Invalid age group")
   if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
@@ -466,40 +466,13 @@ createCohortNHANESIII <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='
     stop("Invalid sex")
   
 
-  nhanes <- readRDS("nhanes_2007_2012.rds") %>%
+  nhanes <- readRDS("nhanesIII.rds") %>%
   as_survey_design(
     weights=MEC6YR,
     ids=SDMVPSU,
     strata=SDMVSTRA,
     nest=TRUE
   )
-  
-  if (AllostaticLoadOnly) {
-    
-    nhanes <- nhanes %>%
-    mutate(
-     mean_bp_sys=mean(c(bp_sys_1, bp_sys_2, bp_sys_3, bp_sys_4), na.rm = TRUE), 
-     mean_bp_dias=mean(c(bp_dias_1, bp_dias_2, bp_dias_3, bp_dias_4), na.rm = TRUE), 
-     als_crp                    = as.numeric((percent_rank(crp)                    >=0.75)),
-     als_wbc                    = as.numeric((percent_rank(wbc)                    >=0.75)),
-     als_glycohemoglobin        = as.numeric((percent_rank(glycohemoglobin)        >=0.75)),
-     als_albumin_ug_ml          = as.numeric((percent_rank(albumin_ug_ml)          <=0.25)),
-     als_creatinin_mg_dl        = as.numeric((percent_rank(creatinin_mg_dl)        >=0.75)),
-     als_total_cholesterol_mg_dl= as.numeric((percent_rank(total_cholesterol_mg_dl)>=0.75)),
-     als_hdl_mg_dl              = as.numeric((percent_rank(hdl_mg_dl)              <=0.25)),
-     als_trigly_mg_dl           = as.numeric((percent_rank(trigly_mg_dl)           >=0.75)),
-     als_bmi                    = as.numeric((percent_rank(bmi)                    >=0.75)),
-     als_mean_bp_sys            = as.numeric((percent_rank(mean_bp_sys)            >=0.75)),
-       als_mean_bp_dias         = as.numeric((percent_rank(mean_bp_dias)           >=0.75)),
-       als_pulse_60_sec         = as.numeric((percent_rank(pulse_60_sec)           >=0.75)),
-      ) %>%
-      mutate(als_score = rowSums(srvyr::select(., als_crp, als_wbc, als_glycohemoglobin, als_albumin_ug_ml,
-                                               als_creatinin_mg_dl, als_total_cholesterol_mg_dl, als_hdl_mg_dl, als_trigly_mg_dl,
-                                               als_bmi, als_mean_bp_sys, als_mean_bp_dias, als_pulse_60_sec
-                                               )$variables, na.rm = TRUE))
-
-  }
-  
   
   stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
   stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
@@ -654,38 +627,6 @@ if (incomePovertyRatioOnly) {
 }
 
 
-if (AllostaticLoadOnly) {
-  ref2 <- ref1 %>% srvyr::filter(is.na(als_score) | (als_score<=8)) %>%
-  mutate(ref="als_score<=8")
-  ref3 <- ref2 %>% srvyr::filter(is.na(als_score) | (als_score<=7)) %>%
-  mutate(ref="als_score<=7")
-  ref4 <- ref3 %>% srvyr::filter(is.na(als_score) | (als_score<=6)) %>%
-  mutate(ref="als_score<=6")
-  ref5 <- ref4 %>% srvyr::filter(is.na(als_score) | (als_score<=5))  %>%
-  mutate(ref="als_score<=5")
-  ref6 <- ref5 %>% srvyr::filter(is.na(als_score) | (als_score<=4)) %>%
-  mutate(ref="als_score<=4")
-  ref7 <- ref6 %>% srvyr::filter(is.na(als_score) | (als_score<=3))  %>%
-  mutate(ref="als_score<=3")
-  ref8 <- ref7 %>% srvyr::filter(is.na(als_score) | (als_score<=2))  %>%
-  mutate(ref="als_score<=2")
-  ref9 <- ref8 %>% srvyr::filter(is.na(als_score) | (als_score<=1))  %>%
-  mutate(ref="als_score<=1")
-  ref10<- ref9 %>% srvyr::filter(is.na(als_score) | (als_score<=0))  %>%
-  mutate(ref="als_score<=0")
-  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
-
-}
-
-
-if (homeOwnershipOnly) {
-  ref2 <- ref1 %>% 
-    srvyr::filter(is.na(home_ownership) | (home_ownership==1)) %>%
-  mutate(ref="home owner")
-  refs <- list(ref1, ref2)
-
-}
-
 if (leaveOneIn) {
   ref2 <- ref1 %>%
     srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
@@ -743,7 +684,7 @@ ref10 <- ref1 %>%
   mutate(ref="healthy diet")
 }
 
-if (!incomePovertyRatioOnly & !homeOwnershipOnly & !AllostaticLoadOnly &!leaveOneIn) {
+if (!incomePovertyRatioOnly & !AllostaticLoadOnly &!leaveOneIn) {
 ref2 <- ref1 %>%
     srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
          (is.na(organic_dusts)   | (organic_dusts!=1)) & 
