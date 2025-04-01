@@ -1014,6 +1014,8 @@ plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRac
 
 fig2_plot <- plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
 
+fig2_plot
+
 ggsave("figure2.pdf", fig2_plot, width=10, height=8, units="in", dpi=300)
 ```
 
@@ -1030,9 +1032,12 @@ refs_youth <- createCohort("children")
 message("Youth counts:")
 message(map_df(refs_youth, ~ count(.x$variables)))
 
-plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
+fig3_plot <- plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
   caption = "Non-Hispanic Black vs. Non-Hispanic White population"
   )
+
+fig3_plot
+ggsave("figure3.pdf", fig3_plot, width=10, height=8, units="in", dpi=300)
 
 ```
 
