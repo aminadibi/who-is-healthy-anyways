@@ -3,10 +3,7 @@ Who is healthy anyway?
 
 This repository includes code and data for the paper:
 
-Amin Adibi, Christopher Carlsten, Emily P. Brigham, Don D. Sin, Peter
-Loewen, Mohsen Sadatsafavi, **Social Determinants of Health and Racial
-Disparities in Lung Function: Findings from NHANES 2007-2012**, *under
-review*, 2025
+Amin Adibi, Christopher Carlsten, Emily P. Brigham, Don D. Sin, Peter Loewen, Mohsen Sadatsafavi, **Social Determinants of Health and Racial Disparities in Lung Function: Findings from NHANES 2007-2012**, *Am J Respir Crit Care Med 2025*;211:2117–2126. [https://doi.org/10.1164/rccm.202501-0280OC](https://doi.org/10.1164/rccm.202501-0280OC)
 
 To reproduce results use [Quarto](https://quarto.org/) to render
 `who-is-healthy-anyway.Rmd`
