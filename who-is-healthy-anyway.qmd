@@ -41,6 +41,9 @@ author:
 date: "`r Sys.Date()`"
 execute:
   echo: false
+knitr:
+  opts_chunk:
+    dev: [png, pdf]
 ---
 
 ```{r, warning=FALSE, message=FALSE}
@@ -936,7 +939,9 @@ tbl_svysummary(table1, by = "age_group",
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: fig-popchange
-#| fig-cap: Changes in population composition in successively more restrictive reference populations. Each reference population adds additional exclusion criteria based on social determinants of health. Race and ethnicity groups that experience a decline in their percentage of the population compared to the reference baseline (moving from left to right) are disproportionately affected by the social determinants of health that are being considered here. 
+#| fig-width: 10
+#| fig-height: 8
+#| fig-cap: Changes in population composition in successively more restrictive reference populations. Each reference population adds additional exclusion criteria based on social determinants of health. Race and ethnicity groups that experience a decline in their percentage of the population compared to the reference baseline (moving from left to right) are disproportionately affected by the social determinants of health that are being considered here. In the most restrictive adult reference population, Non-Hispanic Black and Non-Hispanic Asian participants made up 3.6% and 4.0% of the population, respectively.
 
 
 refs_adult_all_races <- createCohort("adult", includedRace = c(1,2,3,4,5,6,7))
@@ -947,67 +952,59 @@ refs_youth_all_races <- createCohort("children", includedRace = c(1,2,3,4,5,6,7)
 message("Youth counts:")
 message(map_df(refs_youth_all_races, ~ count(.x$variables)))
 
-plot_participants_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
-                                     metric1="fev1", metric2="fvc", includedRace=c(1,2,3,4,5,6,7)) {
-  
-  # Combine refs_df_adult and refs_df_youth
+plot_participants_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE,
+                                     metric1="fev1", metric2="fvc", includedRace=c(1,2,3,4,5,6,7),
+                                     min_label_height = 0.028) {
+
   combine_refs_df <- function(refs_list) {
     refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]]$variables))
     refs_df %>%
       mutate(
-        # ref=ifelse(ref!="reference", str_c("+ ", ref), ref), 
         ref=factor(ref, levels=c("reference",
-                                 "+ job unexposed", 
-                                 "+ physically active", 
-                                 "+ no maternal smoke", 
-                                 "+ no 2ndhand smoke", 
-                                 "+ not obese", 
-                                 "+ homeowner", 
+                                 "+ job unexposed",
+                                 "+ physically active",
+                                 "+ no maternal smoke",
+                                 "+ no 2ndhand smoke",
+                                 "+ not obese",
+                                 "+ homeowner",
                                  "+ insured",
-                                 "+ educated", 
+                                 "+ educated",
                                  "+ healthy diet"))) %>%
       group_by(ref) %>%
       count(race_text_nhanes, wt = MEC6YR) %>%
       mutate(perc = n / sum(n)) %>%
-      ungroup()
+      ungroup() %>%
+      # Only label segments tall enough (relative to the tallest bar in the
+      # panel) for the text to fit; thinner slivers stay unlabelled.
+      mutate(label = if_else(n / max(tapply(n, ref, sum)) >= min_label_height,
+                             scales::percent(perc, accuracy = 1), NA_character_))
   }
-  
-  refs_df_percent_adult <- combine_refs_df(refs_adult_list) 
+
+  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
   refs_df_percent_youth <- combine_refs_df(refs_youth_list)
-  
-  plot_gap_perc <- function(refs_df_percent, title, suppress_legend=FALSE) {
-    p <- ggplot(refs_df_percent) +
-      geom_bar(aes(x=ref, y=n, fill=race_text_nhanes), stat="identity", position = "stack") +
-      geom_text(aes(x=ref, y=n, fill=race_text_nhanes, label=scales::percent(perc, accuracy = 1)), 
-                position = position_stack(vjust = 0.5), color = "white", size = 2) +
+
+  plot_gap_perc <- function(refs_df_percent, title) {
+    ggplot(refs_df_percent, aes(x=ref, y=n, fill=race_text_nhanes)) +
+      geom_col(width = 0.8, colour = "white", linewidth = 0.2) +
+      geom_text(aes(label=label), position = position_stack(vjust = 0.5),
+                colour = "grey15", size = 2.7, na.rm = TRUE) +
       labs(x = "", y = "Representative Population Size") +
       scale_fill_brewer(palette = "Set2") +
-      scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6))  +
+      scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6),
+                         expand = expansion(mult = c(0, 0.03))) +
       ggtitle(title) +
-      guides(fill=guide_legend(title="Race")) +
+      guides(fill=guide_legend(title=NULL, nrow = 2)) +
       theme_few() +
-      theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
-    
-    if (suppress_legend) {
-      p <- p +  theme(legend.position="none")
-    } else {
-      p <- p +  theme(legend.position="bottom") 
-    }
-    return(p)
+      theme(axis.text.x = element_text(angle = 45, size = 9, hjust = 1, vjust = 1))
   }
-  
+
   gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
   gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Children (6-19 yrs)")
-  
-  p <- (((gap_perc_black_youth) + 
-           plot_layout(axes = "collect")) | 
-          ((gap_perc_black_adult) + 
-             plot_layout(axes = "collect")) ) + 
-    plot_annotation(tag_levels = 'A') 
-  
-  p <- ((gap_perc_black_youth + gap_perc_black_adult +  
-           plot_layout(axes="collect"))/guide_area()) + plot_annotation(tag_levels = 'A') + plot_layout(guides = "collect")
-  return(p)
+
+  (gap_perc_black_youth + gap_perc_black_adult) +
+    plot_layout(guides = "collect", axes = "collect") +
+    plot_annotation(tag_levels = 'A') &
+    theme(legend.position = "bottom")
 }
 
 plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
@@ -1301,6 +1298,7 @@ Characteristics of Participants Included in the Baseline Reference Population by
 
 ::: {#suppfig-females}
 ```{r,  warning=FALSE, message=FALSE}
+#| label: appx-females
 refs_adult_female <- createCohort("adult", sex="female")
 refs_youth_female <- createCohort("children", sex="female")
 
@@ -1313,6 +1311,7 @@ Changes in lung function racial gaps between female Non-Hispanic Black and Non-H
 
 ::: {#suppfig-males}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-males
 refs_adult_male <- createCohort("adult", sex="male")
 refs_youth_male <- createCohort("children", sex="male")
 
@@ -1327,6 +1326,7 @@ Changes in lung function racial gaps between male Non-Hispanic Black and Non-His
 
 ::: {#suppfig-usborn}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-usborn
 refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
 # message("Adult counts:")
 # message(map_df(refs_adult, count))
@@ -1387,6 +1387,7 @@ Characteristics of Black Participants Included in the Baseline Reference Populat
 
 ::: {#suppfig-Mexican}
 ```{r, message=F, warning=F}
+#| label: appx-Mexican
 
 refs_adult_mex <- createCohort("adult", includedRace=c(3,1))
 message("Adult counts:")
@@ -1406,6 +1407,7 @@ Changes in lung function racial gaps between Mexican American and Non-Hispanic W
 
 ::: {#suppfig-hispanic}
 ```{r, message=F, warning=F}
+#| label: appx-hispanic
 
 refs_adult_hisp <- createCohort("adult", includedRace=c(3,2))
 message("Adult counts:")
@@ -1424,6 +1426,7 @@ Changes in lung function racial gaps between Other Hispanic and Non-Hispanic Whi
 
 ::: {#suppfig-Asian}
 ```{r, message=F, warning=F}
+#| label: appx-Asian
 refs_adult_asian <- createCohort("adult", includedRace=c(3,6))
 message("Adult counts:")
 message(map_df(refs_adult_asian, ~ count(.x$variables)))
@@ -1441,6 +1444,7 @@ Changes in lung function racial gaps between Asian and Non-Hispanic White partic
 
 ::: {#suppfig-Other}
 ```{r, message=F, warning=F}
+#| label: appx-Other
 
 refs_adult_oth <- createCohort("adult", includedRace=c(3,7))
 message("Adult counts:")
@@ -1462,6 +1466,7 @@ Changes in lung function racial gaps between Other/Multiracial and Non-Hispanic 
 
 ::: {#suppfig-allostaticload}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-allostaticload
 
 
 refs_adult_incomeAllostaticLoadOnly <- createCohort("adult", AllostaticLoadOnly=TRUE)
@@ -1478,6 +1483,7 @@ Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic
 
 ::: {#suppfig-incomepovertyratio}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-incomepovertyratio
 
 
 refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
@@ -1493,6 +1499,7 @@ Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic
 
 ::: {#suppfig-leavejob}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavejob
  plot_racial_gap_change(refs_adult[-2], refs_youth[-2])
 ```
 
@@ -1501,6 +1508,7 @@ Leaving out job exposure
 
 ::: {#suppfig-leavephysicalactivity}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavephysicalactivity
  plot_racial_gap_change(refs_adult[-3], refs_youth[-3])
 ```
 
@@ -1509,6 +1517,7 @@ Leaving out physical activity
 
 ::: {#suppfig-leavematernalsmoke}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavematernalsmoke
  plot_racial_gap_change(refs_adult[-4], refs_youth[-4])
 ```
 
@@ -1517,6 +1526,7 @@ Leaving out maternal smoke
 
 ::: {#suppfig-leavesecondhandsmoke}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavesecondhandsmoke
  plot_racial_gap_change(refs_adult[-5], refs_youth[-5])
 ```
 
@@ -1525,6 +1535,7 @@ Leaving out second-hand smoke exposure
 
 ::: {#suppfig-leaveobesity}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leaveobesity
  plot_racial_gap_change(refs_adult[-6], refs_youth[-6])
 ```
 
@@ -1533,6 +1544,7 @@ Leaving out obesity
 
 ::: {#suppfig-leavehomeowner}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavehomeowner
  plot_racial_gap_change(refs_adult[-7], refs_youth[-7])
 ```
 
@@ -1541,6 +1553,7 @@ Leaving out home ownership
 
 ::: {#suppfig-leaveinsurance}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leaveinsurance
  plot_racial_gap_change(refs_adult[-8], refs_youth[-8])
 ```
 
@@ -1549,6 +1562,7 @@ Leaving out health insurance
 
 ::: {#suppfig-leaveeducation}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leaveeducation
  plot_racial_gap_change(refs_adult[-9], refs_youth[-9])
 ```
 
@@ -1557,6 +1571,7 @@ Leaving out education
 
 ::: {#suppfig-leavediet}
 ```{r, warning=FALSE, message=FALSE}
+#| label: appx-leavediet
  plot_racial_gap_change(refs_adult[-10], refs_youth[-10])
 ```
 

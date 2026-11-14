@@ -1,0 +1,1871 @@
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+rm(list = ls(all.names = TRUE))
+library(tidyverse)
+library(purrr)
+library(naniar)
+library(tidymodels)
+library(ggthemes)
+library(patchwork)
+library(hrbrthemes)
+library(table1)
+library(rspiro)
+library(stringr)
+library(srvyr)
+library(survey)
+library(gtsummary)
+
+compute_gap_reduction <- function(df, measure, type) {
+#   print(df)
+    if (type=="perc") {
+    df %>% 
+      filter(Measure == measure) %>%
+      summarise(point_estimate = 100*(last(estimate) - first(estimate)) / first(estimate),
+                sd_diff  = sqrt((last(std.error))^2 + (first(std.error))^2),
+                low      = 100 * ((last(estimate) - first(estimate)) - 1.96 * (sd_diff)) / first(estimate) ,
+                high     = 100 * ((last(estimate) - first(estimate)) + 1.96 * (sd_diff)) / first(estimate)) %>% 
+      select(-sd_diff) %>%
+      round(2) 
+      } else if (type=="abs"){
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(point_estimate = -1*(last(estimate)  - first(estimate)),
+                  sd_diff  = sqrt((last(std.error))^2 + (first(std.error))^2),
+                  low      = point_estimate-1.96*sd_diff,
+                  high     = point_estimate+1.96*sd_diff) %>%
+          select(-sd_diff) %>% round(2)
+      } else if (type=="baseline") {
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(point_estimate = -1*(first(estimate)),
+                  low      = -1*(first(conf.high)),
+                  high     = -1*(first(conf.low)) %>% round(2)) 
+      } else if (type=="final") {
+        df %>% 
+        filter(Measure == measure) %>%
+        summarise(point_estimate = -1*(last(estimate)),
+                  low      = -1*(last(conf.high)),
+                  high     = -1*(last(conf.low)) %>% round(2)) 
+      
+    } else
+    {stop("Invalid type for compute_gap_reduction")}
+  
+}
+
+createCohort <- function (ageGroup, incomePovertyRatioOnly=FALSE, sex='all', BirthCountry='all', homeOwnershipOnly=FALSE, includedRace=c(3,4), AllostaticLoadOnly=FALSE, leaveOneIn=FALSE) {
+  if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
+    stop("Invalid age group")
+  if (!(BirthCountry %in% c("all", "US", "Other countries"))) 
+    stop("Invalid BirthCountry")
+  if (!(sex %in% c("all", "male", "female"))) 
+    stop("Invalid sex")
+  
+
+  nhanes <- readRDS("nhanes_2007_2012.rds") %>%
+  as_survey_design(
+    weights=MEC6YR,
+    ids=SDMVPSU,
+    strata=SDMVSTRA,
+    nest=TRUE
+  )
+  
+  if (AllostaticLoadOnly) {
+    
+    nhanes <- nhanes %>%
+    mutate(
+     mean_bp_sys=mean(c(bp_sys_1, bp_sys_2, bp_sys_3, bp_sys_4), na.rm = TRUE), 
+     mean_bp_dias=mean(c(bp_dias_1, bp_dias_2, bp_dias_3, bp_dias_4), na.rm = TRUE), 
+     als_crp                    = as.numeric((percent_rank(crp)                    >=0.75)),
+     als_wbc                    = as.numeric((percent_rank(wbc)                    >=0.75)),
+     als_glycohemoglobin        = as.numeric((percent_rank(glycohemoglobin)        >=0.75)),
+     als_albumin_ug_ml          = as.numeric((percent_rank(albumin_ug_ml)          <=0.25)),
+     als_creatinin_mg_dl        = as.numeric((percent_rank(creatinin_mg_dl)        >=0.75)),
+     als_total_cholesterol_mg_dl= as.numeric((percent_rank(total_cholesterol_mg_dl)>=0.75)),
+     als_hdl_mg_dl              = as.numeric((percent_rank(hdl_mg_dl)              <=0.25)),
+     als_trigly_mg_dl           = as.numeric((percent_rank(trigly_mg_dl)           >=0.75)),
+     als_bmi                    = as.numeric((percent_rank(bmi)                    >=0.75)),
+     als_mean_bp_sys            = as.numeric((percent_rank(mean_bp_sys)            >=0.75)),
+       als_mean_bp_dias         = as.numeric((percent_rank(mean_bp_dias)           >=0.75)),
+       als_pulse_60_sec         = as.numeric((percent_rank(pulse_60_sec)           >=0.75)),
+      ) %>%
+      mutate(als_score = rowSums(srvyr::select(., als_crp, als_wbc, als_glycohemoglobin, als_albumin_ug_ml,
+                                               als_creatinin_mg_dl, als_total_cholesterol_mg_dl, als_hdl_mg_dl, als_trigly_mg_dl,
+                                               als_bmi, als_mean_bp_sys, als_mean_bp_dias, als_pulse_60_sec
+                                               )$variables, na.rm = TRUE))
+
+  }
+  
+  
+  stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
+  stopifnot(((nhanes %>% drop_na(fev1_pre, fvc_pre))$variables  %>% count()) == 20050) 
+  
+  if (sex=='female') {
+    warning('only females are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==2)
+  }
+  
+  if (sex=='male') {
+    warning('only males are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==1)
+  }
+
+  nhanes <- nhanes %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
+    drop_na(fev1, fvc) %>%
+    srvyr::filter(spiro_status_pre == 1) %>%
+    srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(
+      race_spiro = case_match(
+        race_text_nhanes,
+        "Non-Hispanic White" ~ 1, 
+        "Mexican American"   ~ 1,
+        "Non-Hispanic Black" ~ 2,
+        "Non-Hispanic Asian" ~ 4, 
+        "Other Race - Including Multi-Racial" ~ 5,
+        "Other Hispanic" ~ 1,
+      ),
+      fev1_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FEV1"),
+      fev1_below_lln_GLIgl = fev1/1000 < fev1_lln_GLIgl,
+      fev1_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FEV1"),
+      fev1_below_lln_GLI = fev1/1000 < fev1_lln_GLI,
+      fvc_lln_GLIgl = LLN_GLIgl(age=age, 
+                                 height=height/100, 
+                                 gender=sex,
+                                 param="FVC"),
+      fvc_below_lln_GLIgl = fvc/1000 < fvc_lln_GLIgl,
+      fvc_lln_GLI = LLN_GLI(age=age, 
+                             height=height/100, 
+                             gender=sex,
+                             ethnicity=race_spiro,
+                             param="FVC"),
+      fvc_below_lln_GLI = fvc/1000 < fvc_lln_GLI,
+      
+      )
+  
+    
+    # mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
+  
+  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+                 (nhanes$variables %>% count())))
+  
+  if (BirthCountry=='all'){
+      nhanes_bw <- nhanes %>%
+        srvyr::filter(race %in% includedRace) %>%
+        mutate(race=factor(race, levels=includedRace))
+  } else  {
+          nhanes_bw <- nhanes %>%
+            srvyr::filter(race %in% includedRace) %>%
+            srvyr::filter(birth_country==BirthCountry) %>%
+            mutate(race=factor(race, levels=includedRace))
+
+  } 
+
+  message(paste0("NHANES included races N (excluding missing or low quality spiro: ", 
+                 (nhanes_bw$variables %>% count())))
+  
+if (ageGroup=="adult") {
+nhanes_bw <- nhanes_bw %>%
+  srvyr::filter(age>=20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+  
+if (ageGroup=="children") {
+nhanes_bw <- nhanes_bw %>%
+  srvyr::filter(age<20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+  
+if (ageGroup=="all_ages") {
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw$variables %>% count())))
+}
+ 
+#vis_miss(nhanes_bw, warn_large_data = F)
+
+ref0 <- nhanes_bw %>%
+   mutate(
+        sex_text = case_match(sex,
+                              "1" ~ "Male",
+                              "2" ~ "Female" ),
+        ref="population"
+        ) 
+  
+
+ref0$variables %>%
+  group_by(race) %>%
+  count()
+
+ref1 <- ref0 %>%
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(ref="reference")
+
+if (incomePovertyRatioOnly) {
+  ref2 <- ref1 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=1)) %>%
+  mutate(ref="income_poverty_ratio>=1")
+  ref3 <- ref2 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=1.5)) %>%
+  mutate(ref="income_poverty_ratio>=1.5")
+  ref4 <- ref3 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=2)) %>%
+  mutate(ref="income_poverty_ratio>=2")
+  ref5 <- ref4 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=2.5))  %>%
+  mutate(ref="income_poverty_ratio>=2.5")
+  ref6 <- ref5 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=3)) %>%
+  mutate(ref="income_poverty_ratio>=3")
+  ref7 <- ref6 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=3.5))  %>%
+  mutate(ref="income_poverty_ratio>=3.5")
+  ref8 <- ref7 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=4))  %>%
+  mutate(ref="income_poverty_ratio>=4")
+  ref9 <- ref8 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=4.5))  %>%
+  mutate(ref="income_poverty_ratio>=4.5")
+  ref10<- ref9 %>% srvyr::filter(is.na(income_poverty_ratio) | (income_poverty_ratio>=5))  %>%
+  mutate(ref="income_poverty_ratio>=5")
+  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+}
+
+
+if (AllostaticLoadOnly) {
+  ref2 <- ref1 %>% srvyr::filter(is.na(als_score) | (als_score<=8)) %>%
+  mutate(ref="als_score<=8")
+  ref3 <- ref2 %>% srvyr::filter(is.na(als_score) | (als_score<=7)) %>%
+  mutate(ref="als_score<=7")
+  ref4 <- ref3 %>% srvyr::filter(is.na(als_score) | (als_score<=6)) %>%
+  mutate(ref="als_score<=6")
+  ref5 <- ref4 %>% srvyr::filter(is.na(als_score) | (als_score<=5))  %>%
+  mutate(ref="als_score<=5")
+  ref6 <- ref5 %>% srvyr::filter(is.na(als_score) | (als_score<=4)) %>%
+  mutate(ref="als_score<=4")
+  ref7 <- ref6 %>% srvyr::filter(is.na(als_score) | (als_score<=3))  %>%
+  mutate(ref="als_score<=3")
+  ref8 <- ref7 %>% srvyr::filter(is.na(als_score) | (als_score<=2))  %>%
+  mutate(ref="als_score<=2")
+  ref9 <- ref8 %>% srvyr::filter(is.na(als_score) | (als_score<=1))  %>%
+  mutate(ref="als_score<=1")
+  ref10<- ref9 %>% srvyr::filter(is.na(als_score) | (als_score<=0))  %>%
+  mutate(ref="als_score<=0")
+  refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+}
+
+
+if (homeOwnershipOnly) {
+  ref2 <- ref1 %>% 
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1)) %>%
+  mutate(ref="home owner")
+  refs <- list(ref1, ref2)
+
+}
+
+if (leaveOneIn) {
+  ref2 <- ref1 %>%
+    srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+  mutate(ref="job unexposed")
+  
+  
+ref3 <- ref1 %>%
+      srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+         (is.na(moderate_work)   | (moderate_work==1)) | 
+         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+  mutate(ref="physically active")
+
+ref4 <- ref1 %>%
+      srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+  mutate(ref="no maternal smoke")
+  
+ref5 <- ref1 %>%  
+      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      mutate(ref="no 2ndhand smoke")
+
+ref6 <- ref1 %>%
+      srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="not obese")
+
+ref7 <- ref1 %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+  mutate(ref="homeowner")
+
+ref8 <- ref1 %>%
+     srvyr::filter((is.na(has_insurance) | 
+               (has_insurance==1)))  %>%
+  mutate(ref="insured")
+
+if (ageGroup=="adult") {
+  ref9 <- ref1 %>%
+    srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+  mutate(ref="educated")
+}
+
+if (ageGroup=="children") {
+  ref9 <- ref1 %>%
+    srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+  mutate(ref="educated")
+}
+
+ref10 <- ref1 %>%
+    srvyr::filter((is.na(healthy_diet) | 
+               (healthy_diet==1) | 
+               (healthy_diet==2) | 
+               (healthy_diet==3)))  %>%
+  mutate(ref="healthy diet")
+}
+
+if (!incomePovertyRatioOnly & !homeOwnershipOnly & !AllostaticLoadOnly &!leaveOneIn) {
+ref2 <- ref1 %>%
+    srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+  mutate(ref="+ job unexposed")
+  
+  
+ref3 <- ref2 %>%
+      srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+         (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+         (is.na(moderate_work)   | (moderate_work==1)) | 
+         (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+  mutate(ref="+ physically active")
+
+ref4 <- ref3 %>%
+      srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+  mutate(ref="+ no maternal smoke")
+  
+ref5 <- ref4 %>%  
+      srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+      mutate(ref="+ no 2ndhand smoke")
+
+ref6 <- ref5 %>%
+      srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="+ not obese")
+
+ref7 <- ref6 %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+  mutate(ref="+ homeowner")
+
+ref8 <- ref7 %>%
+     srvyr::filter((is.na(has_insurance) | 
+               (has_insurance==1)))  %>%
+  mutate(ref="+ insured")
+
+if (ageGroup=="adult") {
+  ref9 <- ref8 %>%
+  srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+  mutate(ref="+ educated")
+}
+
+if (ageGroup=="children") {
+  ref9 <- ref8 %>%
+    filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+  mutate(ref="+ educated")
+}
+
+ref10 <- ref9 %>%
+     srvyr::filter((is.na(healthy_diet) | 
+               (healthy_diet==1) | 
+               (healthy_diet==2) | 
+               (healthy_diet==3)))  %>%
+  mutate(ref="+ healthy diet")
+
+
+  ref11 <- ref10 %>%
+     srvyr::filter((is.na(lang_home_hispanic) | 
+               (lang_home_hispanic==4) | 
+               (lang_home_hispanic==5)))  %>%
+     srvyr::filter((is.na(lang_home_asian) | 
+               (lang_home_asian==4) | 
+               (lang_home_asian==5)))  %>%
+     srvyr::filter((is.na(lang_home_en_bw) | 
+               (lang_home_en_bw==1)))  %>%
+  mutate(ref="+ English at home")
+  
+
+}
+
+
+refs <- list(ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10)
+
+
+return(refs)
+}
+ # Note that maternal smoke variable is only available for youth up to 15 years old.
+
+#
+#
+#
+#
+#
+
+race_estimate <- function(sv_obj, outcome, single_sex=FALSE) {
+  if (single_sex) {formula_text <- as.formula(paste0(outcome, " ~ age + height + race"))}
+  else {formula_text <- as.formula(paste0(outcome, " ~ sex + age + height + race"))}
+  lm_fit <- svyglm(design=sv_obj, formula=formula_text, na.action=na.omit)
+  res <- (tidy(lm_fit, conf.int=TRUE) %>% filter(str_detect(term, "race")))
+            
+#filter(term==paste0('race', includedRace[includedRace!=3]))) 
+  return(res)
+}
+
+
+
+plot_racial_gap_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE, 
+                                   metric1="fev1", metric2="fvc", includedRace=c(3,4), 
+                                   dfOutput=FALSE, outputType="perc"){
+  if (dfOutput & (!(outputType %in% c("perc", "abs", "baseline", "final")))) {stop("invalid dfOutput")}
+  
+  sequence_adult <- lapply(refs_adult_list, function(x) unique(x$variables$ref))
+  sequence_adult_df <- do.call(rbind.data.frame, sequence_adult)
+  names(sequence_adult_df) <- 'ref'
+  sequence_adult_df$ref <- factor(sequence_adult_df$ref, levels=sequence_adult_df$ref)
+  
+  sequence_youth <- lapply(refs_youth_list, function(x) unique(x$variables$ref))
+  sequence_youth_df <- do.call(rbind.data.frame, sequence_youth)
+  names(sequence_youth_df) <- 'ref'
+  sequence_youth_df$ref <- factor(sequence_youth_df$ref, levels=sequence_youth_df$ref)
+  
+  race_coeffs_fev1_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>% 
+    mutate(sequence=sequence_adult_df$ref,
+           Measure = metric1) 
+  
+  race_coeffs_fev1_youth <-
+    map_df(refs_youth_list, function(x) race_estimate(x, metric1, single_sex = single_sex)) %>%
+    mutate(sequence=sequence_youth_df$ref,
+           Measure = metric1) 
+  
+  race_coeffs_fvc_adult <- 
+    map_df(refs_adult_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>%
+    mutate(sequence=sequence_adult_df$ref,
+           Measure = metric2)
+  
+  race_coeffs_fvc_youth <- 
+    map_df(refs_youth_list, function(x) race_estimate(x, metric2, single_sex = single_sex)) %>% 
+    mutate(sequence=sequence_youth_df$ref,
+           Measure = metric2)
+  
+  race_coeffs_adult <- rbind(race_coeffs_fev1_adult, race_coeffs_fvc_adult)
+  race_coeffs_youth <- rbind(race_coeffs_fev1_youth, race_coeffs_fvc_youth)
+  
+  # report Gap Reduction
+  gap_reduction_messages <- function(race_coeffs, age_group) {
+    measures <- c(metric1, metric2)
+    for (measure in measures) {
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the baseline gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="baseline"), " mL"))
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the absolute change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="abs"), " mL"))
+      message(paste0("For ", measure, " in ", age_group, 
+                     ", the percentage change in gap was ", 
+                     compute_gap_reduction(race_coeffs, measure, type="perc"), "%"))
+
+    }
+  }
+
+  # gap_reduction_messages(race_coeffs_adult, "adults")
+  # gap_reduction_messages(race_coeffs_youth, "children")
+  
+  
+  # Plot Racial Gap
+  plot_racial_gap <- function(race_coeffs, age_group, measure, suppress_legend=FALSE) {
+    
+    base_high <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.low
+    base_low <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$conf.high
+    base_ref <- -1* (race_coeffs %>% filter(sequence=="reference" & Measure==measure))$estimate
+    ylim_low <- min(-1*(race_coeffs$conf.high)) #reversed because of the negative sign
+    ylim_high <- max(-1*(race_coeffs$conf.low))
+
+    p <- ggplot(race_coeffs%>%filter(Measure==measure), aes(y=-estimate, x=sequence)) + 
+      geom_point(size=0.7) +
+      geom_errorbar(aes(ymin=-conf.low, ymax=-conf.high), width=0.2, alpha=0.8) +
+      geom_hline(yintercept = base_low, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_high, colour="salmon", linetype='dashed') +
+      geom_hline(yintercept = base_ref, colour="salmon", linetype='dotted') +
+      ylim(ylim_low-0.1, ylim_high+0.1) + 
+      ylab(paste0(str_to_upper(measure), " Gap (mL)")) +
+      xlab("") +
+      theme_few() + theme(axis.text.x = element_text(angle = 90, size=7, hjust=0.95,vjust=0.2))
+    
+    if (suppress_legend) {
+      p <- p +  theme(legend.position="none")
+    }
+    return(p)
+  }
+  
+  racial_gap_fev1_adult <- 
+    plot_racial_gap(race_coeffs_adult, "adults", measure="fev1") + ggtitle('Adults')
+  racial_gap_fvc_adult  <- 
+    plot_racial_gap(race_coeffs_adult, "adults", measure="fvc")
+  racial_gap_fev1_youth <- 
+    plot_racial_gap(race_coeffs_youth, "childten",  measure="fev1") +  ggtitle('Children')
+  racial_gap_fvc_youth <- 
+    plot_racial_gap(race_coeffs_youth, "children",  measure="fvc")
+
+     p <- racial_gap_fev1_youth + 
+       racial_gap_fev1_adult +
+       racial_gap_fvc_youth + 
+       racial_gap_fvc_adult +  
+       plot_layout(ncol = 2) +
+       plot_layout(axes="collect")  + plot_annotation(tag_levels = 'A') 
+  
+  if (dfOutput) {
+   
+    df_adult_reduction_metric1_low  <- NA
+    df_adult_reduction_metric1_high <- NA
+    df_youth_reduction_metric1_low  <- NA
+    df_youth_reduction_metric1_high <- NA
+    df_adult_reduction_metric2_low  <- NA
+    df_adult_reduction_metric2_high <- NA
+    df_youth_reduction_metric2_low  <- NA
+    df_youth_reduction_metric2_high <- NA
+
+
+    
+    if (outputType=="perc") {
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="perc")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="perc")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="perc")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="perc")$high)}
+    
+    if (outputType=="abs") {
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="abs")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="abs")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="abs")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="abs")$high)}
+    
+    
+    if (outputType=="baseline") {
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="baseline")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="baseline")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="baseline")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="baseline")$high)}
+    
+     if (outputType=="final") {
+        df_adult_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$point_estimate)
+        df_adult_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$low)
+        df_adult_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric1, type="final")$high)
+
+        df_youth_reduction_metric1      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$point_estimate)
+        df_youth_reduction_metric1_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$low)
+        df_youth_reduction_metric1_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric1, type="final")$high)
+        
+        df_adult_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$point_estimate)
+        df_adult_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$low)
+        df_adult_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_adult, metric2, type="final")$high)
+        
+        df_youth_reduction_metric2      <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$point_estimate)
+        df_youth_reduction_metric2_low  <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$low)
+        df_youth_reduction_metric2_high <- as.numeric(compute_gap_reduction(race_coeffs_youth, metric2, type="final")$high)}
+       return(list( fev1_youths = df_youth_reduction_metric1,
+                    fev1_youths_low = df_youth_reduction_metric1_low,
+                    fev1_youths_high = df_youth_reduction_metric1_high,
+                    fvc_youths  = df_youth_reduction_metric2, 
+                    fvc_youths_low  = df_youth_reduction_metric2_low, 
+                    fvc_youths_high  = df_youth_reduction_metric2_high, 
+                    fev1_adults = df_adult_reduction_metric1,
+                    fev1_adults_low = df_adult_reduction_metric1_low,
+                    fev1_adults_high = df_adult_reduction_metric1_high,
+                    fvc_adults  = df_adult_reduction_metric2,
+                    fvc_adults_low  = df_adult_reduction_metric2_low,
+                    fvc_adults_high  = df_adult_reduction_metric2_high
+        ))
+
+  } else {
+  return(p)}
+}
+
+
+predPlot <- function(df) {
+  lm_fit_with_race <- lm(fev1 ~ sex + age + height + race, data=df)
+  df <- df %>%
+    mutate(.pred = predict(lm_fit_with_race, df))
+  
+  ggplot(df) +
+    geom_point(aes(y=fev1, x=age), size=0.1, alpha=0.4, colour='salmon') + 
+    geom_smooth(aes(y=fev1, x=age), colour='salmon') +
+    geom_point(aes(y=.pred, x=age), size=0.1, alpha=0.4) +
+    geom_smooth(aes(y=.pred, x=age)) +
+    facet_wrap(~sex) + 
+    theme_few()
+  
+}
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: tbl-table1
+#| tbl-cap: Characteristics of Participants Included in the Baseline Reference Population
+
+table1 <- readRDS("nhanes_2007_2012.rds") %>%
+  as_survey_design(
+    weights=MEC6YR,
+    ids=SDMVPSU,
+    strata=SDMVSTRA,
+    nest=TRUE
+  ) %>%
+  mutate(fev1 = fev1_pre,
+         fvc  = fvc_pre) %>%
+  drop_na(fev1, fvc) %>%
+  srvyr::filter(spiro_status_pre == 1) %>%
+  srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+  srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+  #    filter(race %in% c(3,4)) %>%
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
+            (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+            (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+            (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+            (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+            (is.na(ever_asthma) | (ever_asthma !="1")) &
+            (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+            (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+            (is.na(cough_3_month) | (cough_3_month!=1)) & 
+            (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+            (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+            (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(age_group = ifelse(age>=20, "Adults", "Children"),
+         sex_text   = case_match(sex,
+                                 "1" ~ "Male"  ,
+                                 "2" ~ "Female" ),
+         time_in_us = case_match(time_in_us, 
+                                 1 ~ "Less than 1 year",
+                                 2 ~ "1 yr., less than 5 yrs.",
+                                 3 ~ "5 yrs., less than 10 yrs.",
+                                 4 ~ "10 yrs., less than 15 yrs.", 
+                                 5 ~ "15 yrs., less than 20 yrs.",
+                                 6 ~ "20 yrs., less than 30 yrs.", 
+                                 7 ~ "30 yrs., less than 40 yrs.", 
+                                 8 ~ "40 yrs., less than 50 yrs.", 
+                                 9 ~ "50 years or more", 
+                                 77 ~ NA,
+                                 99 ~ NA, 
+         ),
+         has_insurance = case_match(has_insurance, 
+                                    1 ~ "Yes",
+                                    2 ~ "No",
+                                    7 ~ "Refused",
+                                    9 ~ "Don't Know", 
+         ),
+         cough_3_month = case_match(cough_3_month,
+                                    1 ~ "Yes"  ,
+                                    2 ~ "No"),
+         phlegm_3_month = case_match(phlegm_3_month,
+                                     1 ~ "Yes"  ,
+                                     2 ~ "No"),
+         wheezing_past_yr = case_match(wheezing_past_yr,
+                                       1 ~ "Yes"  ,
+                                       2 ~ "No"),
+         dry_cough_night_past_yr = case_match(dry_cough_night_past_yr,
+                                              1 ~ "Yes"  ,
+                                              2 ~ "No"),
+         ever_asthma = case_match(ever_asthma,
+                                  "1" ~ "Yes"  ,
+                                  "2" ~ "No"),
+         ever_bronchitis = case_match(ever_bronchitis,
+                                      "1" ~ "Yes"  ,
+                                      "2" ~ "No"),
+         ever_emphysema = case_match(ever_emphysema,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+         ever_100_smoke = case_match(ever_100_smoke,
+                                     "1" ~ "Yes"  ,
+                                     "2" ~ "No"),
+         current_smoke = case_match(current_smoke,
+                                    "1" ~ "Everyday"  ,
+                                    "2" ~ "Some days",
+                                    "3" ~ "Not at all"),
+         education_adults = case_match(education_adults,
+                                       "1" ~ "Less than 9th grade"  ,
+                                       "2" ~ "9-11th grade",
+                                       "3" ~ "High school graduate",
+                                       "4" ~ "Some college or AA degree",
+                                       "5" ~ "College graduate or above"),
+         education_adults = factor(education_adults, 
+                                   levels = c("College graduate or above",
+                                              "Some college or AA degree",
+                                              "High school graduate",
+                                              "9-11th grade",
+                                              "Less than 9th grade"
+                                   )),
+         now_attending_school = case_match(now_attending_school,
+                                           1 ~ "In school",
+                                           2 ~ "Between grades",
+                                           3 ~ "Not in school"),
+         smoker_in_household = case_match(smoker_in_household,
+                                          1 ~ "Yes",
+                                          2 ~ "No"),
+         maternal_smoke = case_match(maternal_smoke,
+                                     1 ~ "Yes",
+                                     2 ~ "No"),
+         home_ownership = case_match(home_ownership,
+                                     1 ~ "Owned or being bought",
+                                     2 ~ "Rented",
+                                     3 ~ "Other arrangements"),
+         mineral_dusts = case_match(mineral_dusts,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         organic_dusts = case_match(organic_dusts,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         exhaust_fumes = case_match(exhaust_fumes,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         other_fumes = case_match(other_fumes,
+                                  1 ~ "Yes",
+                                  2 ~ "No"),
+         healthy_diet = case_match(healthy_diet,
+                                   1 ~ "Excellent",
+                                   2 ~ "Very good",
+                                   3 ~ "Good",
+                                   4 ~ "Fair",
+                                   5 ~ "Poor"),
+         healthy_diet = factor(healthy_diet, levels = c("Excellent",
+                                                        "Very good",
+                                                        "Good",
+                                                        "Fair",
+                                                        "Poor")),
+         vigorous_work = case_match(vigorous_work,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         moderate_work = case_match(moderate_work,
+                                    1 ~ "Yes",
+                                    2 ~ "No"),
+         vigorous_recreational = case_match(vigorous_recreational,
+                                            1 ~ "Yes",
+                                            2 ~ "No"),
+         moderate_recreational = case_match(moderate_recreational,
+                                            1 ~ "Yes",
+                                            2 ~ "No"),
+         
+         # smoker=
+         #   !((is.na(current_smoke) | (current_smoke == "3")) &
+         #       (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         #       (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         #       (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         #       (is.na(last_5_days_cigars) | (last_5_days_cigars != "1"))),
+         # resp_symptoms = !((is.na(cough_3_month) | (cough_3_month!=1)) & 
+         #                     (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         #                     (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         #                     (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))),
+         # resp_dx = !((is.na(ever_asthma) | (ever_asthma !="1")) &
+         #               (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         #               (is.na(ever_emphysema) | (ever_emphysema != "1"))),
+         physically_active = 
+           ((is.na(vigorous_work) | (vigorous_work=="Yes")) | 
+           (is.na(vigorous_recreational)   | (vigorous_recreational=="Yes")) | 
+           (is.na(moderate_work)   | (moderate_work=="Yes")) | 
+            (is.na(moderate_recreational)   | (moderate_recreational=="Yes"))),
+         home_owner = (is.na(home_ownership) | (home_ownership=="Owned or being bought")),
+  ) 
+
+label(table1$variables$race_text_nhanes) <- "Race and Ethnicity"
+label(table1$variables$age) <- "Age (years), mean (SD)"
+label(table1$variables$fev1) <- "FEV1 (mL), mean (SD)"
+label(table1$variables$fvc) <- "FVC (mL), mean (SD)"
+label(table1$variables$sex_text) <- "Biological Sex at Birth"
+label(table1$variables$birth_country) <- "Birth Country"
+label(table1$variables$smoker_in_household) <- "Smoker in Household"
+label(table1$variables$maternal_smoke) <- "Maternal smoke during pregnancy (For Children)"
+label(table1$variables$mineral_dusts) <- "Occupational Exposure to Mineral Dusts"
+label(table1$variables$organic_dusts) <- "Occupational Exposure to Organic Dusts"
+label(table1$variables$exhaust_fumes) <- "Occupational Exposure to Exhaust Fumes"
+label(table1$variables$other_fumes) <- "Occupational Exposure to Other Fumes"
+label(table1$variables$education_adults) <- "Education Level for Adults"
+label(table1$variables$now_attending_school) <- "Currently Attending School (for Children)"
+label(table1$variables$healthy_diet) <- "Self-reported Diet Health"
+label(table1$variables$vigorous_work) <- "Vigorous Activity at Work (10 min/week)"
+label(table1$variables$vigorous_recreational) <- "Recreational Vigorous Activity (10 min/week)"
+label(table1$variables$moderate_work) <- "Moderate Activity at Work (10 min/week)"
+label(table1$variables$moderate_recreational) <- "Recreational Moderate Activity (10 min/week)"
+label(table1$variables$bmi) <- "Body Mass Index (kg/m2), mean (SD)"
+label(table1$variables$income_poverty_ratio) <- "Income-to-Poverty Ratio"
+label(table1$variables$home_owner) <- "Homeowner"
+label(table1$variables$has_insurance) <- "Health Insurance"
+
+
+
+tbl_svysummary(table1, by = "age_group", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi)) %>%
+  as_flex_table()
+                         
+ 
+#
+#
+#
+#| label: fig-popchange
+#| fig-width: 10
+#| fig-height: 8
+#| fig-cap: Changes in population composition in successively more restrictive reference populations. Each reference population adds additional exclusion criteria based on social determinants of health. Race and ethnicity groups that experience a decline in their percentage of the population compared to the reference baseline (moving from left to right) are disproportionately affected by the social determinants of health that are being considered here. In the most restrictive adult reference population, Non-Hispanic Black and Non-Hispanic Asian participants made up 3.6% and 4.0% of the population, respectively.
+
+
+refs_adult_all_races <- createCohort("adult", includedRace = c(1,2,3,4,5,6,7))
+message("Adult counts:")
+message(map_df(refs_adult_all_races,~ count(.x$variables)))
+
+refs_youth_all_races <- createCohort("children", includedRace = c(1,2,3,4,5,6,7))
+message("Youth counts:")
+message(map_df(refs_youth_all_races, ~ count(.x$variables)))
+
+plot_participants_change <- function(refs_adult_list, refs_youth_list, single_sex = FALSE,
+                                     metric1="fev1", metric2="fvc", includedRace=c(1,2,3,4,5,6,7),
+                                     min_label_height = 0.028) {
+
+  combine_refs_df <- function(refs_list) {
+    refs_df <- do.call(rbind, lapply(seq_along(refs_list), function(i) refs_list[[i]]$variables))
+    refs_df %>%
+      mutate(
+        ref=factor(ref, levels=c("reference",
+                                 "+ job unexposed",
+                                 "+ physically active",
+                                 "+ no maternal smoke",
+                                 "+ no 2ndhand smoke",
+                                 "+ not obese",
+                                 "+ homeowner",
+                                 "+ insured",
+                                 "+ educated",
+                                 "+ healthy diet"))) %>%
+      group_by(ref) %>%
+      count(race_text_nhanes, wt = MEC6YR) %>%
+      mutate(perc = n / sum(n)) %>%
+      ungroup() %>%
+      # Only label segments tall enough (relative to the tallest bar in the
+      # panel) for the text to fit; thinner slivers stay unlabelled.
+      mutate(label = if_else(n / max(tapply(n, ref, sum)) >= min_label_height,
+                             scales::percent(perc, accuracy = 1), NA_character_))
+  }
+
+  refs_df_percent_adult <- combine_refs_df(refs_adult_list)
+  refs_df_percent_youth <- combine_refs_df(refs_youth_list)
+
+  plot_gap_perc <- function(refs_df_percent, title) {
+    ggplot(refs_df_percent, aes(x=ref, y=n, fill=race_text_nhanes)) +
+      geom_col(width = 0.8, colour = "white", linewidth = 0.2) +
+      geom_text(aes(label=label), position = position_stack(vjust = 0.5),
+                colour = "grey15", size = 2.7, na.rm = TRUE) +
+      labs(x = "", y = "Representative Population Size") +
+      scale_fill_brewer(palette = "Set2") +
+      scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6),
+                         expand = expansion(mult = c(0, 0.03))) +
+      ggtitle(title) +
+      guides(fill=guide_legend(title=NULL, nrow = 2)) +
+      theme_few() +
+      theme(axis.text.x = element_text(angle = 45, size = 9, hjust = 1, vjust = 1))
+  }
+
+  gap_perc_black_adult <- plot_gap_perc(refs_df_percent_adult, "Adults (≥20 yrs)")
+  gap_perc_black_youth <- plot_gap_perc(refs_df_percent_youth, "Children (6-19 yrs)")
+
+  (gap_perc_black_youth + gap_perc_black_adult) +
+    plot_layout(guides = "collect", axes = "collect") +
+    plot_annotation(tag_levels = 'A') &
+    theme(legend.position = "bottom")
+}
+
+plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
+
+fig2_plot <- plot_participants_change(refs_adult_all_races, refs_youth_all_races, includedRace = c(1,2,3,4,5,6,7))
+
+fig2_plot
+
+ggsave("figure2.pdf", fig2_plot, width=10, height=8, units="in", dpi=300)
+#
+#
+#
+#| label: fig-racialgap
+#| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants in successively more restrictive reference populations. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population.  
+
+
+refs_adult <- createCohort("adult")
+message("Adult counts:")
+message(map_df(refs_adult, ~ count(.x$variables)))
+
+refs_youth <- createCohort("children")
+message("Youth counts:")
+message(map_df(refs_youth, ~ count(.x$variables)))
+
+fig3_plot <- plot_racial_gap_change(refs_adult, refs_youth) + plot_annotation(
+  caption = "Non-Hispanic Black vs. Non-Hispanic White population"
+  )
+
+fig3_plot
+ggsave("figure3.pdf", fig3_plot, width=10, height=8, units="in", dpi=300)
+
+#
+#
+#
+# Let's try bootstrapping
+resample_rows <- function(data) {
+  data[sample(nrow(data), replace = TRUE, prob = data$MEC6YR), drop = FALSE]
+}
+
+# Function to generate bootstrap samples
+bootstrap_samples <- function(df, n=1000) {
+  df_list = lapply(1:n, function(i) {
+    df_bootstrap = resample_rows(df)
+    df_bootstrap$bootstrap_id = i
+    df_bootstrap
+  })
+  
+  bind_rows(df_list)
+}
+
+samples_last <- bootstrap_samples(refs_youth[[10]]$variables) %>%
+  mutate(bootstrap_id=factor(bootstrap_id))
+
+samples_baseline <- bootstrap_samples(refs_youth[[1]]) %>%
+  mutate(bootstrap_id=factor(bootstrap_id))
+
+
+bootstrapped_gap <- tibble(bootstrap_id = 1:1000) %>%
+  mutate(
+    fev1_gap = map_dbl(bootstrap_id, function(id) {
+      sample_data_last <- samples_last %>% filter(bootstrap_id == id)
+      sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
+
+      -1*race_estimate(sample_data_last, outcome = 'fev1')$estimate-
+        (-1*race_estimate(sample_data_base, outcome = 'fev1')$estimate
+)
+    }),
+
+    fvc_gap = map_dbl(bootstrap_id, function(id) {
+      sample_data_last <- samples_last %>% filter(bootstrap_id == id)
+      sample_data_base <- samples_baseline %>% filter(bootstrap_id == id)
+
+      -1*race_estimate(sample_data_last, outcome = 'fvc')$estimate-
+        (-1*race_estimate(sample_data_base, outcome = 'fvc')$estimate
+)
+    }),
+
+  )
+
+
+message('fev1 CI:')
+
+quantile(bootstrapped_gap$fev1_gap, 0.025)
+quantile(bootstrapped_gap$fev1_gap, 0.975)
+
+message("fev1 p-value:")
+
+bootstrapped_gap %>% filter(fev1_gap>0) %>% count()/1000*2
+
+message('fvc CI:')
+
+quantile(bootstrapped_gap$fvc_gap, 0.025)
+quantile(bootstrapped_gap$fvc_gap, 0.975)
+
+message("fvc p-value:")
+bootstrapped_gap %>% filter(fvc_gap>0) %>% count()/1000*2
+
+
+#
+#
+#
+#| label: fig-racialgap-home-bmi-job
+#| fig-cap: Changes in lung function racial gaps between Non-Hispanic Black and Non-Hispanic White participants after exclusions based on home ownership, BMI, and occupational exposures to fumes and dusts. Lung function differences are adjusted for height, age, and biological sex at birth. Positive values indicate higher lung function in the Non-Hispanic White population. 
+ 
+createCohort3Factor <- function (ageGroup,sex='all') {
+  if (!(ageGroup %in% c("adult", "children"))) 
+    stop("Invalid age group")
+  if (!(sex %in% c("all", "male", "female"))) 
+    stop("Invalid sex")
+  
+
+  nhanes <- readRDS("nhanes_2007_2012.rds") 
+  
+  stopifnot((nhanes %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot((nhanes %>% filter(race %in% c(3,4)) %>% count()) == 18359) 
+  stopifnot((nhanes %>% drop_na(fev1_pre, fvc_pre)  %>% count()) == 20050) 
+  
+  if (sex=='female') {
+    warning('only females are included.')
+    nhanes <- nhanes %>% filter(sex==2)
+  }
+  
+  if (sex=='male') {
+    warning('only males are included.')
+    nhanes <- nhanes %>% filter(sex==1)
+  }
+
+  nhanes <- nhanes %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
+    drop_na(fev1, fvc) %>%
+    filter(spiro_status_pre == 1) %>%
+    filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B") %>%
+    mutate(race_text_nhanes = str_remove(race_text_nhanes, "Non-Hispanic "))
+  
+  message(paste0("NHANES N (excluding missing or low quality spiro: ", 
+                 (nhanes %>% count())))
+  
+  nhanes_bw <- nhanes %>%
+        filter(race %in% c(3,4))
+
+  message(paste0("NHANES Black and White N (excluding missing or low quality spiro: ", 
+                 (nhanes_bw %>% count())))
+  
+if (ageGroup=="adult") {
+nhanes_bw <- nhanes_bw %>%
+  filter(age>=20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw %>% count())))
+}
+  
+if (ageGroup=="children") {
+nhanes_bw <- nhanes_bw %>%
+  filter(age<20)
+
+  message(paste0(ageGroup, "-NHANES : ", 
+                 (nhanes_bw %>% count())))
+}
+
+ref0 <- nhanes_bw
+
+ref0 %>%
+  group_by(race) %>%
+  count()
+
+ref1 <- ref0 %>%
+  filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(ref="reference")
+
+
+ref2 <- ref1 %>%
+      filter((is.na(bmi) | (bmi<=30))) %>%
+      filter(is.na(home_ownership) | (home_ownership==1)) %>%
+    filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+         (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+         (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+         (is.na(other_fumes)     | (other_fumes!=1))) %>%
+      filter((is.na(bmi) | (bmi<=30))) %>%
+  mutate(ref="home-job-bmi") 
+
+
+refs <- list(ref1, ref2)
+
+return(refs)
+}
+
+plot_racial_gap_change(createCohort3Factor("adult"), createCohort3Factor("children"))
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+tbl_svysummary(table1, by = "race_text_nhanes", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi))  %>%
+  as_flex_table()
+                         
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-females
+refs_adult_female <- createCohort("adult", sex="female")
+refs_youth_female <- createCohort("children", sex="female")
+
+
+plot_racial_gap_change(refs_adult_female, refs_youth_female, single_sex=TRUE)
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-males
+refs_adult_male <- createCohort("adult", sex="male")
+refs_youth_male <- createCohort("children", sex="male")
+
+
+plot_racial_gap_change(refs_adult_male, refs_youth_male, single_sex=TRUE)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-usborn
+refs_adult_US_Black <- createCohort("adult", BirthCountry="US")
+# message("Adult counts:")
+# message(map_df(refs_adult, count))
+
+refs_youth_US_Black <- createCohort("children", BirthCountry="US")
+# message("Youth counts:")
+# message(map_df(refs_youth, count))
+
+plot_racial_gap_change(refs_adult_US_Black, refs_youth_US_Black)
+#
+#
+#
+#
+#
+#
+#
+table1_BW <- table1 %>% 
+  srvyr::filter(race_text_nhanes == "Non-Hispanic Black" | race_text_nhanes == "Non-Hispanic White" ) 
+
+table1_BW %>%
+  tbl_svysummary(by = "birth_country", 
+               missing = "ifany", 
+               statistic = list(
+                 all_continuous()  ~ "{mean} ({sd})", 
+                 all_categorical() ~ "{n_unweighted} ({p}%)"),
+               missing_text = "Missing",
+               missing_stat = "{N_miss_unweighted} ({p_miss_unweighted}%)",
+               digits = list(all_continuous() ~ c(1, 1), all_categorical() ~ c(0, 1)),
+               include=c(age,
+                         race_text_nhanes, 
+                         sex_text,fev1, 
+                         fvc,
+                         smoker_in_household, 
+                         maternal_smoke,
+                         mineral_dusts,
+                         organic_dusts, 
+                         exhaust_fumes, 
+                         other_fumes,
+                         income_poverty_ratio,
+                         home_owner, 
+                         has_insurance,
+                         education_adults, 
+                         now_attending_school,
+                         healthy_diet,
+                         vigorous_work,
+                         moderate_work, 
+                         vigorous_recreational,
+                         moderate_recreational,
+                        bmi)) %>%
+   as_flex_table()
+        
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-Mexican
+
+refs_adult_mex <- createCohort("adult", includedRace=c(3,1))
+message("Adult counts:")
+message(map_df(refs_adult_mex, ~ count(.x$variables)))
+
+refs_youth_mex <- createCohort("children", includedRace=c(3,1))
+message("Youth counts:")
+message(map_df(refs_youth_mex, ~ count(.x$variables)))
+
+plot_racial_gap_change(refs_adult_mex, refs_youth_mex, includedRace=c(3,1)) + plot_annotation(
+  caption = "Mexican American vs. Non-Hispanic White population")
+
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-hispanic
+
+refs_adult_hisp <- createCohort("adult", includedRace=c(3,2))
+message("Adult counts:")
+message(map_df(refs_adult_hisp, ~ count(.x$variables)))
+
+refs_youth_hisp <- createCohort("children", includedRace=c(3,2))
+message("Youth counts:")
+message(map_df(refs_youth_hisp, ~ count(.x$variables)))
+
+plot_racial_gap_change(refs_adult_hisp, refs_youth_hisp, includedRace=c(3,2)) + plot_annotation(
+  caption = "Other Hispanic vs. Non-Hispanic White population")
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-Asian
+refs_adult_asian <- createCohort("adult", includedRace=c(3,6))
+message("Adult counts:")
+message(map_df(refs_adult_asian, ~ count(.x$variables)))
+
+refs_youth_asian <- createCohort("children", includedRace=c(3,6))
+message("Youth counts:")
+message(map_df(refs_youth_asian, ~ count(.x$variables)))
+
+plot_racial_gap_change(refs_adult_asian, refs_youth_asian, includedRace=c(3,6))  + plot_annotation(
+  caption = "Asian vs. Non-Hispanic White population")
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-Other
+
+refs_adult_oth <- createCohort("adult", includedRace=c(3,7))
+message("Adult counts:")
+message(map_df(refs_adult_oth, ~ count(.x$variables)))
+
+refs_youth_oth <- createCohort("children", includedRace=c(3,7))
+message("Youth counts:")
+message(map_df(refs_youth_oth, ~ count(.x$variables)))
+
+plot_racial_gap_change(refs_adult_oth, refs_youth_oth, includedRace=c(3,7)) + plot_annotation(
+  caption = "Other/Multiracial vs. Non-Hispanic White population")
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-allostaticload
+
+
+refs_adult_incomeAllostaticLoadOnly <- createCohort("adult", AllostaticLoadOnly=TRUE)
+refs_youth_incomeAllostaticLoadOnly <- createCohort("children", AllostaticLoadOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_incomeAllostaticLoadOnly, refs_youth_incomeAllostaticLoadOnly)
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-incomepovertyratio
+
+
+refs_adult_incomePovertyRatioOnly <- createCohort("adult", incomePovertyRatioOnly=TRUE)
+refs_youth_incomePovertyRatioOnly <- createCohort("children", incomePovertyRatioOnly=TRUE)
+
+plot_racial_gap_change(refs_adult_incomePovertyRatioOnly, refs_youth_incomePovertyRatioOnly)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavejob
+ plot_racial_gap_change(refs_adult[-2], refs_youth[-2])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavephysicalactivity
+ plot_racial_gap_change(refs_adult[-3], refs_youth[-3])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavematernalsmoke
+ plot_racial_gap_change(refs_adult[-4], refs_youth[-4])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavesecondhandsmoke
+ plot_racial_gap_change(refs_adult[-5], refs_youth[-5])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leaveobesity
+ plot_racial_gap_change(refs_adult[-6], refs_youth[-6])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavehomeowner
+ plot_racial_gap_change(refs_adult[-7], refs_youth[-7])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leaveinsurance
+ plot_racial_gap_change(refs_adult[-8], refs_youth[-8])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leaveeducation
+ plot_racial_gap_change(refs_adult[-9], refs_youth[-9])
+#
+#
+#
+#
+#
+#
+#
+#| label: appx-leavediet
+ plot_racial_gap_change(refs_adult[-10], refs_youth[-10])
+#
+#
+#
+#
+#
+#
+#
+#
+
+createCohortFlex <- function (ageGroup, sex='all', includedRace=c(3,4), exclusions=NULL) {
+  if (!(ageGroup %in% c("adult", "children", "all_ages"))) 
+    stop("Invalid age group")
+  if (!(sex %in% c("all", "male", "female"))) 
+    stop("Invalid sex")
+  
+
+  nhanes <- readRDS("nhanes_2007_2012.rds") %>%
+      as_survey_design(
+      weights=MEC6YR,
+      ids=SDMVPSU,
+      strata=SDMVSTRA,
+      nest=TRUE
+    )
+  
+  stopifnot((nhanes$variables %>% count()) == 30442) # Ensure we have the correct n
+  stopifnot(((nhanes %>% srvyr::filter(race %in% c(3,4)))$variables %>% count()) == 18359) 
+  stopifnot(((nhanes %>% drop_na(fev1_pre, fvc_pre))$variables  %>% count()) == 20050) 
+  
+  if (sex=='female') {
+    warning('only females are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==2)
+  }
+  
+  if (sex=='male') {
+    warning('only males are included.')
+    nhanes <- nhanes %>% srvyr::filter(sex==1)
+  }
+
+  nhanes <- nhanes %>%
+    mutate(fev1 = fev1_pre,
+           fvc  = fvc_pre) %>%
+    drop_na(fev1, fvc) %>%
+    srvyr::filter(spiro_status_pre == 1) %>%
+    srvyr::filter(fev1_quality_pre == "A" | fev1_quality_pre == "B") %>%
+    srvyr::filter(fvc_quality_pre  == "A" | fvc_quality_pre  == "B")
+
+
+  nhanes_bw <- nhanes %>%
+    srvyr::filter(race %in% includedRace) %>%
+    mutate(race=factor(race, levels=includedRace))
+
+  
+  if (ageGroup=="adult") {
+  nhanes_bw <- nhanes_bw %>%
+    srvyr::filter(age>=20)
+  }
+  
+  if (ageGroup=="children") {
+  nhanes_bw <- nhanes_bw %>%
+    srvyr::filter(age<20)
+
+}
+
+
+
+ref0 <- nhanes_bw %>%
+   mutate(
+        sex_text           = case_match(sex,
+                                     "1" ~ "Male"  ,
+                                     "2" ~ "Female" ),
+        ) 
+  
+
+ref0$variables %>%
+  group_by(race) %>%
+  count()
+
+ref1 <- ref0 %>%
+  srvyr::filter ((is.na(current_smoke) | (current_smoke == "3")) &
+         (is.na(ever_100_smoke) | (ever_100_smoke != "1")) &
+         (is.na(last_5_days_cigarettes) |  (last_5_days_cigarettes != "1")) &
+         (is.na(last_5_days_pipes) | (last_5_days_pipes != "1")) &
+         (is.na(last_5_days_cigars) | (last_5_days_cigars != "1")) &
+         (is.na(ever_asthma) | (ever_asthma !="1")) &
+         (is.na(ever_bronchitis) | (ever_bronchitis != "1")) &
+         (is.na(ever_emphysema) | (ever_emphysema != "1")) &
+         (is.na(cough_3_month) | (cough_3_month!=1)) & 
+         (is.na(phlegm_3_month) | (phlegm_3_month!=1)) & 
+         (is.na(wheezing_past_yr) | (wheezing_past_yr!=1)) & 
+         (is.na(dry_cough_night_past_yr) | (dry_cough_night_past_yr!=1))) %>%
+  mutate(ref="reference")
+
+ref2 <- ref1
+
+if ('job unexposed' %in% exclusions) {
+
+  ref2 <- ref2 %>%
+      srvyr::filter((is.na(mineral_dusts) | (mineral_dusts!=1)) & 
+           (is.na(organic_dusts)   | (organic_dusts!=1)) & 
+           (is.na(exhaust_fumes)   | (exhaust_fumes!=1)) & 
+           (is.na(other_fumes)     | (other_fumes!=1))) %>%
+    mutate(ref="job unexposed")
+
+}
+
+if ('physically active' %in% exclusions) {
+
+  ref2 <- ref2 %>%
+        srvyr::filter((is.na(vigorous_work) | (vigorous_work==1)) | 
+           (is.na(vigorous_recreational)   | (vigorous_recreational==1)) | 
+           (is.na(moderate_work)   | (moderate_work==1)) | 
+           (is.na(moderate_recreational)   | (moderate_recreational==1)))  %>%
+    mutate(ref="physically active")
+
+}
+
+if ('no maternal smoke' %in% exclusions) {
+
+  ref2 <- ref2 %>%
+        srvyr::filter((is.na(maternal_smoke) | (maternal_smoke!=1))) %>% #TODO Maternal smoke not available for those over 15 years
+    mutate(ref="no maternal smoke")
+  
+}
+
+if ("no 2ndhand smoke" %in% exclusions) {
+
+  ref2 <- ref2 %>%  
+        srvyr::filter((is.na(smoker_in_household) | (smoker_in_household != "1"))) %>%
+        mutate(ref="no 2ndhand smoke")
+}
+
+if ("not obese" %in% exclusions) {
+  
+  ref2 <- ref2 %>%
+        srvyr::filter((is.na(bmi) | (bmi<=30))) %>%
+    mutate(ref="not obese")
+
+}
+
+if ("homeowner" %in% exclusions) {
+
+  ref2 <- ref2 %>%
+    srvyr::filter(is.na(home_ownership) | (home_ownership==1))  %>%
+  mutate(ref="homeowner")
+}
+
+if ("insured" %in% exclusions) {
+  
+  ref2 <- ref2 %>%
+       srvyr::filter((is.na(has_insurance) | 
+                 (has_insurance==1)))  %>%
+    mutate(ref="insured")
+}
+
+if ("educated" %in% exclusions) {
+  
+  if (ageGroup=="adult") {
+    ref2 <- ref2 %>%
+      srvyr::filter(is.na(education_adults) | (education_adults %in% c(4,5)))  %>%
+    mutate(ref="educated")
+  }
+
+  if (ageGroup=="children") {
+    ref2 <- ref2 %>%
+      srvyr::filter(is.na(now_attending_school) | (now_attending_school != 3)| (age<6))  %>%
+    mutate(ref="educated")
+  }
+  
+}
+
+if ("healthy diet" %in% exclusions) {
+  
+ref2 <- ref2 %>%
+     srvyr::filter((is.na(healthy_diet) | 
+               (healthy_diet==1) | 
+               (healthy_diet==2) | 
+               (healthy_diet==3)))  %>%
+  mutate(ref="healthy diet")
+
+}
+
+refs <- list(ref1, ref2)
+
+return(refs)
+}
+
+
+exclude_all_combinations <- function(exclusionList=c("homeowner", 
+                                              "job unexposed",
+                                              "no maternal smoke", 
+                                              "no 2ndhand smoke",
+                                              "physically active", 
+                                              "not obese", 
+                                              "insured",
+                                              "educated", 
+                                              "healthy diet"),
+                              n, outputType="perc", includedRace=c(3,4)) {
+  
+   if (!(n %in% c(1, 2,3,4))) 
+    stop("Invalid n")
+  # Ensure the list has unique items
+  uniqueExclusionList <- unique(exclusionList)
+  
+  # Get all combinations of two elements from the list
+  exclusionPairs <- combn(uniqueExclusionList, n, simplify = FALSE)
+  
+  message(paste0("Number of combination is ", length(exclusionPairs)))
+  df_res <- tibble(id=1:length(exclusionPairs), 
+                   pair="N", 
+                   n_youths=9999,
+                   n_adults=9999,
+                   fev1_youths=9999,
+                   fev1_youths_low=9999,
+                   fev1_youths_high=9999,
+                   fvc_youths=9999,
+                   fvc_youths_low=9999,
+                   fvc_youths_high=9999,
+                   fev1_adults=9999,
+                   fev1_adults_low=9999,
+                   fev1_adults_high=9999,
+                   fvc_adults=9999,
+                   fvc_adults_low=9999,
+                   fvc_adults_high=9999
+                   )
+  # Iterate over each pair and perform operations
+  i<-1
+  for (pair in exclusionPairs) {
+    exclusion1 <- pair[1]
+    if(n>1) exclusion2 <- pair[2]
+    if(n>2) {exclusion3 <- pair[3]}
+    if(n>3) {exclusion4 <- pair[4]}
+    
+    #message(pair)
+    # Create cohort references for adult and youth
+    if (n==1){
+    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1), includedRace=includedRace)
+    refs_youth <- createCohortFlex("children", exclusions = c(exclusion1), includedRace=includedRace)
+    }
+    if (n==2){
+    refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
+    refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2), includedRace=includedRace)
+    } 
+    if (n==3) {
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
+      refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2, exclusion3), includedRace=includedRace)
+    }
+    
+    if (n==4) {
+      refs_adult <- createCohortFlex("adult", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
+                                     includedRace=includedRace)
+      refs_youth <- createCohortFlex("children", exclusions = c(exclusion1, exclusion2, exclusion3, exclusion4), 
+                                     includedRace=includedRace)
+    }
+    
+    # Plot the racial gap change
+    res <- plot_racial_gap_change(refs_adult, refs_youth, dfOutput=TRUE, outputType=outputType)
+    
+    if (n==1) {df_res[i, "pair"] <- paste0(pair[1])}
+    if (n==2) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2])}
+    if (n==3) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3])}
+    if (n==4) {df_res[i, "pair"] <- paste0(pair[1], ", ", pair[2], ", ", pair[3], ", ", pair[4])}
+    df_res[i, "n_youths"] <- nrow(refs_youth[[2]])
+    df_res[i, "n_adults"] <- nrow(refs_adult[[2]])
+    df_res[i, "fev1_youths"] <- res$fev1_youths
+    df_res[i, "fev1_youths_low"] <- res$fev1_youths_low
+    df_res[i, "fev1_youths_high"] <- res$fev1_youths_high
+    df_res[i, "fvc_youths"]  <- res$fvc_youths
+    df_res[i, "fvc_youths_low"]  <- res$fvc_youths_low
+    df_res[i, "fvc_youths_high"]  <- res$fvc_youths_high
+    df_res[i, "fev1_adults"] <- res$fev1_adults
+    df_res[i, "fev1_adults_low"] <- res$fev1_adults_low
+    df_res[i, "fev1_adults_high"] <- res$fev1_adults_high
+    df_res[i, "fvc_adults"]  <- res$fvc_adults
+    df_res[i, "fvc_adults_low"]  <- res$fvc_adults_low
+    df_res[i, "fvc_adults_high"]  <- res$fvc_adults_high
+    i <- i+1
+  }
+  return(df_res)
+}
+
+
+ones <- exclude_all_combinations(n=1, includedRace=c(3,4))
+
+pairs <- exclude_all_combinations(n=2, includedRace=c(3,4))
+
+triplets <- exclude_all_combinations(n=3, includedRace=c(3,4))
+
+quartets <- exclude_all_combinations(n=4, includedRace=c(3,4))
+
+
+
+pairs_mexican <- exclude_all_combinations(n=2, includedRace=c(3,1))
+#
+#
+#
+#
